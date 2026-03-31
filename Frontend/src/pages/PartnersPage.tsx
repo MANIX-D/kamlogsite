@@ -1,0 +1,198 @@
+import { useTranslation } from 'react-i18next';
+import { Building2, Handshake, Globe, Award } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
+export default function PartnersPage() {
+  const { t } = useTranslation();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setIsVisible(false);
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 100);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const partnerCategories = [
+    {
+      id: 'maritime',
+      icon: Globe,
+      title: t('partners.categories.maritime.title'),
+      description: t('partners.categories.maritime.description'),
+      partners: [
+        { name: 'CMA CGM', logo: 'https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.maritime') },
+        { name: 'MSC', logo: 'https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.maritime') },
+        { name: 'Maersk', logo: 'https://images.pexels.com/photos/1117210/pexels-photo-1117210.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.maritime') },
+      ]
+    },
+    {
+      id: 'logistics',
+      icon: Building2,
+      title: t('partners.categories.logistics.title'),
+      description: t('partners.categories.logistics.description'),
+      partners: [
+        { name: 'DHL', logo: 'https://images.pexels.com/photos/4246120/pexels-photo-4246120.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.logistics') },
+        { name: 'Bollore Logistics', logo: 'https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.logistics') },
+        { name: 'SDV', logo: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.logistics') },
+      ]
+    },
+    {
+      id: 'industrial',
+      icon: Award,
+      title: t('partners.categories.industrial.title'),
+      description: t('partners.categories.industrial.description'),
+      partners: [
+        { name: 'Total Energies', logo: 'https://images.pexels.com/photos/257700/pexels-photo-257700.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.industrial') },
+        { name: 'COTCO', logo: 'https://images.pexels.com/photos/1388944/pexels-photo-1388944.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.industrial') },
+        { name: 'SONARA', logo: 'https://images.pexels.com/photos/3568518/pexels-photo-3568518.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.industrial') },
+      ]
+    },
+    {
+      id: 'institutional',
+      icon: Handshake,
+      title: t('partners.categories.institutional.title'),
+      description: t('partners.categories.institutional.description'),
+      partners: [
+        { name: 'Port Autonome de Douala', logo: 'https://images.pexels.com/photos/2144326/pexels-photo-2144326.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.institutional') },
+        { name: 'Port de Kribi', logo: 'https://images.pexels.com/photos/2144325/pexels-photo-2144325.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.institutional') },
+        { name: 'Douanes Cameroun', logo: 'https://images.pexels.com/photos/5668837/pexels-photo-5668837.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.institutional') },
+      ]
+    }
+  ];
+
+  const stats = [
+    { value: '50+', label: t('partners.stats.partners') },
+    { value: '15+', label: t('partners.stats.countries') },
+    { value: '5', label: t('partners.stats.years') },
+    { value: '100%', label: t('partners.stats.satisfaction') }
+  ];
+
+  return (
+    <div className="min-h-screen pt-20">
+      <div
+        className="relative bg-[#1f3878] text-white h-screen overflow-hidden flex items-center"
+        style={{
+          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.85), rgba(31, 56, 120, 0.85)), url('https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      >
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h1
+            className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 transition-all duration-1000 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
+            }`}
+          >
+            {t('partners.hero.title')}
+          </h1>
+          <p
+            className={`text-xl md:text-2xl lg:text-3xl text-gray-100 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
+              isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+            }`}
+          >
+            {t('partners.hero.subtitle')}
+          </p>
+        </div>
+      </div>
+
+      <div className="py-12 bg-white border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-4xl md:text-5xl font-bold text-[#1f3878] mb-2">
+                  {stat.value}
+                </div>
+                <div className="text-gray-600 text-sm md:text-base">
+                  {stat.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              {t('partners.intro.title')}
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              {t('partners.intro.description')}
+            </p>
+          </div>
+
+          <div className="space-y-20">
+            {partnerCategories.map((category, categoryIndex) => {
+              const Icon = category.icon;
+              return (
+                <div key={category.id} className="relative">
+                  <div className="flex items-center gap-4 mb-8">
+                    <div className="w-16 h-16 bg-[#1f3878] rounded-xl flex items-center justify-center">
+                      <Icon className="w-8 h-8 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="text-3xl font-bold text-gray-900">
+                        {category.title}
+                      </h3>
+                      <p className="text-gray-600 mt-1">
+                        {category.description}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    {category.partners.map((partner, index) => (
+                      <div
+                        key={index}
+                        className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
+                      >
+                        <div className="h-48 overflow-hidden bg-gray-100">
+                          <img
+                            src={partner.logo}
+                            alt={partner.name}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        <div className="p-6">
+                          <h4 className="text-xl font-bold text-gray-900 mb-2">
+                            {partner.name}
+                          </h4>
+                          <p className="text-sm text-[#1f3878] font-medium">
+                            {partner.sector}
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+
+      <div className="py-20 bg-[#1f3878] text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Handshake className="w-16 h-16 mx-auto mb-6" />
+          <h2 className="text-4xl font-bold mb-6">
+            {t('partners.cta.title')}
+          </h2>
+          <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
+            {t('partners.cta.description')}
+          </p>
+          <Link
+            to="/contact"
+            className="inline-block bg-white text-[#1f3878] px-8 py-4 rounded-xl font-semibold text-lg hover:bg-gray-100 transition-colors"
+          >
+            {t('partners.cta.button')}
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

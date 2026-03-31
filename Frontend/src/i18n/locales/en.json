@@ -1,0 +1,951 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "services": "Our Services",
+    "infrastructures": "Infrastructures",
+    "partners": "Our Partners",
+    "news": "News",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Reliability • Security • Performance • Customer Satisfaction",
+    "title": "Your strategic partner for controlled logistics",
+    "subtitle": "Complete transport, transit and port logistics solutions",
+    "cta": {
+      "primary": "About Us"
+    },
+    "stats": {
+      "years": "Years",
+      "years_sub": "of experience",
+      "tons": "tons",
+      "tons_sub": "storage capacity",
+      "warehouse": "Warehouse",
+      "warehouse_sub": "capacity"
+    }
+  },
+  "partners": {
+    "title": "Our Partners",
+    "hero": {
+      "title": "Our Partners",
+      "subtitle": "A solid network of trusted partners to guarantee the excellence of our services"
+    },
+    "stats": {
+      "partners": "Partners",
+      "countries": "Countries",
+      "years": "Years of experience",
+      "satisfaction": "Customer satisfaction"
+    },
+    "intro": {
+      "title": "An ecosystem of strategic partners",
+      "description": "KAMLOG collaborates with major players in the logistics, maritime and industrial sectors to offer complete and efficient solutions to its clients."
+    },
+    "categories": {
+      "maritime": {
+        "title": "Maritime Partners",
+        "description": "Collaboration with global maritime transport leaders"
+      },
+      "logistics": {
+        "title": "Logistics Partners",
+        "description": "Network of leading logistics providers"
+      },
+      "industrial": {
+        "title": "Industrial Partners",
+        "description": "Privileged relationships with major industrial players"
+      },
+      "institutional": {
+        "title": "Institutional Partners",
+        "description": "Close cooperation with port and customs authorities"
+      }
+    },
+    "sectors": {
+      "maritime": "Maritime Transport",
+      "logistics": "Logistics",
+      "industrial": "Industry",
+      "institutional": "Institutional"
+    },
+    "cta": {
+      "title": "Become a partner",
+      "description": "Join our network of partners and let's develop innovative logistics solutions together",
+      "button": "Contact us"
+    }
+  },
+  "services": {
+    "title": "Our Services",
+    "click": "Click for more",
+    "close": "Close",
+    "description": {
+      "title": "Description"
+    },
+    "details": {
+      "title": "Details"
+    },
+    "transport": {
+      "title": "Transport",
+      "subtitle": "Your goods, our priority",
+      "description": "KAMLOG provides land freight transport from ports, warehouses and loading points across the Central Africa sub-region.",
+      "details": "We offer reliable and secure transport services with a modern fleet and experienced drivers. Our routes cover the main commercial roads in the region."
+    },
+    "containers": {
+      "title": "Container Yard",
+      "subtitle": "A safe solution for your containers",
+      "description": "KAMLOG provides a modern and secure container yard for storage, deposit and management of your containers.",
+      "details": "Our facilities are equipped with 24/7 surveillance systems, modern handling equipment and qualified personnel to ensure the safety of your goods."
+    },
+    "customs": {
+      "title": "Customs Transit & Import/Export",
+      "subtitle": "We simplify your formalities",
+      "description": "KAMLOG supports its clients in all import and export transit procedures, guaranteeing regulatory compliance and time savings.",
+      "details": "Our team of customs experts handles all documents, declarations and administrative procedures to ensure fast and compliant clearance."
+    },
+    "page": {
+      "title": "Our Services",
+      "subtitle": "Complete and customized logistics solutions to optimize your supply chain",
+      "transport": {
+        "title": "Land Transport",
+        "description": "Secure freight transport across Central Africa with a modern and high-performance fleet.",
+        "point1": "Modern and well-maintained truck fleet",
+        "point2": "Experienced and trained drivers",
+        "point3": "Coverage of the entire sub-region"
+      },
+      "containers": {
+        "title": "Container Yard",
+        "description": "Storage and management of containers in modern and secure facilities with 24/7 surveillance.",
+        "point1": "24/7 surveillance and security",
+        "point2": "Modern handling equipment",
+        "point3": "Computerized inventory management"
+      },
+      "customs": {
+        "title": "Customs Transit",
+        "description": "Complete management of import/export customs formalities with expertise and regulatory compliance.",
+        "point1": "Experts in customs regulations",
+        "point2": "Fast and compliant clearance",
+        "point3": "Real-time file tracking"
+      },
+      "warehouse": {
+        "title": "Warehousing",
+        "description": "Flexible and secure warehousing solutions for all types of goods.",
+        "point1": "Modern and secure warehouses",
+        "point2": "Optimized inventory management",
+        "point3": "Customized solutions"
+      },
+      "maritime": {
+        "title": "Port Operations",
+        "description": "Complete port services in Douala and Kribi to optimize your maritime operations.",
+        "point1": "Presence in Douala and Kribi ports",
+        "point2": "Coordination of port operations",
+        "point3": "Handling and stowage"
+      },
+      "security": {
+        "title": "Security & Compliance",
+        "description": "ISO 9001:2015 certification guaranteeing quality, security and compliance of our services.",
+        "point1": "ISO 9001:2015 certification",
+        "point2": "Compliance with international standards",
+        "point3": "Complete traceability"
+      },
+      "process": {
+        "title": "Our Process",
+        "step1": {
+          "title": "Analysis",
+          "description": "Study of your needs and development of a customized solution"
+        },
+        "step2": {
+          "title": "Planning",
+          "description": "Logistics organization and operations coordination"
+        },
+        "step3": {
+          "title": "Execution",
+          "description": "Implementation with real-time tracking"
+        },
+        "step4": {
+          "title": "Optimization",
+          "description": "Continuous improvement and detailed reporting"
+        }
+      },
+      "cta": {
+        "title": "Need a logistics solution?",
+        "subtitle": "Our team of experts is at your disposal to study your needs",
+        "button": "Contact Us",
+        "quoteButton": "Request a Quote"
+      }
+    },
+    "page": {
+      "title": "Our Services",
+      "subtitle": "Complete logistics solutions tailored to your needs",
+      "cta": {
+        "title": "Need a customized solution?",
+        "subtitle": "Contact us to discuss your logistics needs",
+        "button": "Contact Us",
+        "quoteButton": "Request a Quote"
+      }
+    }
+  },
+  "quote": {
+    "title": "Quote Request",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "company": "Company (optional)",
+      "serviceType": "Service Type",
+      "selectService": "Select a service",
+      "description": "Description of your need",
+      "descriptionPlaceholder": "Describe your project and needs in detail...",
+      "submit": "Send Request",
+      "submitting": "Sending...",
+      "cancel": "Cancel",
+      "successMessage": "Your quote request has been sent successfully! We will contact you soon.",
+      "errorMessage": "An error occurred. Please try again."
+    }
+  },
+  "admin": {
+    "loading": "Loading...",
+    "view": "View",
+    "delete": "Delete",
+    "close": "Close",
+    "actions": "Actions",
+    "quotes": {
+      "title": "Quote Requests",
+      "subtitle": "Manage all received quote requests",
+      "deleteConfirm": "Are you sure you want to delete this quote request?",
+      "details": "Request Details",
+      "columns": {
+        "name": "Name",
+        "email": "Email",
+        "phone": "Phone",
+        "serviceType": "Service",
+        "status": "Status",
+        "createdAt": "Date"
+      },
+      "status": {
+        "pending": "Pending",
+        "in_progress": "In Progress",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      }
+    }
+  },
+  "why": {
+    "title": "Why Choose Us?",
+    "reason1": "Recognized expertise in the logistics sector",
+    "reason2": "Modern and well-maintained fleet",
+    "reason3": "Experienced and qualified team",
+    "reason4": "24/7 services available",
+    "reason5": "Secure and equipped infrastructure",
+    "reason6": "Guaranteed regulatory compliance"
+  },
+  "testimonials": {
+    "title": "Testimonials",
+    "client1": {
+      "name": "Amadou Diallo",
+      "company": "TradeCorp",
+      "text": "KAMLOG has transformed our supply chain. Their professionalism and reliability are exceptional."
+    },
+    "client2": {
+      "name": "Marie Kouassi",
+      "company": "AfriMarket",
+      "text": "A trusted logistics partner who understands the challenges of the African market. Highly recommended!"
+    },
+    "client3": {
+      "name": "Jean-Pierre Mbala",
+      "company": "GlobalTrade",
+      "text": "Impeccable service and innovative solutions. KAMLOG is our #1 choice for all our logistics operations."
+    }
+  },
+  "footer": {
+    "quick": {
+      "links": "Quick Links"
+    },
+    "follow": "Follow Us",
+    "newsletter": {
+      "title": "Newsletter",
+      "text": "Subscribe to our newsletter",
+      "placeholder": "EMAIL",
+      "submit": "SUBSCRIBE",
+      "submitting": "Sending...",
+      "success": "Thank you for subscribing!",
+      "error": "Error subscribing. Please try again."
+    },
+    "phone": {
+      "label": "PHONE"
+    },
+    "email": {
+      "label": "EMAIL"
+    },
+    "address": {
+      "label": "ADDRESS",
+      "value": "Douala-Bonanjo"
+    },
+    "rights": "All rights reserved."
+  },
+  "about": {
+    "hero": {
+      "title": "About KAMLOG",
+      "subtitle": "A leading logistics player at the service of your performance"
+    },
+    "section": {
+      "title": "About Us"
+    },
+    "intro": {
+      "text1": "Present in Cameroon for",
+      "years": "5 years",
+      "text2": "is a company specialized in transport, transit and port logistics. It offers complete solutions covering transport, customs transit, container storage, import/export and port operations.",
+      "text3": "Located in the ports of",
+      "ports": "Douala and Kribi",
+      "text4": "relies on modern infrastructure and a qualified team to offer reliable, secure and efficient services, nationally and internationally."
+    },
+    "iso": {
+      "title": "ISO 9001 version 2015 Certified",
+      "subtitle": "Quality and customer satisfaction at the heart of our commitment"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "intro": "Optimize our clients' supply chain by guaranteeing:",
+      "item1": "Secure and controlled transport",
+      "item2": "Fast and compliant customs transit",
+      "item3": "Smooth goods management",
+      "commitment": "We are committed to providing efficient solutions that reduce costs, delays and risks while ensuring complete traceability of operations."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "text": "To become the leading logistics partner in",
+      "region": "Central Africa",
+      "text2": ", offering innovative, reliable and sustainable solutions, capable of effectively connecting global markets while optimizing costs and the logistics value chain."
+    },
+    "values": {
+      "title": "Our Values",
+      "subtitle": "The principles that guide our daily work",
+      "reliability": {
+        "title": "Reliability",
+        "text": "We honor our commitments and guarantee operational continuity."
+      },
+      "security": {
+        "title": "Security",
+        "text": "The protection of goods, people and infrastructure is an absolute priority."
+      },
+      "performance": {
+        "title": "Performance",
+        "text": "We continuously seek to improve our processes."
+      },
+      "satisfaction": {
+        "title": "Customer Satisfaction",
+        "text": "Each solution is designed to precisely meet our clients' needs."
+      }
+    },
+    "difference": {
+      "title": "What Sets Us Apart",
+      "item1": "End-to-end integrated logistics offering",
+      "item2": "Modern and secure infrastructure",
+      "item3": "High-performance equipment",
+      "item4": "Experienced and qualified team",
+      "item5": "ISO 9001:2015 Certification"
+    }
+  },
+  "infrastructures": {
+    "page": {
+      "title": "Our Infrastructures",
+      "construction": "Page under construction. Please provide screenshots for this page."
+    }
+  },
+  "news": {
+    "page": {
+      "title": "News",
+      "construction": "Page under construction. Please provide screenshots for this page."
+    },
+    "hero": {
+      "title": "News",
+      "subtitle": "Stay informed about our latest news, announcements, and opportunities"
+    },
+    "filters": {
+      "all": "All",
+      "article": "Articles",
+      "announcement": "Announcements",
+      "job": "Job Offers"
+    },
+    "types": {
+      "article": "Article",
+      "announcement": "Announcement",
+      "job": "Job Offer"
+    },
+    "readMore": "Read more",
+    "empty": "No news available at the moment",
+    "error": {
+      "fetch": "Error loading news",
+      "retry": "Retry"
+    },
+    "pagination": {
+      "previous": "Previous",
+      "next": "Next"
+    },
+    "jobsCta": {
+      "title": "Join Our Team",
+      "subtitle": "Discover our career opportunities and be part of the KAMLOG adventure",
+      "button": "View Job Offers"
+    }
+  },
+  "jobs": {
+    "badge": "Job Offer",
+    "published": "Published on",
+    "deadline": "Application Deadline",
+    "backToNews": "Back to News",
+    "description": {
+      "title": "Job Description"
+    },
+    "requirements": {
+      "title": "Requirements"
+    },
+    "skills": {
+      "title": "Required Skills"
+    },
+    "apply": {
+      "title": "Ready to Apply?",
+      "description": "Send us your application and join the KAMLOG team",
+      "button": "Apply Now",
+      "error": "Error sending your application. Please try again.",
+      "modal": {
+        "title": "Apply for this Position",
+        "subtitle": "Position"
+      },
+      "form": {
+        "firstName": "First Name",
+        "lastName": "Last Name",
+        "email": "Email",
+        "phone": "Phone",
+        "cv": "Resume/CV",
+        "coverLetter": "Cover Letter (optional)",
+        "cancel": "Cancel",
+        "submit": "Submit Application",
+        "submitting": "Submitting..."
+      },
+      "success": {
+        "title": "Application Sent!",
+        "message": "We have received your application. Our team will contact you soon."
+      }
+    },
+    "error": {
+      "fetch": "Error loading job offer",
+      "notFound": "Job offer not found"
+    }
+  },
+  "contact": {
+    "page": {
+      "title": "Contact",
+      "construction": "Page under construction. Please provide screenshots for this page."
+    },
+    "hero": {
+      "title": "Contact Us",
+      "subtitle": "Our team is available to answer all your questions"
+    },
+    "info": {
+      "phone": {
+        "title": "Phone"
+      },
+      "email": {
+        "title": "Email"
+      },
+      "address": {
+        "title": "Address",
+        "line1": "Douala-Bonanjo",
+        "line2": "Cameroon"
+      },
+      "hours": {
+        "title": "Business Hours",
+        "weekdays": "Mon - Fri: 8:00 AM - 6:00 PM",
+        "weekend": "Sat: 8:00 AM - 1:00 PM"
+      },
+      "about": {
+        "title": "Why KAMLOG?",
+        "description": "With over 5 years of experience, KAMLOG is your trusted partner for all your transport, transit, and logistics needs in Cameroon.",
+        "point1": "Recognized expertise in the sector",
+        "point2": "Personalized and flexible solutions",
+        "point3": "24/7 customer service available"
+      },
+      "help": {
+        "title": "How Can We Help You?",
+        "description": "Whether you need a quote, information about our services, or assistance, we are here to help.",
+        "option1": "Request a free quote",
+        "option2": "Information about our services",
+        "option3": "Customer support and assistance"
+      },
+      "visit": {
+        "title": "Visit Our Offices",
+        "description": "Would you like to meet us in person? Our offices are open Monday through Saturday.",
+        "note": "Call us to schedule an appointment:"
+      }
+    },
+    "form": {
+      "title": "Send Us a Message",
+      "subtitle": "Fill out the form below and we will respond as soon as possible.",
+      "fields": {
+        "name": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone",
+        "company": "Company",
+        "subject": "Subject",
+        "message": "Your Message"
+      },
+      "placeholders": {
+        "name": "Your name",
+        "email": "your@email.com",
+        "phone": "+237 XXX XX XX XX",
+        "company": "Your company name",
+        "subject": "Select a subject",
+        "message": "Describe your needs..."
+      },
+      "subjects": {
+        "transport": "Freight Transport",
+        "transit": "Transit and Customs Clearance",
+        "warehouse": "Warehousing",
+        "customs": "Customs Operations",
+        "quote": "Request for Quote",
+        "other": "Other"
+      },
+      "buttons": {
+        "send": "Send Message",
+        "sending": "Sending..."
+      },
+      "error": "Error sending message. Please try again.",
+      "validation": {
+        "name": "Please enter your full name",
+        "email": "Please enter a valid email address",
+        "phone": "Please enter your phone number",
+        "subject": "Please select a subject",
+        "message": "Message must contain at least 10 characters"
+      },
+      "success": {
+        "title": "Message Sent Successfully!",
+        "message": "Thank you for your message. Our team will contact you shortly."
+      }
+    },
+    "map": {
+      "title": "Our Location"
+    }
+  },
+  "servicesDetailed": {
+    "transport": {
+      "title": "Transport",
+      "heading": "YOUR GOODS, OUR PRIORITY",
+      "description": "KAMLOG provides land freight transport from ports, warehouses and loading points across the Central Africa sub-region. Our modern fleet and experienced drivers guarantee reliability and punctuality.",
+      "services": {
+        "title": "Our Services",
+        "item1": "Transport of 20' and 40' containers (full or empty)",
+        "item2": "Conventional freight transport",
+        "item3": "Transport of sensitive or high-value goods",
+        "item4": "Regular or one-time transport",
+        "item5": "Sub-regional coverage (CEMAC)"
+      },
+      "benefits": {
+        "title": "Client Benefits",
+        "item1": "Qualified drivers trained in safety standards",
+        "item2": "Recent fleet regularly inspected",
+        "item3": "Real-time GPS tracking",
+        "item4": "Comprehensive insurance on all operations",
+        "item5": "24/7 availability"
+      }
+    },
+    "containers": {
+      "title": "Container Yard",
+      "heading": "A SAFE SOLUTION FOR YOUR CONTAINERS",
+      "description": "KAMLOG provides a modern and secure container yard for temporary storage of your empty or full containers. Located near the ports of Douala and Kribi, our infrastructure allows flexible and efficient management.",
+      "benefits": {
+        "title": "Client Benefits",
+        "item1": "Reduction of port demurrage fees",
+        "item2": "Professional container management",
+        "item3": "Storage flexibility",
+        "item4": "24/7 enhanced security",
+        "item5": "Simplified and fast access"
+      },
+      "capacity": {
+        "title": "Capacities and Equipment",
+        "item1": "Fully paved area of 22,000 m²",
+        "item2": "Capacity to accommodate over 2,000 TEUs",
+        "item3": "Modern surveillance system (video surveillance, 24/7 security)",
+        "item4": "Forklifts and mobile cranes",
+        "item5": "Computerized inventory management",
+        "item6": "Dedicated spaces for refrigerated containers",
+        "item7": "Container maintenance and washing"
+      }
+    },
+    "customs": {
+      "tag": "CUSTOMS",
+      "title": "Customs Transit & Import / Export",
+      "heading": "WE SIMPLIFY YOUR FORMALITIES, YOU SAVE TIME",
+      "description": "KAMLOG supports its clients in all import and export transit procedures, guaranteeing regulatory compliance, time savings and cost control. Thanks to our expertise and customs network, we ensure smooth management of your files.",
+      "import": {
+        "title": "Import",
+        "item1": "Collection of goods at the port or airport",
+        "item2": "Import customs declarations",
+        "item3": "Customs clearance at Douala or Kribi port",
+        "item4": "Management of health or technical procedures (MINCOMMERCE, MINDAF...)",
+        "item5": "Provision of customs bond",
+        "item6": "Settlement of duties and taxes",
+        "item7": "Payment of port fees",
+        "item8": "Home delivery in Douala or hinterland"
+      },
+      "export": {
+        "title": "Export",
+        "item1": "Collection of goods from warehouse or factory",
+        "item2": "Container stuffing at our premises or client site",
+        "item3": "Establishment of export documents (BAE, BL, invoice...)",
+        "item4": "Export customs declarations",
+        "item5": "Payment of port fees",
+        "item6": "Container delivery to port",
+        "item7": "Tracking until loading",
+        "item8": "Coordination with shipowners and consignees"
+      }
+    },
+    "warehouse": {
+      "tag": "WAREHOUSING",
+      "title": "WAREHOUSING & INVENTORY MANAGEMENT",
+      "heading": "YOUR GOODS SAFE, UNDER PERMANENT CONTROL",
+      "description": "KAMLOG has secure warehousing facilities adapted to different types of goods: industrial products, agricultural equipment, consumer goods, and more.",
+      "features": {
+        "item1": "Bonded warehouse (fictitious warehouse) allowing deferral of duties and taxes",
+        "item2": "Area: 5,000 m² covered + 22,000 m² outdoor for containers",
+        "item3": "Ceiling height up to 18 meters (silos)",
+        "item4": "Vertical and horizontal storage",
+        "item5": "Computerized inventory management with traceability",
+        "item6": "Handling and loading/unloading services",
+        "item7": "Dedicated space for dangerous goods storage (with permits)",
+        "item8": "Possibility of grouping, ungrouping and packaging"
+      }
+    },
+    "handling": {
+      "tag": "HANDLING",
+      "title": "PORT HANDLING & BERTHING",
+      "heading": "PROFESSIONAL HANDLING AT THE HEART OF THE PORT",
+      "description": "KAMLOG handles goods at the Autonomous Port of Douala (Quay 3) as well as at Kribi Port. Our qualified teams and high-performance equipment guarantee fast, secure and compliant handling.",
+      "services": {
+        "title": "Our Services",
+        "item1": "Ship unloading",
+        "item2": "Container lashing and unlashing",
+        "item3": "Handling of heavy and bulky packages",
+        "item4": "Transfer of goods from quayside to warehouses or storage areas",
+        "item5": "Berthing operations management",
+        "item6": "Coordination with consignees and shipowners",
+        "item7": "Compliance with ISPS security procedures"
+      },
+      "benefits": {
+        "title": "Client Benefits",
+        "item1": "Speed and efficiency (reduction of immobilization times)",
+        "item2": "Availability of high-performance equipment (cranes, forklifts, tractors...)",
+        "item3": "Experienced and trained teams",
+        "item4": "Proximity to the port area",
+        "item5": "24/7 service continuity if needed"
+      }
+    },
+    "methodology": {
+      "tag": "METHODOLOGY",
+      "title": "Our Methodology",
+      "step1": {
+        "title": "Analysis of your needs",
+        "description": "Listening, diagnosis and evaluation of your expectations"
+      },
+      "step2": {
+        "title": "Customized solution proposal",
+        "description": "Development of a technical and financial offer adapted"
+      },
+      "step3": {
+        "title": "Operational planning",
+        "description": "Logistics organization and resource mobilization"
+      },
+      "step4": {
+        "title": "Secure execution",
+        "description": "Implementation with real-time tracking"
+      },
+      "step5": {
+        "title": "Monitoring & reporting",
+        "description": "Regular communication and continuous improvement"
+      }
+    }
+  },
+  "infrastructuresPage": {
+    "title": "Our Infrastructures",
+    "subtitle": "Modern and secure facilities at the heart of strategic port areas",
+    "tag": "OUR FACILITIES",
+    "heading": "A Network of Strategic Infrastructures",
+    "intro": "KAMLOG has a set of infrastructures strategically located near the ports of Douala and Kribi, guaranteeing efficiency, security and complete traceability of your goods.",
+    "labels": {
+      "surface": "Surface",
+      "capacity": "Capacity",
+      "height": "Height",
+      "type": "Type",
+      "location": "Location",
+      "features": "Main Features"
+    },
+    "facilities": {
+      "warehouse": {
+        "location": "Quay 3, Douala Autonomous Port",
+        "feature1": "Integrated mezzanine for optimized storage",
+        "feature2": "Direct access to the loading dock",
+        "feature3": "Modern handling equipment",
+        "feature4": "24/7 surveillance system"
+      },
+      "containers": {
+        "location": "Douala Port Area",
+        "capacity": "Fully paved",
+        "feature1": "Fully paved and secured surface",
+        "feature2": "45-ton reach stackers",
+        "feature3": "Computerized inventory management",
+        "feature4": "Container storage and maintenance"
+      },
+      "silos": {
+        "location": "Douala Autonomous Port",
+        "type": "Pile silos",
+        "feature1": "Fully automated",
+        "feature2": "Rapid unloading of bulk goods",
+        "feature3": "Integrated weighing system",
+        "feature4": "Continuous quality control"
+      },
+      "udeac": {
+        "location": "UDEAC Square 01, Port Area",
+        "capacity": "Secured 24/7",
+        "feature1": "Enhanced 24/7 security",
+        "feature2": "Immediate proximity to the port",
+        "feature3": "Multiple loading docks",
+        "feature4": "Multi-product storage"
+      }
+    },
+    "statsLabels": {
+      "storage": {
+        "label": "Tons",
+        "description": "Cumulative storage capacity"
+      },
+      "surface": {
+        "label": "m²",
+        "description": "Total warehouse surface"
+      },
+      "containers": {
+        "label": "m²",
+        "description": "Container yard"
+      },
+      "ports": {
+        "label": "Ports",
+        "description": "Douala and Kribi"
+      }
+    },
+    "cta": {
+      "title": "Visit Our Facilities",
+      "description": "Discover our modern and high-performance infrastructures that guarantee the efficiency of your logistics operations",
+      "button": "Schedule a visit"
+    },
+    "stats": {
+      "surface": {
+        "label": "Total Surface",
+        "value": "27,000 m²"
+      },
+      "capacity": {
+        "label": "Container Capacity",
+        "value": "2,000+ TEU"
+      },
+      "height": {
+        "label": "Maximum Height",
+        "value": "18 meters"
+      },
+      "security": {
+        "label": "Surveillance",
+        "value": "24/7"
+      }
+    }
+  },
+  "visitRequest": {
+    "title": "Schedule a visit",
+    "subtitle": "Fill out the form to organize your visit",
+    "success": {
+      "title": "Request sent successfully!",
+      "message": "Our team will contact you soon to confirm your visit."
+    },
+    "error": "An error occurred. Please try again.",
+    "form": {
+      "name": "Full Name",
+      "namePlaceholder": "John Doe",
+      "email": "Email",
+      "emailPlaceholder": "john.doe@example.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+237 6XX XXX XXX",
+      "company": "Company",
+      "companyPlaceholder": "Your company name",
+      "date": "Preferred Date",
+      "time": "Preferred Time",
+      "infrastructure": "Infrastructure to visit",
+      "infrastructureOptions": {
+        "select": "Select an infrastructure",
+        "warehouse": "Warehouse - Port of Douala",
+        "containers": "Container Yard",
+        "silos": "Automated Silos",
+        "udeac": "UDEAC Zone Warehouse",
+        "all": "All infrastructures"
+      },
+      "message": "Message (optional)",
+      "messagePlaceholder": "Additional information about your request...",
+      "cancel": "Cancel",
+      "submit": "Send request",
+      "submitting": "Sending...",
+      "required": "*"
+    }
+  },
+  "admin": {
+    "common": {
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "actions": "Actions",
+      "confirm": "Are you sure you want to delete this item?",
+      "error": "Operation error",
+      "noData": "No data available",
+      "search": "Search...",
+      "filter": "Filter",
+      "export": "Export"
+    },
+    "nav": {
+      "logout": "Logout",
+      "panel": "Admin Panel"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "news": "News",
+      "partners": "Partners",
+      "services": "Services",
+      "infrastructures": "Infrastructures",
+      "messages": "Messages",
+      "newsletter": "Newsletter"
+    },
+    "login": {
+      "title": "Administration",
+      "subtitle": "Log in to access the admin panel",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Connecting...",
+      "error": "Connection failed"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your administration",
+      "stats": {
+        "news": "Total News",
+        "jobs": "Job Offers",
+        "partners": "Partners",
+        "messages": "Messages Received",
+        "subscribers": "Newsletter Subscribers"
+      },
+      "activity": "Recent Activity",
+      "activityDescription": "Detailed statistics will be displayed here.",
+      "quickActions": "Quick Actions",
+      "actions": {
+        "addNews": "Add news",
+        "addPartner": "Add partner",
+        "viewMessages": "View messages"
+      }
+    },
+    "news": {
+      "title": "News",
+      "subtitle": "Manage articles, announcements and offers",
+      "columns": {
+        "title": "Title",
+        "type": "Type",
+        "date": "Date",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "titleLabel": "Title",
+        "typeLabel": "Type",
+        "date": "Publication date",
+        "content": "Content",
+        "image": "Image",
+        "chooseImage": "Choose an image",
+        "editTitle": "Edit news",
+        "newTitle": "New news"
+      },
+      "types": {
+        "all": "All types",
+        "article": "Article",
+        "articles": "Articles",
+        "announcement": "Announcement",
+        "announcements": "Announcements",
+        "job": "Job Offer",
+        "jobs": "Job Offers"
+      }
+    },
+    "partners": {
+      "title": "Partners",
+      "subtitle": "Manage partners",
+      "columns": {
+        "name": "Name",
+        "sector": "Sector",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "name": "Name",
+        "sector": "Sector",
+        "description": "Description",
+        "logo": "Logo",
+        "chooseLogo": "Choose a logo",
+        "editTitle": "Edit partner",
+        "newTitle": "New partner"
+      },
+      "noLogo": "N/A"
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Manage offered services",
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "name": "Name",
+        "description": "Description",
+        "icon": "Icon",
+        "iconPlaceholder": "Ex: Truck, Container, Ship",
+        "iconHelper": "Lucide React icon name",
+        "editTitle": "Edit service",
+        "newTitle": "New service"
+      }
+    },
+    "infrastructures": {
+      "title": "Infrastructures",
+      "subtitle": "Manage infrastructures",
+      "columns": {
+        "name": "Name",
+        "surface": "Surface",
+        "capacity": "Capacity",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "name": "Name",
+        "surface": "Surface",
+        "surfacePlaceholder": "Ex: 5000 m²",
+        "capacity": "Capacity",
+        "capacityPlaceholder": "Ex: 1000 containers",
+        "description": "Description",
+        "image": "Image",
+        "chooseImage": "Choose an image",
+        "editTitle": "Edit infrastructure",
+        "newTitle": "New infrastructure"
+      }
+    },
+    "messages": {
+      "title": "Messages",
+      "subtitle": "Messages received via contact form",
+      "noMessages": "No messages",
+      "newBadge": "New",
+      "markAsRead": "Mark as read",
+      "subject": "Subject:"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "subtitle": "Newsletter subscribers",
+      "export": "Export emails",
+      "noSubscribers": "No subscribers",
+      "columns": {
+        "email": "Email",
+        "date": "Registration date"
+      }
+    }
+  }
+}

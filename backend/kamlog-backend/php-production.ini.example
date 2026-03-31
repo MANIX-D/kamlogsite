@@ -1,0 +1,90 @@
+; ================================================================
+; KAMLOG Backend — PHP Production Configuration
+; ================================================================
+; Add these settings to your php.ini or as a separate .ini file
+; in /etc/php/8.2/fpm/conf.d/99-kamlog.ini
+;
+; Also configure PHP-FPM pool at:
+; /etc/php/8.2/fpm/pool.d/kamlog.conf
+; ================================================================
+
+; ── OPcache (critical for production performance) ────────────────
+[opcache]
+opcache.enable=1
+opcache.enable_cli=0
+opcache.memory_consumption=256
+opcache.interned_strings_buffer=32
+opcache.max_accelerated_files=20000
+opcache.validate_timestamps=0          ; IMPORTANT: Set to 0 in production
+                                       ; Requires php-fpm restart on deploy
+opcache.revalidate_freq=0
+opcache.save_comments=1                ; Required for Laravel annotations
+opcache.jit_buffer_size=100M
+opcache.jit=1255                       ; Tracing JIT (PHP 8.2+)
+
+; ── PHP Settings ─────────────────────────────────────────────────
+[PHP]
+expose_php=Off                         ; Hide PHP version in headers
+max_execution_time=30                  ; 30 seconds max per request
+max_input_time=30
+memory_limit=256M                      ; Adjust based on your workload
+post_max_size=25M
+upload_max_filesize=20M
+max_file_uploads=10
+default_charset="UTF-8"
+
+; ── Session (handled by Redis, but set sensible defaults) ────────
+session.cookie_httponly=1
+session.cookie_secure=1
+session.use_strict_mode=1
+session.cookie_samesite=Lax
+
+; ── Security ─────────────────────────────────────────────────────
+allow_url_fopen=On                     ; Required for some packages
+allow_url_include=Off
+disable_functions=exec,passthru,shell_exec,system,proc_open,popen
+display_errors=Off
+display_startup_errors=Off
+log_errors=On
+error_reporting=E_ALL & ~E_DEPRECATED & ~E_STRICT
+
+; ── Realpath cache (reduces filesystem stat calls) ───────────────
+realpath_cache_size=4096K
+realpath_cache_ttl=600
+
+; ================================================================
+; PHP-FPM Pool Configuration
+; ================================================================
+; File: /etc/php/8.2/fpm/pool.d/kamlog.conf
+;
+; [kamlog]
+; user = www-data
+; group = www-data
+; listen = /var/run/php/php8.2-fpm-kamlog.sock
+; listen.owner = www-data
+; listen.group = www-data
+; listen.mode = 0660
+;
+; ; Dynamic process management
+; pm = dynamic
+; pm.max_children = 50          ; Max workers (RAM / ~40MB per worker)
+; pm.start_servers = 10         ; Workers at startup
+; pm.min_spare_servers = 5      ; Min idle workers
+; pm.max_spare_servers = 20     ; Max idle workers
+; pm.max_requests = 1000        ; Recycle workers after N requests (prevents leaks)
+; pm.process_idle_timeout = 10s
+;
+; ; Status page (restrict to localhost)
+; pm.status_path = /fpm-status
+; ping.path = /fpm-ping
+;
+; ; Slow log
+; request_slowlog_timeout = 5s
+; slowlog = /var/log/php-fpm/kamlog-slow.log
+;
+; ; Request timeout
+; request_terminate_timeout = 60s
+;
+; ; Environment
+; env[APP_ENV] = production
+; ================================================================

@@ -1,0 +1,38 @@
+export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1';
+
+export const API_ENDPOINTS = {
+  services: '/services',
+  news: '/news',
+  partners: '/partners',
+  infrastructures: '/infrastructures',
+  contact: '/contact',
+  newsletter: '/newsletter',
+  visitRequest: '/visit-requests',
+  quoteRequest: '/quote-requests',
+  uploadCV: '/upload/cv',
+
+  admin: {
+    login: '/admin/auth/login',
+    logout: '/admin/auth/logout',
+    logoutAll: '/admin/auth/logout-all',
+    me: '/admin/auth/me',
+    refresh: '/admin/auth/refresh',
+    services: '/admin/services',
+    news: '/admin/news',
+    actualites: '/admin/news',
+    partners: '/admin/partners',
+    infrastructures: '/admin/infrastructures',
+    jobs: '/admin/jobs',
+    jobOffers: '/admin/jobs',
+    announcements: '/admin/announcements',
+    contactMessages: '/admin/contact-messages',
+    messages: '/admin/contact-messages',
+    newsletter: '/admin/newsletter',
+    visitRequests: '/admin/visit-requests',
+    quoteRequests: '/admin/quote-requests',
+    quotes: '/admin/quote-requests',
+    dashboard: '/admin/dashboard',
+    files: '/admin/files',
+    storage: '/admin/storage',
+  },
+};

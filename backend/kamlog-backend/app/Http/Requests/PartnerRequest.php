@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Http\Requests;
+
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+class PartnerRequest extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return true;
+    }
+
+    public function rules(): array
+    {
+        return [
+            'name_fr' => ['required', 'string', 'max:255'],
+            'name_en' => ['required', 'string', 'max:255'],
+            'logo_url' => ['nullable', 'string', 'max:255'],
+            'description_fr' => ['nullable', 'string'],
+            'description_en' => ['nullable', 'string'],
+            'category' => ['required', 'in:logistique,transport,technologie,financier,autre'],
+            'website' => ['nullable', 'url', 'max:255'],
+            'email' => ['nullable', 'email', 'max:255'],
+            'phone' => ['nullable', 'string', 'max:50'],
+            'address' => ['nullable', 'string', 'max:500'],
+            'partnership_level' => ['required', 'in:strategic,premium,standard,basic'],
+            'display_order' => ['nullable', 'integer', 'min:0'],
+            'is_active' => ['nullable', 'boolean'],
+            'is_featured' => ['nullable', 'boolean'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'name_fr.required' => 'Le nom en français est requis.',
+            'name_en.required' => 'Le nom en anglais est requis.',
+            'category.in' => 'La catégorie doit être logistique, transport, technologie, financier ou autre.',
+            'partnership_level.in' => 'Le niveau doit être strategic, premium, standard ou basic.',
+            'website.url' => 'Le site web doit être une URL valide.',
+            'email.email' => 'L\'email doit être valide.',
+        ];
+    }
+
+    protected function failedValidation(Validator $validator)
+    {
+        throw new HttpResponseException(
+            response()->json([
+                'success' => false,
+                'message' => 'Erreur de validation',
+                'errors' => $validator->errors(),
+            ], 422)
+        );
+    }
+}

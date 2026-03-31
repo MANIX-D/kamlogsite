@@ -1,0 +1,1140 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "about": "À Propos",
+    "services": "Nos services",
+    "infrastructures": "Infrastructures",
+    "partners": "Nos partenaires",
+    "news": "Actualités",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Fiabilité • Sécurité • Performance • Satisfaction client",
+    "title": "Votre partenaire stratégique pour une logistique maîtrisée",
+    "subtitle": "Solutions complètes de transport, transit et logistique portuaire",
+    "cta": {
+      "primary": "À propos de nous"
+    },
+    "stats": {
+      "years": "Ans",
+      "years_sub": "d'expérience",
+      "tons": "tonnes",
+      "tons_sub": "capacité stockage",
+      "warehouse": "Capacité de",
+      "warehouse_sub": "l'entrepôt"
+    }
+  },
+  "partners": {
+    "title": "Nos partenaires",
+    "hero": {
+      "title": "Nos Partenaires",
+      "subtitle": "Un réseau solide de partenaires de confiance pour garantir l'excellence de nos services"
+    },
+    "stats": {
+      "partners": "Partenaires",
+      "countries": "Pays",
+      "years": "Ans d'expérience",
+      "satisfaction": "Satisfaction client"
+    },
+    "intro": {
+      "title": "Un écosystème de partenaires stratégiques",
+      "description": "KAMLOG collabore avec des acteurs majeurs du secteur logistique, maritime et industriel pour offrir des solutions complètes et performantes à ses clients."
+    },
+    "categories": {
+      "maritime": {
+        "title": "Partenaires Maritimes",
+        "description": "Collaboration avec les leaders du transport maritime mondial"
+      },
+      "logistics": {
+        "title": "Partenaires Logistiques",
+        "description": "Réseau de prestataires logistiques de premier plan"
+      },
+      "industrial": {
+        "title": "Partenaires Industriels",
+        "description": "Relations privilégiées avec les grands acteurs industriels"
+      },
+      "institutional": {
+        "title": "Partenaires Institutionnels",
+        "description": "Coopération étroite avec les autorités portuaires et douanières"
+      }
+    },
+    "sectors": {
+      "maritime": "Transport Maritime",
+      "logistics": "Logistique",
+      "industrial": "Industrie",
+      "institutional": "Institutionnel"
+    },
+    "cta": {
+      "title": "Devenir partenaire",
+      "description": "Rejoignez notre réseau de partenaires et développons ensemble des solutions logistiques innovantes",
+      "button": "Nous contacter"
+    }
+  },
+  "services": {
+    "title": "Nos Services",
+    "click": "Cliquez pour plus",
+    "close": "Fermer",
+    "description": {
+      "title": "Description"
+    },
+    "details": {
+      "title": "Détails"
+    },
+    "transport": {
+      "title": "Transport",
+      "subtitle": "Votre marchandise, notre priorité",
+      "description": "KAMLOG assure le transport terrestre des marchandises depuis les ports, entrepôts et points de chargement sur l'ensemble de la sous-région Afrique centrale.",
+      "details": "Nous offrons des services de transport fiables et sécurisés, avec une flotte modernisée et des conducteurs expérimentés. Nos itinéraires couvrent les principales routes commerciales de la région."
+    },
+    "containers": {
+      "title": "Parc à conteneurs",
+      "subtitle": "Une solution sûre pour vos conteneurs",
+      "description": "KAMLOG met à disposition un parc à conteneurs moderne et sécurisé pour le stockage, le dépôt et la gestion de vos conteneurs.",
+      "details": "Nos installations sont équipées de systèmes de surveillance 24/7, d'équipements de manutention modernes et d'un personnel qualifié pour assurer la sécurité de vos biens."
+    },
+    "customs": {
+      "title": "Transit Douanier & Import/Export",
+      "subtitle": "Nous simplifions vos formalités",
+      "description": "KAMLOG accompagne ses clients dans toutes les procédures de transit import et export, en garantissant conformité réglementaire et gain de temps.",
+      "details": "Notre équipe d'experts en douane gère tous les documents, déclarations et procédures administratives pour assurer un dédouanement rapide et conforme."
+    },
+    "page": {
+      "title": "Nos Services",
+      "subtitle": "Des solutions logistiques complètes et sur mesure pour optimiser votre chaîne d'approvisionnement",
+      "transport": {
+        "title": "Transport Terrestre",
+        "description": "Transport sécurisé de marchandises sur l'ensemble de l'Afrique centrale avec une flotte moderne et performante.",
+        "point1": "Flotte de camions moderne et bien entretenue",
+        "point2": "Conducteurs expérimentés et formés",
+        "point3": "Couverture de toute la sous-région"
+      },
+      "containers": {
+        "title": "Parc à Conteneurs",
+        "description": "Stockage et gestion de conteneurs dans des installations modernes et sécurisées avec surveillance 24/7.",
+        "point1": "Surveillance et sécurité 24/7",
+        "point2": "Équipements de manutention modernes",
+        "point3": "Gestion informatisée des stocks"
+      },
+      "customs": {
+        "title": "Transit Douanier",
+        "description": "Gestion complète des formalités douanières import/export avec expertise et conformité réglementaire.",
+        "point1": "Experts en réglementation douanière",
+        "point2": "Dédouanement rapide et conforme",
+        "point3": "Suivi en temps réel des dossiers"
+      },
+      "warehouse": {
+        "title": "Entreposage",
+        "description": "Solutions d'entreposage flexibles et sécurisées pour tous types de marchandises.",
+        "point1": "Entrepôts modernes et sécurisés",
+        "point2": "Gestion optimisée des stocks",
+        "point3": "Solutions sur mesure"
+      },
+      "maritime": {
+        "title": "Opérations Portuaires",
+        "description": "Services portuaires complets à Douala et Kribi pour optimiser vos opérations maritimes.",
+        "point1": "Présence dans les ports de Douala et Kribi",
+        "point2": "Coordination des opérations portuaires",
+        "point3": "Manutention et arrimage"
+      },
+      "security": {
+        "title": "Sécurité & Conformité",
+        "description": "Certification ISO 9001:2015 garantissant qualité, sécurité et conformité de nos services.",
+        "point1": "Certification ISO 9001:2015",
+        "point2": "Respect des normes internationales",
+        "point3": "Traçabilité complète"
+      },
+      "process": {
+        "title": "Notre Processus",
+        "step1": {
+          "title": "Analyse",
+          "description": "Étude de vos besoins et élaboration d'une solution sur mesure"
+        },
+        "step2": {
+          "title": "Planification",
+          "description": "Organisation logistique et coordination des opérations"
+        },
+        "step3": {
+          "title": "Exécution",
+          "description": "Mise en œuvre avec suivi en temps réel"
+        },
+        "step4": {
+          "title": "Optimisation",
+          "description": "Amélioration continue et reporting détaillé"
+        }
+      },
+      "cta": {
+        "title": "Besoin d'une solution logistique ?",
+        "subtitle": "Notre équipe d'experts est à votre disposition pour étudier vos besoins",
+        "button": "Nous contacter",
+        "quoteButton": "Demander un devis"
+      }
+    },
+    "page": {
+      "title": "Nos Services",
+      "subtitle": "Des solutions logistiques complètes adaptées à vos besoins",
+      "cta": {
+        "title": "Besoin d'une solution sur mesure ?",
+        "subtitle": "Contactez-nous pour discuter de vos besoins logistiques",
+        "button": "Nous contacter",
+        "quoteButton": "Demander un devis"
+      }
+    }
+  },
+  "quote": {
+    "title": "Demande de Devis",
+    "form": {
+      "name": "Nom complet",
+      "email": "Email",
+      "phone": "Téléphone",
+      "company": "Société (optionnel)",
+      "serviceType": "Type de service",
+      "selectService": "Sélectionnez un service",
+      "description": "Description de votre besoin",
+      "descriptionPlaceholder": "Décrivez votre projet et vos besoins en détail...",
+      "submit": "Envoyer la demande",
+      "submitting": "Envoi en cours...",
+      "cancel": "Annuler",
+      "successMessage": "Votre demande de devis a été envoyée avec succès ! Nous vous contacterons bientôt.",
+      "errorMessage": "Une erreur s'est produite. Veuillez réessayer."
+    }
+  },
+  "admin": {
+    "loading": "Chargement...",
+    "view": "Voir",
+    "delete": "Supprimer",
+    "close": "Fermer",
+    "actions": "Actions",
+    "quotes": {
+      "title": "Demandes de Devis",
+      "subtitle": "Gérez toutes les demandes de devis reçues",
+      "deleteConfirm": "Êtes-vous sûr de vouloir supprimer cette demande de devis ?",
+      "details": "Détails de la demande",
+      "columns": {
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "serviceType": "Service",
+        "status": "Statut",
+        "createdAt": "Date"
+      },
+      "status": {
+        "pending": "En attente",
+        "in_progress": "En cours",
+        "completed": "Terminé",
+        "cancelled": "Annulé"
+      }
+    }
+  },
+  "why": {
+    "title": "Pourquoi nous choisir ?",
+    "reason1": "Expertise reconnue dans le secteur logistique",
+    "reason2": "Flotte moderne et bien entretenue",
+    "reason3": "Équipe expérimentée et qualifiée",
+    "reason4": "Services 24/7 disponibles",
+    "reason5": "Infrastructure sécurisée et équipée",
+    "reason6": "Conformité réglementaire garantie"
+  },
+  "testimonials": {
+    "title": "Témoignages",
+    "client1": {
+      "name": "Amadou Diallo",
+      "company": "TradeCorp",
+      "text": "KAMLOG a transformé notre chaîne d'approvisionnement. Leur professionnalisme et leur fiabilité sont exceptionnels."
+    },
+    "client2": {
+      "name": "Marie Kouassi",
+      "company": "AfriMarket",
+      "text": "Un partenaire logistique de confiance qui comprend les défis du marché africain. Hautement recommandé!"
+    },
+    "client3": {
+      "name": "Jean-Pierre Mbala",
+      "company": "GlobalTrade",
+      "text": "Service impeccable et solutions innovantes. KAMLOG est notre choix n°1 pour toutes nos opérations logistiques."
+    }
+  },
+  "footer": {
+    "quick": {
+      "links": "Accès rapides"
+    },
+    "follow": "Nous suivre",
+    "newsletter": {
+      "title": "Newsletter",
+      "text": "Inscrivez-vous à notre newsletter",
+      "placeholder": "EMAIL",
+      "submit": "S'INSCRIRE",
+      "submitting": "Envoi...",
+      "success": "Merci pour votre inscription !",
+      "error": "Erreur lors de l'inscription. Veuillez réessayer."
+    },
+    "phone": {
+      "label": "TELEPHONE"
+    },
+    "email": {
+      "label": "EMAIL"
+    },
+    "address": {
+      "label": "ADRESSE",
+      "value": "Douala-Bonanjo"
+    },
+    "rights": "Tous droits réservés."
+  },
+  "about": {
+    "hero": {
+      "title": "À propos de KAMLOG",
+      "subtitle": "Un acteur logistique de référence au service de vos performances"
+    },
+    "section": {
+      "title": "À propos de nous"
+    },
+    "intro": {
+      "text1": "Présente au Cameroun depuis",
+      "years": "5 ans",
+      "text2": "est une entreprise spécialisée dans le transport, le transit et la logistique portuaire. Elle propose des solutions complètes couvrant le transport, le transit douanier, le stockage de conteneurs, l'import/export et les opérations portuaires.",
+      "text3": "Implantée dans les ports de",
+      "ports": "Douala et Kribi",
+      "text4": "s'appuie sur des infrastructures modernes et une équipe qualifiée pour offrir des services fiables, sécurisés et efficaces, au niveau national et international."
+    },
+    "iso": {
+      "title": "Certifiée ISO 9001 version 2015",
+      "subtitle": "La qualité et la satisfaction client au cœur de notre engagement"
+    },
+    "mission": {
+      "title": "Notre Mission",
+      "intro": "Optimiser la chaîne logistique de nos clients en garantissant :",
+      "item1": "Un transport sécurisé et maîtrisé",
+      "item2": "Un transit douanier rapide et conforme",
+      "item3": "Une gestion fluide des marchandises",
+      "commitment": "Nous nous engageons à fournir des solutions efficaces qui réduisent les coûts, les délais et les risques tout en assurant une traçabilité complète des opérations."
+    },
+    "vision": {
+      "title": "Notre Vision",
+      "text": "Devenir le partenaire logistique de référence en",
+      "region": "Afrique centrale",
+      "text2": ", en proposant des solutions innovantes, fiables et durables, capables de connecter efficacement les marchés mondiaux tout en optimisant les coûts et la chaîne de valeur logistique."
+    },
+    "values": {
+      "title": "Nos Valeurs",
+      "subtitle": "Les principes qui guident notre travail au quotidien",
+      "reliability": {
+        "title": "Fiabilité",
+        "text": "Nous respectons nos engagements et garantissons la continuité des opérations."
+      },
+      "security": {
+        "title": "Sécurité",
+        "text": "La protection des marchandises, des personnes et des infrastructures est une priorité absolue."
+      },
+      "performance": {
+        "title": "Performance",
+        "text": "Nous recherchons en permanence l'amélioration de nos processus."
+      },
+      "satisfaction": {
+        "title": "Satisfaction Client",
+        "text": "Chaque solution est pensée pour répondre précisément aux besoins de nos clients."
+      }
+    },
+    "difference": {
+      "title": "Ce qui nous distingue",
+      "item1": "Offre logistique intégrée de bout en bout",
+      "item2": "Infrastructures modernes et sécurisées",
+      "item3": "Équipements performants",
+      "item4": "Équipe expérimentée et qualifiée",
+      "item5": "Certification ISO 9001:2015"
+    }
+  },
+  "infrastructures": {
+    "page": {
+      "title": "Nos Infrastructures",
+      "construction": "Page en construction. Veuillez fournir les captures d'écran pour cette page."
+    }
+  },
+  "news": {
+    "page": {
+      "title": "Actualités",
+      "construction": "Page en construction. Veuillez fournir les captures d'écran pour cette page."
+    },
+    "hero": {
+      "title": "Actualités",
+      "subtitle": "Restez informés de nos dernières nouvelles, annonces et opportunités"
+    },
+    "filters": {
+      "all": "Tout",
+      "article": "Articles",
+      "announcement": "Annonces",
+      "job": "Offres d'emploi"
+    },
+    "types": {
+      "article": "Article",
+      "announcement": "Annonce",
+      "job": "Offre d'emploi"
+    },
+    "readMore": "Lire la suite",
+    "empty": "Aucune actualité disponible pour le moment",
+    "error": {
+      "fetch": "Erreur lors du chargement des actualités",
+      "retry": "Réessayer"
+    },
+    "pagination": {
+      "previous": "Précédent",
+      "next": "Suivant"
+    },
+    "jobsCta": {
+      "title": "Rejoignez notre équipe",
+      "subtitle": "Découvrez nos opportunités de carrière et faites partie de l'aventure KAMLOG",
+      "button": "Voir les offres d'emploi"
+    }
+  },
+  "jobs": {
+    "badge": "Offre d'emploi",
+    "published": "Publié le",
+    "deadline": "Date limite",
+    "backToNews": "Retour aux actualités",
+    "description": {
+      "title": "Description du poste"
+    },
+    "requirements": {
+      "title": "Exigences"
+    },
+    "skills": {
+      "title": "Compétences requises"
+    },
+    "apply": {
+      "title": "Prêt à postuler ?",
+      "description": "Envoyez-nous votre candidature et rejoignez l'équipe KAMLOG",
+      "button": "Postuler maintenant",
+      "error": "Erreur lors de l'envoi de votre candidature. Veuillez réessayer.",
+      "modal": {
+        "title": "Postuler à cette offre",
+        "subtitle": "Poste"
+      },
+      "form": {
+        "firstName": "Prénom",
+        "lastName": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "cv": "CV",
+        "coverLetter": "Lettre de motivation (optionnel)",
+        "cancel": "Annuler",
+        "submit": "Envoyer ma candidature",
+        "submitting": "Envoi en cours..."
+      },
+      "success": {
+        "title": "Candidature envoyée !",
+        "message": "Nous avons bien reçu votre candidature. Notre équipe vous contactera prochainement."
+      }
+    },
+    "error": {
+      "fetch": "Erreur lors du chargement de l'offre",
+      "notFound": "Offre d'emploi introuvable"
+    }
+  },
+  "contact": {
+    "page": {
+      "title": "Contact",
+      "construction": "Page en construction. Veuillez fournir les captures d'écran pour cette page."
+    },
+    "hero": {
+      "title": "Contactez-nous",
+      "subtitle": "Notre équipe est à votre disposition pour répondre à toutes vos questions"
+    },
+    "info": {
+      "phone": {
+        "title": "Téléphone"
+      },
+      "email": {
+        "title": "Email"
+      },
+      "address": {
+        "title": "Adresse",
+        "line1": "Douala-Bonanjo",
+        "line2": "Cameroun"
+      },
+      "hours": {
+        "title": "Horaires",
+        "weekdays": "Lun - Ven: 8h00 - 18h00",
+        "weekend": "Sam: 8h00 - 13h00"
+      },
+      "about": {
+        "title": "Pourquoi KAMLOG ?",
+        "description": "Avec plus de 5 ans d'expérience, KAMLOG est votre partenaire de confiance pour tous vos besoins en transport, transit et logistique au Cameroun.",
+        "point1": "Expertise reconnue dans le secteur",
+        "point2": "Solutions personnalisées et flexibles",
+        "point3": "Service client disponible 24/7"
+      },
+      "help": {
+        "title": "Comment pouvons-nous vous aider ?",
+        "description": "Que vous ayez besoin d'un devis, d'informations sur nos services ou d'assistance, nous sommes là pour vous aider.",
+        "option1": "Demande de devis gratuit",
+        "option2": "Information sur nos services",
+        "option3": "Support client et assistance"
+      },
+      "visit": {
+        "title": "Visitez nos bureaux",
+        "description": "Vous souhaitez nous rencontrer en personne ? Nos bureaux sont ouverts du lundi au samedi.",
+        "note": "Appelez-nous pour prendre rendez-vous :"
+      }
+    },
+    "form": {
+      "title": "Envoyez-nous un message",
+      "subtitle": "Remplissez le formulaire ci-dessous et nous vous répondrons dans les plus brefs délais.",
+      "fields": {
+        "name": "Nom complet",
+        "email": "Adresse email",
+        "phone": "Téléphone",
+        "company": "Entreprise",
+        "subject": "Sujet",
+        "message": "Votre message"
+      },
+      "placeholders": {
+        "name": "Votre nom",
+        "email": "votre@email.com",
+        "phone": "+237 XXX XX XX XX",
+        "company": "Nom de votre entreprise",
+        "subject": "Sélectionnez un sujet",
+        "message": "Décrivez votre besoin..."
+      },
+      "subjects": {
+        "transport": "Transport de marchandises",
+        "transit": "Transit et dédouanement",
+        "warehouse": "Entreposage",
+        "customs": "Opérations douanières",
+        "quote": "Demande de devis",
+        "other": "Autre"
+      },
+      "buttons": {
+        "send": "Envoyer le message",
+        "sending": "Envoi en cours..."
+      },
+      "error": "Erreur lors de l'envoi du message. Veuillez réessayer.",
+      "validation": {
+        "name": "Veuillez entrer votre nom complet",
+        "email": "Veuillez entrer une adresse email valide",
+        "phone": "Veuillez entrer votre numéro de téléphone",
+        "subject": "Veuillez sélectionner un sujet",
+        "message": "Le message doit contenir au moins 10 caractères"
+      },
+      "success": {
+        "title": "Message envoyé avec succès !",
+        "message": "Merci pour votre message. Notre équipe vous contactera dans les plus brefs délais."
+      }
+    },
+    "map": {
+      "title": "Notre emplacement"
+    }
+  },
+  "servicesDetailed": {
+    "transport": {
+      "title": "Transport",
+      "heading": "VOTRE MARCHANDISE, NOTRE PRIORITÉ",
+      "description": "KAMLOG assure le transport terrestre des marchandises depuis les ports, entrepôts et points de chargement sur l'ensemble de la sous-région Afrique centrale. Notre flotte moderne et nos conducteurs expérimentés garantissent fiabilité et ponctualité.",
+      "services": {
+        "title": "Nos prestations",
+        "item1": "Transport de conteneurs 20' et 40' (pleins ou vides)",
+        "item2": "Transport de fret conventionnel",
+        "item3": "Transport de marchandises sensibles ou de grande valeur",
+        "item4": "Transports réguliers ou ponctuels",
+        "item5": "Couverture sous-régionale (CEMAC)"
+      },
+      "benefits": {
+        "title": "Bénéfices clients",
+        "item1": "Conducteurs qualifiés et formés aux normes de sécurité",
+        "item2": "Flotte récente et régulièrement contrôlée",
+        "item3": "Suivi GPS en temps réel",
+        "item4": "Assurance tous risques sur toutes les opérations",
+        "item5": "Disponibilité 24h/7j"
+      }
+    },
+    "containers": {
+      "title": "Parc à Conteneurs",
+      "heading": "UNE SOLUTION SÛRE POUR VOS CONTENEURS",
+      "description": "KAMLOG met à disposition un parc à conteneurs moderne et sécurisé pour le stockage temporaire de vos conteneurs vides ou pleins. Situé à proximité des ports de Douala et Kribi, notre infrastructure permet une gestion flexible et efficace.",
+      "benefits": {
+        "title": "Bénéfices clients",
+        "item1": "Réduction des frais de surestaries portuaires",
+        "item2": "Gestion professionnelle des conteneurs",
+        "item3": "Flexibilité de stockage",
+        "item4": "Sécurité renforcée 24h/24",
+        "item5": "Accès simplifié et rapide"
+      },
+      "capacity": {
+        "title": "Capacités et équipements",
+        "item1": "Superficie entièrement pavée de 22 000 m²",
+        "item2": "Capacité d'accueil de plus de 2 000 EVP",
+        "item3": "Système de surveillance moderne (vidéosurveillance, gardiennage 24h/7j)",
+        "item4": "Chariots élévateurs et grues mobiles",
+        "item5": "Gestion informatisée des stocks",
+        "item6": "Espaces dédiés aux conteneurs frigorifiques",
+        "item7": "Maintenance et lavage de conteneurs"
+      }
+    },
+    "customs": {
+      "tag": "DOUANE",
+      "title": "Transit Douanier & Import / Export",
+      "heading": "NOUS SIMPLIFIONS VOS FORMALITÉS, VOUS GAGNEZ DU TEMPS",
+      "description": "KAMLOG accompagne ses clients dans toutes les procédures de transit import et export, en garantissant conformité réglementaire, gain de temps et maîtrise des coûts. Grâce à notre expertise et notre réseau douanier, nous assurons une gestion fluide de vos dossiers.",
+      "import": {
+        "title": "Import",
+        "item1": "Enlèvement des marchandises au port ou à l'aéroport",
+        "item2": "Déclarations en douane import",
+        "item3": "Dédouanement au niveau du port de Douala ou de Kribi",
+        "item4": "Gestion des procédures sanitaires ou techniques (MINCOMMERCE, MINDAF...)",
+        "item5": "Mise à disposition de caution en douane",
+        "item6": "Liquidation des droits et taxes",
+        "item7": "Paiement des frais portuaires",
+        "item8": "Livraison à domicile sur Douala ou dans l'arrière-pays"
+      },
+      "export": {
+        "title": "Export",
+        "item1": "Enlèvement des marchandises en magasin ou en usine",
+        "item2": "Empotage de conteneurs dans nos locaux ou sur site client",
+        "item3": "Établissement des documents d'export (BAE, BL, facture...)",
+        "item4": "Déclarations en douane export",
+        "item5": "Paiement des frais portuaires",
+        "item6": "Acheminement des conteneurs au port",
+        "item7": "Suivi jusqu'à embarquement",
+        "item8": "Coordination avec les armateurs et consignataires"
+      }
+    },
+    "warehouse": {
+      "tag": "ENTREPOSAGE",
+      "title": "ENTREPOSAGE & GESTION DE STOCKS",
+      "heading": "VOS MARCHANDISES EN SÉCURITÉ, SOUS CONTRÔLE PERMANENT",
+      "description": "KAMLOG dispose d'infrastructures d'entreposage sécurisées et adaptées à différentes typologies de marchandises : produits industriels, matériel agricole, biens de consommation, et plus encore.",
+      "features": {
+        "item1": "Entrepôt sous douane (entrepôt fictif) permettant le report des droits et taxes",
+        "item2": "Superficie : 5 000 m² couverts + 22 000 m² extérieurs pour conteneurs",
+        "item3": "Hauteur sous plafond jusqu'à 18 mètres (silos)",
+        "item4": "Stockage vertical et horizontal",
+        "item5": "Gestion informatisée des stocks avec traçabilité",
+        "item6": "Services de manutention et de chargement/déchargement",
+        "item7": "Espace dédié au stockage des marchandises dangereuses (avec autorisations)",
+        "item8": "Possibilité de groupage, dégroupage et conditionnement"
+      }
+    },
+    "handling": {
+      "tag": "MANUTENTION",
+      "title": "MANUTENTION PORTUAIRE & ACCOSTAGE",
+      "heading": "UNE PRISE EN CHARGE PROFESSIONNELLE AU CŒUR DU PORT",
+      "description": "KAMLOG assure la manutention des marchandises au Port Autonome de Douala (Quai 3) ainsi qu'au Port de Kribi. Nos équipes qualifiées et équipements performants garantissent une prise en charge rapide, sécurisée et conforme.",
+      "services": {
+        "title": "Nos prestations",
+        "item1": "Déchargement de navires",
+        "item2": "Arrimage et désarrimage de conteneurs",
+        "item3": "Manutention de colis lourds et volumineux",
+        "item4": "Transfert de marchandises depuis le bord à quai jusqu'aux entrepôts ou zones de stockage",
+        "item5": "Gestion des opérations d'accostage",
+        "item6": "Coordination avec les consignataires et armateurs",
+        "item7": "Respect des procédures de sécurité ISPS"
+      },
+      "benefits": {
+        "title": "Bénéfices clients",
+        "item1": "Rapidité et efficacité (réduction des temps d'immobilisation)",
+        "item2": "Disponibilité de matériel performant (grues, chariots, tracteurs...)",
+        "item3": "Équipes expérimentées et formées",
+        "item4": "Proximité avec la zone portuaire",
+        "item5": "Continuité de service 24h/7j si besoin"
+      }
+    },
+    "methodology": {
+      "tag": "MÉTHODOLOGIE",
+      "title": "Notre Méthodologie",
+      "step1": {
+        "title": "Analyse de vos besoins",
+        "description": "Écoute, diagnostic et évaluation de vos attentes"
+      },
+      "step2": {
+        "title": "Proposition de solution personnalisée",
+        "description": "Élaboration d'une offre technique et financière adaptée"
+      },
+      "step3": {
+        "title": "Planification opérationnelle",
+        "description": "Organisation logistique et mobilisation des ressources"
+      },
+      "step4": {
+        "title": "Exécution sécurisée",
+        "description": "Mise en œuvre avec suivi en temps réel"
+      },
+      "step5": {
+        "title": "Suivi & reporting",
+        "description": "Communication régulière et amélioration continue"
+      }
+    }
+  },
+  "infrastructuresPage": {
+    "title": "Nos Infrastructures",
+    "subtitle": "Des installations modernes et sécurisées au cœur des zones portuaires stratégiques",
+    "tag": "NOS INSTALLATIONS",
+    "heading": "Un Réseau d'Infrastructures Stratégiques",
+    "intro": "KAMLOG dispose d'un ensemble d'infrastructures stratégiquement situées à proximité des ports de Douala et Kribi, garantissant efficacité, sécurité et traçabilité complète de vos marchandises.",
+    "labels": {
+      "surface": "Surface",
+      "capacity": "Capacité",
+      "height": "Hauteur",
+      "type": "Type",
+      "location": "Emplacement",
+      "features": "Caractéristiques principales"
+    },
+    "facilities": {
+      "warehouse": {
+        "location": "Quai 3, Port Autonome de Douala",
+        "feature1": "Mezzanine intégrée pour optimisation du stockage",
+        "feature2": "Accès direct au quai d'embarquement",
+        "feature3": "Équipements de manutention modernes",
+        "feature4": "Système de surveillance 24/7"
+      },
+      "containers": {
+        "location": "Zone Portuaire de Douala",
+        "capacity": "Entièrement pavé",
+        "feature1": "Surface entièrement pavée et sécurisée",
+        "feature2": "Reach stackers de 45 tonnes",
+        "feature3": "Gestion informatisée des stocks",
+        "feature4": "Stockage et maintenance de conteneurs"
+      },
+      "silos": {
+        "location": "Port Autonome de Douala",
+        "type": "Silos sur pieux",
+        "feature1": "Entièrement automatisés",
+        "feature2": "Déchargement rapide des marchandises en vrac",
+        "feature3": "Système de pesage intégré",
+        "feature4": "Contrôle qualité en continu"
+      },
+      "udeac": {
+        "location": "Place UDEAC 01, Zone Portuaire",
+        "capacity": "Sécurisé 24/7",
+        "feature1": "Sécurité renforcée 24h/24",
+        "feature2": "Proximité immédiate du port",
+        "feature3": "Quais de chargement multiples",
+        "feature4": "Stockage multi-produits"
+      }
+    },
+    "statsLabels": {
+      "storage": {
+        "label": "Tonnes",
+        "description": "Capacité de stockage cumulée"
+      },
+      "surface": {
+        "label": "m²",
+        "description": "Surface d'entreposage totale"
+      },
+      "containers": {
+        "label": "m²",
+        "description": "Parc à conteneurs"
+      },
+      "ports": {
+        "label": "Ports",
+        "description": "Douala et Kribi"
+      }
+    },
+    "cta": {
+      "title": "Visitez Nos Installations",
+      "description": "Découvrez nos infrastructures modernes et performantes qui garantissent l'efficacité de vos opérations logistiques",
+      "button": "Planifier une visite"
+    },
+    "stats": {
+      "surface": {
+        "label": "Surface totale",
+        "value": "27 000 m²"
+      },
+      "capacity": {
+        "label": "Capacité conteneurs",
+        "value": "2 000+ EVP"
+      },
+      "height": {
+        "label": "Hauteur maximale",
+        "value": "18 mètres"
+      },
+      "security": {
+        "label": "Surveillance",
+        "value": "24h/7j"
+      }
+    }
+  },
+  "visitRequest": {
+    "title": "Planifier une visite",
+    "subtitle": "Remplissez le formulaire pour organiser votre visite",
+    "success": {
+      "title": "Demande envoyée avec succès!",
+      "message": "Notre équipe vous contactera bientôt pour confirmer votre visite."
+    },
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "form": {
+      "name": "Nom complet",
+      "namePlaceholder": "Jean Dupont",
+      "email": "Email",
+      "emailPlaceholder": "jean.dupont@exemple.com",
+      "phone": "Téléphone",
+      "phonePlaceholder": "+237 6XX XXX XXX",
+      "company": "Entreprise",
+      "companyPlaceholder": "Nom de votre entreprise",
+      "date": "Date souhaitée",
+      "time": "Heure souhaitée",
+      "infrastructure": "Infrastructure à visiter",
+      "infrastructureOptions": {
+        "select": "Sélectionnez une infrastructure",
+        "warehouse": "Magasin Cale - Port de Douala",
+        "containers": "Parc à Conteneurs",
+        "silos": "Silos Automatisés",
+        "udeac": "Entrepôt Zone UDEAC",
+        "all": "Toutes les infrastructures"
+      },
+      "message": "Message (optionnel)",
+      "messagePlaceholder": "Informations supplémentaires sur votre demande...",
+      "cancel": "Annuler",
+      "submit": "Envoyer la demande",
+      "submitting": "Envoi en cours...",
+      "required": "*"
+    }
+  },
+  "admin": {
+    "common": {
+      "add": "Ajouter",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "actions": "Actions",
+      "confirm": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+      "error": "Erreur lors de l'opération",
+      "noData": "Aucune donnée disponible",
+      "search": "Rechercher...",
+      "filter": "Filtrer",
+      "export": "Exporter"
+    },
+    "nav": {
+      "logout": "Déconnexion",
+      "panel": "Admin Panel"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "news": "Actualités",
+      "partners": "Partenaires",
+      "services": "Services",
+      "infrastructures": "Infrastructures",
+      "messages": "Messages",
+      "newsletter": "Newsletter"
+    },
+    "login": {
+      "title": "Administration",
+      "subtitle": "Connectez-vous pour accéder au panneau d'administration",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "submitting": "Connexion...",
+      "error": "Échec de connexion"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Vue d'ensemble de votre administration",
+      "stats": {
+        "news": "Total Actualités",
+        "jobs": "Offres d'emploi",
+        "partners": "Partenaires",
+        "messages": "Messages reçus",
+        "subscribers": "Abonnés Newsletter"
+      },
+      "activity": "Activité récente",
+      "activityDescription": "Les statistiques détaillées seront affichées ici.",
+      "quickActions": "Actions rapides",
+      "actions": {
+        "addNews": "Ajouter une actualité",
+        "addPartner": "Ajouter un partenaire",
+        "viewMessages": "Voir les messages"
+      }
+    },
+    "news": {
+      "title": "Actualités",
+      "subtitle": "Gérer les articles, annonces et offres",
+      "columns": {
+        "title": "Titre",
+        "type": "Type",
+        "date": "Date",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "titleLabel": "Titre",
+        "typeLabel": "Type",
+        "date": "Date de publication",
+        "content": "Contenu",
+        "image": "Image",
+        "chooseImage": "Choisir une image",
+        "editTitle": "Modifier l'actualité",
+        "newTitle": "Nouvelle actualité"
+      },
+      "types": {
+        "all": "Tous les types",
+        "article": "Article",
+        "articles": "Articles",
+        "announcement": "Annonce",
+        "announcements": "Annonces",
+        "job": "Offre",
+        "jobs": "Offres"
+      }
+    },
+    "partners": {
+      "title": "Partenaires",
+      "subtitle": "Gérer les partenaires",
+      "columns": {
+        "name": "Nom",
+        "sector": "Secteur",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "name": "Nom",
+        "sector": "Secteur",
+        "description": "Description",
+        "logo": "Logo",
+        "chooseLogo": "Choisir un logo",
+        "editTitle": "Modifier le partenaire",
+        "newTitle": "Nouveau partenaire"
+      },
+      "noLogo": "N/A"
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Gérer les services proposés",
+      "columns": {
+        "name": "Nom",
+        "description": "Description",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "name": "Nom",
+        "description": "Description",
+        "icon": "Icône",
+        "iconPlaceholder": "Ex: Truck, Container, Ship",
+        "iconHelper": "Nom de l'icône Lucide React",
+        "editTitle": "Modifier le service",
+        "newTitle": "Nouveau service"
+      }
+    },
+    "infrastructures": {
+      "title": "Infrastructures",
+      "subtitle": "Gérer les infrastructures",
+      "columns": {
+        "name": "Nom",
+        "surface": "Surface",
+        "capacity": "Capacité",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "name": "Nom",
+        "surface": "Surface",
+        "surfacePlaceholder": "Ex: 5000 m²",
+        "capacity": "Capacité",
+        "capacityPlaceholder": "Ex: 1000 conteneurs",
+        "description": "Description",
+        "image": "Image",
+        "chooseImage": "Choisir une image",
+        "editTitle": "Modifier l'infrastructure",
+        "newTitle": "Nouvelle infrastructure"
+      }
+    },
+    "messages": {
+      "title": "Messages",
+      "subtitle": "Messages reçus via le formulaire de contact",
+      "noMessages": "Aucun message",
+      "newBadge": "Nouveau",
+      "markAsRead": "Marquer comme lu",
+      "subject": "Sujet:"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "subtitle": "Abonnés à la newsletter",
+      "export": "Exporter les emails",
+      "noSubscribers": "Aucun abonné",
+      "columns": {
+        "email": "Email",
+        "date": "Date d'inscription"
+      }
+    },
+    "visitRequests": {
+      "title": "Demandes de visite",
+      "subtitle": "Gérer les demandes de visite des clients",
+      "stats": {
+        "total": "Total",
+        "pending": "En attente",
+        "confirmed": "Confirmées",
+        "cancelled": "Annulées"
+      },
+      "columns": {
+        "id": "ID",
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "date": "Date souhaitée",
+        "status": "Statut",
+        "created": "Reçue le"
+      },
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmée",
+        "cancelled": "Annulée"
+      },
+      "details": {
+        "title": "Détails de la demande",
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "company": "Entreprise",
+        "date": "Date souhaitée",
+        "received": "Reçue le",
+        "message": "Message",
+        "currentStatus": "Statut actuel",
+        "changeStatus": "Changer le statut"
+      },
+      "actions": {
+        "pending": "En attente",
+        "confirm": "Confirmer",
+        "cancel": "Annuler"
+      },
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette demande de visite ?",
+      "success": {
+        "statusUpdated": "Statut mis à jour avec succès",
+        "deleted": "Demande supprimée avec succès"
+      },
+      "error": {
+        "load": "Erreur lors du chargement des demandes de visite",
+        "updateStatus": "Erreur lors de la mise à jour du statut",
+        "delete": "Erreur lors de la suppression"
+      }
+    }
+  },
+  "servicesDetailed": {
+    "transport": {
+      "title": "Transport",
+      "heading": "VOTRE MARCHANDISE, NOTRE PRIORITÉ",
+      "description": "KAMLOG assure le transport terrestre des marchandises depuis les ports, entrepôts et points de chargement sur l'ensemble de la sous-région Afrique centrale. Notre flotte moderne et nos conducteurs expérimentés garantissent fiabilité et ponctualité.",
+      "services": {
+        "title": "Nos prestations",
+        "item1": "Transport de conteneurs 20' et 40' (pleins ou vides)",
+        "item2": "Transport de fret conventionnel",
+        "item3": "Transport de marchandises sensibles ou de grande valeur",
+        "item4": "Transports réguliers ou ponctuels",
+        "item5": "Couverture sous-régionale (CEMAC)"
+      },
+      "benefits": {
+        "title": "Bénéfices clients",
+        "item1": "Conducteurs qualifiés et formés aux normes de sécurité",
+        "item2": "Flotte récente et régulièrement contrôlée",
+        "item3": "Suivi GPS en temps réel",
+        "item4": "Assurance tous risques sur toutes les opérations",
+        "item5": "Disponibilité 24h/7j"
+      }
+    },
+    "containers": {
+      "title": "Parc à Conteneurs",
+      "heading": "UNE SOLUTION SÛRE POUR VOS CONTENEURS",
+      "description": "KAMLOG met à disposition un parc à conteneurs moderne et sécurisé pour le stockage temporaire de vos conteneurs vides ou pleins. Situé à proximité des ports de Douala et Kribi, notre infrastructure permet une gestion flexible et efficace.",
+      "benefits": {
+        "title": "Bénéfices clients",
+        "item1": "Réduction des frais de surestaries portuaires",
+        "item2": "Gestion professionnelle des conteneurs",
+        "item3": "Flexibilité de stockage",
+        "item4": "Sécurité renforcée 24h/24",
+        "item5": "Accès simplifié et rapide"
+      },
+      "capacity": {
+        "title": "Capacités et équipements",
+        "item1": "Superficie entièrement pavée de 22 000 m²",
+        "item2": "Capacité d'accueil de plus de 2 000 EVP",
+        "item3": "Système de surveillance moderne (vidéosurveillance, gardiennage 24h/7j)",
+        "item4": "Chariots élévateurs et grues mobiles",
+        "item5": "Gestion informatisée des stocks",
+        "item6": "Espaces dédiés aux conteneurs frigorifiques",
+        "item7": "Maintenance et lavage de conteneurs"
+      }
+    },
+    "customs": {
+      "tag": "DOUANE",
+      "title": "Transit Douanier & Import / Export",
+      "heading": "NOUS SIMPLIFIONS VOS FORMALITÉS, VOUS GAGNEZ DU TEMPS",
+      "description": "KAMLOG accompagne ses clients dans toutes les procédures de transit import et export, en garantissant conformité réglementaire, gain de temps et maîtrise des coûts. Grâce à notre expertise et notre réseau douanier, nous assurons une gestion fluide de vos dossiers.",
+      "import": {
+        "title": "Import",
+        "item1": "Enlèvement des marchandises au port ou à l'aéroport",
+        "item2": "Déclarations en douane import",
+        "item3": "Dédouanement au niveau du port de Douala ou de Kribi",
+        "item4": "Gestion des procédures sanitaires ou techniques (MINCOMMERCE, MINDAF...)",
+        "item5": "Mise à disposition de caution en douane",
+        "item6": "Liquidation des droits et taxes",
+        "item7": "Paiement des frais portuaires",
+        "item8": "Livraison à domicile sur Douala ou dans l'arrière-pays"
+      },
+      "export": {
+        "title": "Export",
+        "item1": "Enlèvement des marchandises en magasin ou en usine",
+        "item2": "Empotage de conteneurs dans nos locaux ou sur site client",
+        "item3": "Établissement des documents d'export (BAE, BL, facture...)",
+        "item4": "Déclarations en douane export",
+        "item5": "Paiement des frais portuaires",
+        "item6": "Acheminement des conteneurs au port",
+        "item7": "Suivi jusqu'à embarquement",
+        "item8": "Coordination avec les armateurs et consignataires"
+      }
+    },
+    "warehouse": {
+      "tag": "ENTREPOSAGE",
+      "title": "ENTREPOSAGE & GESTION DE STOCKS",
+      "heading": "VOS MARCHANDISES EN SÉCURITÉ, SOUS CONTRÔLE PERMANENT",
+      "description": "KAMLOG dispose d'infrastructures d'entreposage sécurisées et adaptées à différentes typologies de marchandises : produits industriels, matériel agricole, biens de consommation, et plus encore.",
+      "features": {
+        "item1": "Entrepôt sous douane (entrepôt fictif) permettant le report des droits et taxes",
+        "item2": "Superficie : 5 000 m² couverts + 22 000 m² extérieurs pour conteneurs",
+        "item3": "Hauteur sous plafond jusqu'à 18 mètres (silos)",
+        "item4": "Stockage vertical et horizontal",
+        "item5": "Gestion informatisée des stocks avec traçabilité",
+        "item6": "Services de manutention et de chargement/déchargement",
+        "item7": "Espace dédié au stockage des marchandises dangereuses (avec autorisations)",
+        "item8": "Possibilité de groupage, dégroupage et conditionnement"
+      }
+    },
+    "handling": {
+      "tag": "MANUTENTION",
+      "title": "MANUTENTION PORTUAIRE & ACCOSTAGE",
+      "heading": "UNE PRISE EN CHARGE PROFESSIONNELLE AU CŒUR DU PORT",
+      "description": "KAMLOG assure la manutention des marchandises au Port Autonome de Douala (Quai 3) ainsi qu'au Port de Kribi. Nos équipes qualifiées et équipements performants garantissent une prise en charge rapide, sécurisée et conforme.",
+      "services": {
+        "title": "Nos prestations",
+        "item1": "Déchargement de navires",
+        "item2": "Arrimage et désarrimage de conteneurs",
+        "item3": "Manutention de colis lourds et volumineux",
+        "item4": "Transfert de marchandises depuis le bord à quai jusqu'aux entrepôts ou zones de stockage",
+        "item5": "Gestion des opérations d'accostage",
+        "item6": "Coordination avec les consignataires et armateurs",
+        "item7": "Respect des procédures de sécurité ISPS"
+      },
+      "benefits": {
+        "title": "Bénéfices clients",
+        "item1": "Rapidité et efficacité (réduction des temps d'immobilisation)",
+        "item2": "Disponibilité de matériel performant (grues, chariots, tracteurs...)",
+        "item3": "Équipes expérimentées et formées",
+        "item4": "Proximité avec la zone portuaire",
+        "item5": "Continuité de service 24h/7j si besoin"
+      }
+    },
+    "methodology": {
+      "tag": "MÉTHODOLOGIE",
+      "title": "Notre Méthodologie",
+      "step1": {
+        "title": "Analyse de vos besoins",
+        "description": "Écoute, diagnostic et évaluation de vos attentes"
+      },
+      "step2": {
+        "title": "Proposition de solution personnalisée",
+        "description": "Élaboration d'une offre technique et financière adaptée"
+      },
+      "step3": {
+        "title": "Planification opérationnelle",
+        "description": "Organisation logistique et mobilisation des ressources"
+      },
+      "step4": {
+        "title": "Exécution sécurisée",
+        "description": "Mise en œuvre avec suivi en temps réel"
+      },
+      "step5": {
+        "title": "Suivi & reporting",
+        "description": "Communication régulière et amélioration continue"
+      }
+    }
+  }
+}

@@ -1,0 +1,133 @@
+import { useEffect, useState } from 'react';
+import { MailOpen, Trash2 } from 'lucide-react';
+import { adminApiService, Newsletter } from '../../services/adminApi';
+
+export default function AdminNewsletter() {
+  const [subscribers, setSubscribers] = useState<Newsletter[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSubscribers();
+  }, []);
+
+  const fetchSubscribers = async () => {
+    try {
+      setLoading(true);
+      const data = await adminApiService.getNewsletterSubscribers();
+      setSubscribers(data);
+    } catch (err) {
+      console.error('Error fetching newsletter subscribers:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDelete = async (subscriber: Newsletter) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer cet abonné ?')) return;
+
+    try {
+      await adminApiService.deleteNewsletterSubscriber(subscriber.id);
+      fetchSubscribers();
+    } catch (err) {
+      console.error('Error deleting subscriber:', err);
+      alert('Erreur lors de la suppression');
+    }
+  };
+
+  const handleExport = () => {
+    const emails = subscribers.map((s) => s.email).join('\n');
+    const blob = new Blob([emails], { type: 'text/plain' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `newsletter-subscribers-${new Date().toISOString().split('T')[0]}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    window.URL.revokeObjectURL(url);
+  };
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-600 border-t-transparent" />
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-slate-900">Newsletter</h1>
+          <p className="text-slate-600 mt-2">
+            Abonnés à la newsletter ({subscribers.length})
+          </p>
+        </div>
+        {subscribers.length > 0 && (
+          <button
+            onClick={handleExport}
+            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+          >
+            Exporter les emails
+          </button>
+        )}
+      </div>
+
+      <div className="bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden">
+        {subscribers.length === 0 ? (
+          <div className="p-8 text-center">
+            <MailOpen size={48} className="mx-auto text-slate-400 mb-4" />
+            <p className="text-slate-500">Aucun abonné</p>
+          </div>
+        ) : (
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-slate-50 border-b border-slate-200">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
+                    Email
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
+                    Date d'inscription
+                  </th>
+                  <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200">
+                {subscribers.map((subscriber) => (
+                  <tr
+                    key={subscriber.id}
+                    className="hover:bg-slate-50 transition-colors"
+                  >
+                    <td className="px-6 py-4 text-sm text-slate-900">
+                      {subscriber.email}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-slate-600">
+                      {new Date(subscriber.created_at).toLocaleDateString('fr-FR', {
+                        day: '2-digit',
+                        month: 'long',
+                        year: 'numeric',
+                      })}
+                    </td>
+                    <td className="px-6 py-4 text-right">
+                      <button
+                        onClick={() => handleDelete(subscriber)}
+                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        title="Supprimer"
+                      >
+                        <Trash2 size={18} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
