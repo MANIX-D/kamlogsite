@@ -24,6 +24,12 @@ class SanitizeInput
         'project_description',
         'cover_letter',
         'reponse',
+        'contenu_fr',
+        'contenu_en',
+        'content_fr',
+        'content_en',
+        'description_fr',
+        'description_en',
     ];
 
     /**

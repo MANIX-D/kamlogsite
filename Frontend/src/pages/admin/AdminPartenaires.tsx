@@ -13,9 +13,12 @@ export default function AdminPartenaires() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    nom: '',
-    description: '',
-    secteur: '',
+    name_fr: '',
+    name_en: '',
+    description_fr: '',
+    description_en: '',
+    category: '',
+    website: '',
     logo: null as File | null,
   });
 
@@ -39,20 +42,26 @@ export default function AdminPartenaires() {
     if (item) {
       setEditingItem(item);
       setFormData({
-        nom: item.nom,
-        description: item.description || '',
-        secteur: item.secteur || '',
+        name_fr: item.name_fr,
+        name_en: item.name_en,
+        description_fr: item.description_fr || '',
+        description_en: item.description_en || '',
+        category: item.category || '',
+        website: item.website || '',
         logo: null,
       });
-      if (item.logo) {
-        setImagePreview(item.logo);
+      if (item.logo_url) {
+        setImagePreview(item.logo_url);
       }
     } else {
       setEditingItem(null);
       setFormData({
-        nom: '',
-        description: '',
-        secteur: '',
+        name_fr: '',
+        name_en: '',
+        description_fr: '',
+        description_en: '',
+        category: '',
+        website: '',
         logo: null,
       });
       setImagePreview(null);
@@ -84,11 +93,14 @@ export default function AdminPartenaires() {
 
     try {
       const submitData = new FormData();
-      submitData.append('nom', formData.nom);
-      submitData.append('description', formData.description);
-      submitData.append('secteur', formData.secteur);
+      submitData.append('name_fr', formData.name_fr);
+      submitData.append('name_en', formData.name_en);
+      submitData.append('description_fr', formData.description_fr);
+      submitData.append('description_en', formData.description_en);
+      submitData.append('category', formData.category);
+      submitData.append('website', formData.website);
       if (formData.logo) {
-        submitData.append('logo', formData.logo);
+        submitData.append('logo_url', formData.logo);
       }
 
       if (editingItem) {
@@ -122,13 +134,13 @@ export default function AdminPartenaires() {
 
   const columns = [
     {
-      key: 'logo',
+      key: 'logo_url',
       label: 'Logo',
       render: (item: Partenaire) =>
-        item.logo ? (
+        item.logo_url ? (
           <img
-            src={item.logo}
-            alt={item.nom}
+            src={item.logo_url}
+            alt={item.name_fr}
             className="w-12 h-12 object-cover rounded"
           />
         ) : (
@@ -138,12 +150,16 @@ export default function AdminPartenaires() {
         ),
     },
     {
-      key: 'nom',
-      label: 'Nom',
+      key: 'name_fr',
+      label: 'Nom (FR)',
     },
     {
-      key: 'secteur',
-      label: 'Secteur',
+      key: 'name_en',
+      label: 'Nom (EN)',
+    },
+    {
+      key: 'category',
+      label: 'Catégorie',
     },
     {
       key: 'created_at',
@@ -185,47 +201,94 @@ export default function AdminPartenaires() {
         loading={submitting}
       >
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Nom
-            </label>
-            <input
-              type="text"
-              value={formData.nom}
-              onChange={(e) =>
-                setFormData({ ...formData, nom: e.target.value })
-              }
-              required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Nom (Français)
+              </label>
+              <input
+                type="text"
+                value={formData.name_fr}
+                onChange={(e) =>
+                  setFormData({ ...formData, name_fr: e.target.value })
+                }
+                required
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Nom (English)
+              </label>
+              <input
+                type="text"
+                value={formData.name_en}
+                onChange={(e) =>
+                  setFormData({ ...formData, name_en: e.target.value })
+                }
+                required
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Secteur
-            </label>
-            <input
-              type="text"
-              value={formData.secteur}
-              onChange={(e) =>
-                setFormData({ ...formData, secteur: e.target.value })
-              }
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Catégorie
+              </label>
+              <input
+                type="text"
+                value={formData.category}
+                onChange={(e) =>
+                  setFormData({ ...formData, category: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Site web
+              </label>
+              <input
+                type="url"
+                value={formData.website}
+                onChange={(e) =>
+                  setFormData({ ...formData, website: e.target.value })
+                }
+                placeholder="https://..."
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Description
-            </label>
-            <textarea
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-              rows={4}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Description (Français)
+              </label>
+              <textarea
+                value={formData.description_fr}
+                onChange={(e) =>
+                  setFormData({ ...formData, description_fr: e.target.value })
+                }
+                rows={4}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Description (English)
+              </label>
+              <textarea
+                value={formData.description_en}
+                onChange={(e) =>
+                  setFormData({ ...formData, description_en: e.target.value })
+                }
+                rows={4}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
           </div>
 
           <div>

@@ -18,41 +18,40 @@ class PartnerController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $perPage = $request->input('per_page', 20);
-        $perPage = min(max($perPage, 1), 100);
-
+        $perPage = min(max((int) $request->input('per_page', 20), 1), 100);
         $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $category = $request->input('category');
+        $level = $request->input('partnership_level');
+        $isFeatured = $request->has('is_featured');
+        $isActive = $request->input('is_active');
 
-        $query = Partner::query();
+        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $category . ':' . $level . ':' . ($isFeatured ? '1' : '0') . ':' . $isActive;
 
-        // Filtrer par statut actif pour le public
-        if (!$isAdmin) {
-            $query->active();
-        }
+        $partners = $this->remember($cacheKey, function () use ($perPage, $isAdmin, $category, $level, $isFeatured, $isActive) {
+            $query = Partner::query();
 
-        // Filtres optionnels
-        if ($request->has('category')) {
-            $query->ofCategory($request->input('category'));
-        }
+            if (!$isAdmin) {
+                $query->active();
+            }
 
-        if ($request->has('partnership_level')) {
-            $query->ofLevel($request->input('partnership_level'));
-        }
+            if ($category) {
+                $query->ofCategory($category);
+            }
 
-        if ($request->has('is_featured')) {
-            $query->featured();
-        }
+            if ($level) {
+                $query->ofLevel($level);
+            }
 
-        if ($request->has('is_active')) {
-            $query->where('is_active', $request->boolean('is_active'));
-        }
+            if ($isFeatured) {
+                $query->featured();
+            }
 
-        // Tri
-        $query->ordered();
+            if ($isActive !== null) {
+                $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
+            }
 
-        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $request->input('category') . ':' . $request->input('partnership_level');
+            $query->ordered();
 
-        $partners = $this->remember($cacheKey, function () use ($query, $perPage) {
             return $query->paginate($perPage);
         }, 3600);
 

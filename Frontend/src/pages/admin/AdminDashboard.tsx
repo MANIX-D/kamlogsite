@@ -3,10 +3,14 @@ import { Newspaper, Mail, MailOpen } from 'lucide-react';
 import { adminApiService } from '../../services/adminApi';
 
 interface Stats {
-  totalActualites: number;
-  totalOffres: number;
-  totalMessages: number;
-  totalNewsletter: number;
+  total_services: number;
+  total_news: number;
+  total_messages: number;
+  total_users: number;
+  unread_messages: number;
+  active_services: number;
+  published_news: number;
+  active_users: number;
 }
 
 export default function AdminDashboard() {
@@ -33,29 +37,29 @@ export default function AdminDashboard() {
   const statCards = stats
     ? [
         {
-          title: 'Total Actualités',
-          value: stats.totalActualites,
+          title: 'Actualités',
+          value: `${stats.published_news} / ${stats.total_news}`,
           icon: Newspaper,
           color: 'bg-blue-500',
           bgColor: 'bg-blue-50',
         },
         {
-          title: 'Offres d\'emploi',
-          value: stats.totalOffres,
+          title: 'Services actifs',
+          value: `${stats.active_services} / ${stats.total_services}`,
           icon: Newspaper,
           color: 'bg-green-500',
           bgColor: 'bg-green-50',
         },
         {
           title: 'Messages reçus',
-          value: stats.totalMessages,
+          value: `${stats.total_messages} (${stats.unread_messages} non lus)`,
           icon: Mail,
           color: 'bg-orange-500',
           bgColor: 'bg-orange-50',
         },
         {
-          title: 'Abonnés Newsletter',
-          value: stats.totalNewsletter,
+          title: 'Utilisateurs',
+          value: `${stats.active_users} / ${stats.total_users}`,
           icon: MailOpen,
           color: 'bg-emerald-500',
           bgColor: 'bg-emerald-50',

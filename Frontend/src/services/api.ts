@@ -71,11 +71,11 @@ export interface Infrastructure {
 }
 
 export interface ContactMessage {
-  name: string;
+  nom: string;
   email: string;
-  phone: string;
-  company?: string;
-  subject: string;
+  telephone?: string;
+  entreprise?: string;
+  sujet: string;
   message: string;
 }
 
@@ -89,7 +89,10 @@ export interface VisitRequest {
   phone: string;
   company?: string;
   date: string;
+  heure: string;
+  type_visite: 'guidee' | 'autonome' | 'virtuelle' | 'rencontre';
   message?: string;
+  infrastructure_id?: number;
 }
 
 export interface ApiResponse<T> {

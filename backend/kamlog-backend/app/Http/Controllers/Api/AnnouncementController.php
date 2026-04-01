@@ -18,41 +18,40 @@ class AnnouncementController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $perPage = $request->input('per_page', 10);
-        $perPage = min(max($perPage, 1), 100);
-
+        $perPage = min(max((int) $request->input('per_page', 10), 1), 100);
         $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $type = $request->input('type');
+        $priority = $request->input('priority');
+        $isPopup = $request->has('is_popup');
+        $isActive = $request->input('is_active');
 
-        $query = Announcement::query();
+        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $type . ':' . $priority . ':' . ($isPopup ? '1' : '0') . ':' . $isActive;
 
-        // Filtrer par statut actif pour le public
-        if (!$isAdmin) {
-            $query->active()->current();
-        }
+        $announcements = $this->remember($cacheKey, function () use ($perPage, $isAdmin, $type, $priority, $isPopup, $isActive) {
+            $query = Announcement::query();
 
-        // Filtres optionnels
-        if ($request->has('type')) {
-            $query->ofType($request->input('type'));
-        }
+            if (!$isAdmin) {
+                $query->active()->current();
+            }
 
-        if ($request->has('priority')) {
-            $query->ofPriority($request->input('priority'));
-        }
+            if ($type) {
+                $query->ofType($type);
+            }
 
-        if ($request->has('is_popup')) {
-            $query->popup();
-        }
+            if ($priority) {
+                $query->ofPriority($priority);
+            }
 
-        if ($request->has('is_active')) {
-            $query->where('is_active', $request->boolean('is_active'));
-        }
+            if ($isPopup) {
+                $query->popup();
+            }
 
-        // Tri par priorité puis date
-        $query->orderedByPriority()->latest();
+            if ($isActive !== null) {
+                $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
+            }
 
-        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $request->input('type') . ':' . $request->input('priority');
+            $query->orderedByPriority()->latest();
 
-        $announcements = $this->remember($cacheKey, function () use ($query, $perPage) {
             return $query->paginate($perPage);
         }, 1800);
 

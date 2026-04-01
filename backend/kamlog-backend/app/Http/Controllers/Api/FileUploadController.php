@@ -140,7 +140,12 @@ class FileUploadController extends Controller
     public function downloadCV(Request $request): \Symfony\Component\HttpFoundation\StreamedResponse|JsonResponse
     {
         $request->validate([
-            'path' => 'required|string',
+            'path' => [
+                'required',
+                'string',
+                'max:500',
+                'regex:/^[a-z0-9_]+\/[a-z0-9_\-]+\.(pdf|doc|docx)$/i'
+            ],
         ]);
 
         try {
@@ -171,7 +176,12 @@ class FileUploadController extends Controller
     public function deleteCV(Request $request): JsonResponse
     {
         $request->validate([
-            'path' => 'required|string',
+            'path' => [
+                'required',
+                'string',
+                'max:500',
+                'regex:/^[a-z0-9_]+\/[a-z0-9_\-]+\.(pdf|doc|docx)$/i'
+            ],
         ]);
 
         try {

@@ -6,6 +6,7 @@ use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Database\Connection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
+use Illuminate\Support\DateFactory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\RateLimiter;
@@ -42,6 +43,14 @@ class AppServiceProvider extends ServiceProvider
         if (app()->isProduction()) {
             URL::forceScheme('https');
         }
+
+        // Use immutable dates globally — prevents accidental mutation bugs
+        DateFactory::useClass(\Carbon\CarbonImmutable::class);
+
+        // Set sensible global pagination max to prevent abuse
+        \Illuminate\Database\Eloquent\Builder::macro('paginateWithMax', function (int $perPage = 15, int $max = 100) {
+            return $this->paginate(min($perPage, $max));
+        });
     }
 
     /**
@@ -67,6 +76,11 @@ class AppServiceProvider extends ServiceProvider
 
         // Empêcher l'accès à des attributs inexistants
         Model::preventAccessingMissingAttributes(!app()->isProduction());
+
+        // Unguard models only in console (seeders) — prevents mass-assignment bypass
+        if (app()->runningInConsole() && !app()->isProduction()) {
+            Model::unguard();
+        }
     }
 
     /**
@@ -74,18 +88,20 @@ class AppServiceProvider extends ServiceProvider
      */
     protected function configureDatabase(): void
     {
+        $slowThreshold = (int) config('app.log_slow_query_ms', 500);
+
         // Log slow queries in production only (avoids overhead in dev)
         if (app()->isProduction()) {
-            // Aggregate alert: queries taking > 500ms total per request
-            DB::whenQueryingForLongerThan(500, function (Connection $connection) {
+            // Aggregate alert: queries taking > threshold total per request
+            DB::whenQueryingForLongerThan($slowThreshold, function (Connection $connection) {
                 Log::channel('query')->warning('Slow database queries detected', [
                     'connection' => $connection->getName(),
                 ]);
             });
 
-            // Individual slow query logging (> 1s)
-            DB::listen(function ($query) {
-                if ($query->time > 1000) {
+            // Individual slow query logging (> 2x threshold)
+            DB::listen(function ($query) use ($slowThreshold) {
+                if ($query->time > $slowThreshold * 2) {
                     Log::channel('query')->warning('Slow query', [
                         'sql' => $query->sql,
                         'time_ms' => $query->time,

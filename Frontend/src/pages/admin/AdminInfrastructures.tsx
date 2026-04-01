@@ -13,8 +13,10 @@ export default function AdminInfrastructures() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    nom: '',
-    description: '',
+    nom_fr: '',
+    nom_en: '',
+    description_fr: '',
+    description_en: '',
     surface: '',
     capacite: '',
     image: null as File | null,
@@ -40,8 +42,10 @@ export default function AdminInfrastructures() {
     if (item) {
       setEditingItem(item);
       setFormData({
-        nom: item.nom,
-        description: item.description,
+        nom_fr: item.nom_fr,
+        nom_en: item.nom_en,
+        description_fr: item.description_fr,
+        description_en: item.description_en,
         surface: item.surface || '',
         capacite: item.capacite || '',
         image: null,
@@ -52,8 +56,10 @@ export default function AdminInfrastructures() {
     } else {
       setEditingItem(null);
       setFormData({
-        nom: '',
-        description: '',
+        nom_fr: '',
+        nom_en: '',
+        description_fr: '',
+        description_en: '',
         surface: '',
         capacite: '',
         image: null,
@@ -87,8 +93,10 @@ export default function AdminInfrastructures() {
 
     try {
       const submitData = new FormData();
-      submitData.append('nom', formData.nom);
-      submitData.append('description', formData.description);
+      submitData.append('nom_fr', formData.nom_fr);
+      submitData.append('nom_en', formData.nom_en);
+      submitData.append('description_fr', formData.description_fr);
+      submitData.append('description_en', formData.description_en);
       submitData.append('surface', formData.surface);
       submitData.append('capacite', formData.capacite);
       if (formData.image) {
@@ -127,8 +135,8 @@ export default function AdminInfrastructures() {
 
   const columns = [
     {
-      key: 'nom',
-      label: 'Nom',
+      key: 'nom_fr',
+      label: 'Nom (FR)',
     },
     {
       key: 'surface',
@@ -180,19 +188,35 @@ export default function AdminInfrastructures() {
         loading={submitting}
       >
         <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Nom
-            </label>
-            <input
-              type="text"
-              value={formData.nom}
-              onChange={(e) =>
-                setFormData({ ...formData, nom: e.target.value })
-              }
-              required
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Nom (Français)
+              </label>
+              <input
+                type="text"
+                value={formData.nom_fr}
+                onChange={(e) =>
+                  setFormData({ ...formData, nom_fr: e.target.value })
+                }
+                required
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Nom (English)
+              </label>
+              <input
+                type="text"
+                value={formData.nom_en}
+                onChange={(e) =>
+                  setFormData({ ...formData, nom_en: e.target.value })
+                }
+                required
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -227,19 +251,35 @@ export default function AdminInfrastructures() {
             </div>
           </div>
 
-          <div>
-            <label className="block text-sm font-medium text-slate-700 mb-2">
-              Description
-            </label>
-            <textarea
-              value={formData.description}
-              onChange={(e) =>
-                setFormData({ ...formData, description: e.target.value })
-              }
-              required
-              rows={6}
-              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            />
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Description (Français)
+              </label>
+              <textarea
+                value={formData.description_fr}
+                onChange={(e) =>
+                  setFormData({ ...formData, description_fr: e.target.value })
+                }
+                required
+                rows={6}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Description (English)
+              </label>
+              <textarea
+                value={formData.description_en}
+                onChange={(e) =>
+                  setFormData({ ...formData, description_en: e.target.value })
+                }
+                required
+                rows={6}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
+            </div>
           </div>
 
           <div>

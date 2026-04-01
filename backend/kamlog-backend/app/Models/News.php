@@ -86,15 +86,17 @@ class News extends Model
     public function incrementViews()
     {
         $cacheKey = 'news:views:' . $this->id;
-        $pending = (int) \Illuminate\Support\Facades\Cache::get($cacheKey, 0);
-        $pending++;
+
+        if (!\Illuminate\Support\Facades\Cache::has($cacheKey)) {
+            \Illuminate\Support\Facades\Cache::put($cacheKey, 0, now()->addHours(2));
+        }
+
+        $pending = \Illuminate\Support\Facades\Cache::increment($cacheKey);
 
         // Flush to DB every 10 views or if no cache driver (testing)
         if ($pending >= 10 || config('cache.default') === 'array') {
             $this->increment('views', $pending);
             \Illuminate\Support\Facades\Cache::forget($cacheKey);
-        } else {
-            \Illuminate\Support\Facades\Cache::put($cacheKey, $pending, now()->addHours(2));
         }
     }
 }

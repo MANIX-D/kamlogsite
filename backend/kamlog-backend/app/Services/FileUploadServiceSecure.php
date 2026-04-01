@@ -353,6 +353,10 @@ class FileUploadServiceSecure
         imagedestroy($source);
         imagedestroy($destination);
 
+        if ($imageData === false || $imageData === '') {
+            throw new \RuntimeException('Échec de l\'encodage de l\'image');
+        }
+
         return $imageData;
     }
 
@@ -403,6 +407,10 @@ class FileUploadServiceSecure
 
         imagedestroy($source);
         imagedestroy($destination);
+
+        if ($thumbData === false || $thumbData === '') {
+            throw new \RuntimeException('Échec de l\'encodage de la miniature');
+        }
 
         Storage::disk('images')->put($thumbPath, $thumbData);
 

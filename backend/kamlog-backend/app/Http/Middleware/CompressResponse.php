@@ -12,6 +12,8 @@ class CompressResponse
     /**
      * Compresser les réponses JSON avec gzip si le client le supporte.
      * Réduit la bande passante de 60-80% pour les réponses JSON volumineuses.
+     *
+     * Adaptive compression: level 1 for large payloads (speed), level 6 for smaller ones (ratio).
      */
     public function handle(Request $request, Closure $next): Response
     {
@@ -23,25 +25,27 @@ class CompressResponse
         }
 
         // Vérifier que le client accepte gzip
-        if (!str_contains($request->header('Accept-Encoding', ''), 'gzip')) {
+        $acceptEncoding = $request->header('Accept-Encoding', '');
+        if (!str_contains($acceptEncoding, 'gzip')) {
             return $response;
         }
 
         // Ne pas compresser les petites réponses (< 1KB — overhead gzip non rentable)
         $content = $response->getContent();
-        if ($content === false || strlen($content) < 1024) {
+        if ($content === false || ($contentLength = strlen($content)) < 1024) {
             return $response;
         }
 
-        // Compresser
-        $compressed = gzencode($content, 6);
+        // Adaptive: large payloads (>50KB) use level 1 (fast), smaller use level 4 (balanced)
+        $level = $contentLength > 51200 ? 1 : 4;
+        $compressed = gzencode($content, $level);
 
         if ($compressed === false) {
             return $response;
         }
 
         // Ne retourner la version compressée que si elle est plus petite
-        if (strlen($compressed) >= strlen($content)) {
+        if (strlen($compressed) >= $contentLength) {
             return $response;
         }
 

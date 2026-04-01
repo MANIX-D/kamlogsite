@@ -135,4 +135,16 @@ return [
 
     'log_api_requests' => (bool) env('LOG_API_REQUESTS', false),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Slow Query Threshold
+    |--------------------------------------------------------------------------
+    |
+    | Seuil en millisecondes pour le logging des requêtes SQL lentes.
+    | Les requêtes individuelles dépassant 2x ce seuil sont loggées.
+    |
+    */
+
+    'log_slow_query_ms' => (int) env('LOG_SLOW_QUERY_MS', 500),
+
 ];

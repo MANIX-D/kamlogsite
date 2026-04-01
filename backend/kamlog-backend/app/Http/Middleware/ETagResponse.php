@@ -21,6 +21,11 @@ class ETagResponse
             return $response;
         }
 
+        // Ne pas ajouter d'ETag pour les requêtes authentifiées (données personnalisées)
+        if ($request->user()) {
+            return $response;
+        }
+
         // Ne pas ajouter d'ETag si déjà présent ou si la réponse est streamée
         if ($response->headers->has('ETag')) {
             return $response;
@@ -32,8 +37,8 @@ class ETagResponse
             return $response;
         }
 
-        // Générer un ETag basé sur le contenu (crc32b: ~3x faster than md5, sufficient for cache validation)
-        $etag = '"' . hash('crc32b', $content) . '"';
+        // xxh128 : plus rapide que crc32b avec moins de collisions sur de grands payloads
+        $etag = '"' . hash('xxh128', $content) . '"';
         $response->headers->set('ETag', $etag);
 
         // Vérifier If-None-Match du client

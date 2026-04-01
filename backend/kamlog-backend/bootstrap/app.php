@@ -45,14 +45,14 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         // Middlewares globaux pour l'API
-        // Ordre : sécurité → sanitize → logging → cache → ETag → compression
+        // Ordre : sécurité → sanitize → logging → cache → compression → ETag
         $middleware->api(prepend: [
             \App\Http\Middleware\AddSecurityHeaders::class,
             \App\Http\Middleware\SanitizeInput::class,
             \App\Http\Middleware\LogApiRequests::class,
             \App\Http\Middleware\CacheControl::class,
-            \App\Http\Middleware\ETagResponse::class,
             \App\Http\Middleware\CompressResponse::class,
+            \App\Http\Middleware\ETagResponse::class,
         ]);
 
         // Configuration CORS

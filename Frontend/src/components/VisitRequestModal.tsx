@@ -17,6 +17,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
     company: '',
     preferredDate: '',
     preferredTime: '',
+    type_visite: 'guidee' as 'guidee' | 'autonome' | 'virtuelle' | 'rencontre',
     infrastructure: '',
     message: ''
   });
@@ -39,9 +40,11 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
         name: formData.fullName,
         email: formData.email,
         phone: formData.phone,
-        company: formData.company,
-        date: `${formData.preferredDate} ${formData.preferredTime}`,
-        message: `Infrastructure: ${formData.infrastructure}\n\n${formData.message}`
+        company: formData.company || undefined,
+        date: formData.preferredDate,
+        heure: formData.preferredTime,
+        type_visite: formData.type_visite,
+        message: formData.message || undefined,
       });
 
       setSubmitSuccess(true);
@@ -55,6 +58,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
           company: '',
           preferredDate: '',
           preferredTime: '',
+          type_visite: 'guidee',
           infrastructure: '',
           message: ''
         });
@@ -221,25 +225,45 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                   </div>
                 </div>
 
-                <div>
-                  <label htmlFor="infrastructure" className="block text-sm font-semibold text-gray-700 mb-2">
-                    {t('visitRequest.form.infrastructure')} {t('visitRequest.form.required')}
-                  </label>
-                  <select
-                    id="infrastructure"
-                    name="infrastructure"
-                    required
-                    value={formData.infrastructure}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1F3878] focus:outline-none transition-colors"
-                  >
-                    <option value="">{t('visitRequest.form.infrastructureOptions.select')}</option>
-                    <option value="magasin-cale">{t('visitRequest.form.infrastructureOptions.warehouse')}</option>
-                    <option value="parc-conteneurs">{t('visitRequest.form.infrastructureOptions.containers')}</option>
-                    <option value="silos">{t('visitRequest.form.infrastructureOptions.silos')}</option>
-                    <option value="entrepot-udeac">{t('visitRequest.form.infrastructureOptions.udeac')}</option>
-                    <option value="toutes">{t('visitRequest.form.infrastructureOptions.all')}</option>
-                  </select>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="type_visite" className="block text-sm font-semibold text-gray-700 mb-2">
+                      {t('visitRequest.form.visitType') || 'Type de visite'} {t('visitRequest.form.required')}
+                    </label>
+                    <select
+                      id="type_visite"
+                      name="type_visite"
+                      required
+                      value={formData.type_visite}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1F3878] focus:outline-none transition-colors"
+                    >
+                      <option value="guidee">{t('visitRequest.form.visitTypeOptions.guided') || 'Visite guidée'}</option>
+                      <option value="autonome">{t('visitRequest.form.visitTypeOptions.autonomous') || 'Visite autonome'}</option>
+                      <option value="virtuelle">{t('visitRequest.form.visitTypeOptions.virtual') || 'Visite virtuelle'}</option>
+                      <option value="rencontre">{t('visitRequest.form.visitTypeOptions.meeting') || 'Rencontre'}</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label htmlFor="infrastructure" className="block text-sm font-semibold text-gray-700 mb-2">
+                      {t('visitRequest.form.infrastructure')}
+                    </label>
+                    <select
+                      id="infrastructure"
+                      name="infrastructure"
+                      value={formData.infrastructure}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1F3878] focus:outline-none transition-colors"
+                    >
+                      <option value="">{t('visitRequest.form.infrastructureOptions.select')}</option>
+                      <option value="magasin-cale">{t('visitRequest.form.infrastructureOptions.warehouse')}</option>
+                      <option value="parc-conteneurs">{t('visitRequest.form.infrastructureOptions.containers')}</option>
+                      <option value="silos">{t('visitRequest.form.infrastructureOptions.silos')}</option>
+                      <option value="entrepot-udeac">{t('visitRequest.form.infrastructureOptions.udeac')}</option>
+                      <option value="toutes">{t('visitRequest.form.infrastructureOptions.all')}</option>
+                    </select>
+                  </div>
                 </div>
 
                 <div>

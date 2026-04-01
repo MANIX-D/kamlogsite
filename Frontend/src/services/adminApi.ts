@@ -3,13 +3,14 @@ import { API_ENDPOINTS } from '../config/api';
 import { Announcement, JobOffer } from '../types';
 
 interface DashboardStats {
-  totalActualites: number;
-  totalOffres: number;
-  totalPartenaires: number;
-  totalMessages: number;
-  totalNewsletter: number;
-  totalAnnouncements: number;
-  totalJobOffers: number;
+  total_services: number;
+  total_news: number;
+  total_messages: number;
+  total_users: number;
+  unread_messages: number;
+  active_services: number;
+  published_news: number;
+  active_users: number;
 }
 
 export interface Actualite {
@@ -34,6 +35,46 @@ export interface Partenaire {
   description_en?: string;
   category?: string;
   website?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  partnership_level?: 'strategic' | 'premium' | 'standard' | 'basic';
+  display_order?: number;
+  is_active?: boolean;
+  is_featured?: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Infrastructure {
+  id: number;
+  nom_fr: string;
+  nom_en: string;
+  description_fr: string;
+  description_en: string;
+  surface?: string;
+  capacite?: string;
+  image?: string;
+  image_alt_fr?: string;
+  image_alt_en?: string;
+  type?: 'entrepot' | 'bureau' | 'atelier' | 'showroom' | 'autre';
+  equipements?: string[];
+  specifications_techniques?: Record<string, string>;
+  display_order?: number;
+  is_active?: boolean;
+  is_available?: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Service {
+  id: number;
+  nom_fr: string;
+  nom_en: string;
+  description_fr: string;
+  description_en: string;
+  icon?: string;
+  image?: string;
   display_order?: number;
   is_active?: boolean;
   created_at: string;
@@ -251,6 +292,81 @@ class AdminApiService {
 
   async deleteQuote(id: number): Promise<void> {
     return del<void>(`${API_ENDPOINTS.admin.quotes}/${id}`);
+  }
+
+  // Partenaires
+  async getPartenaires(): Promise<Partenaire[]> {
+    const res = await get<ApiResponse<Partenaire[]>>(API_ENDPOINTS.admin.partners);
+    return res.data;
+  }
+
+  async getPartenaire(id: number): Promise<Partenaire> {
+    const res = await get<ApiResponse<Partenaire>>(`${API_ENDPOINTS.admin.partners}/${id}`);
+    return res.data;
+  }
+
+  async createPartenaire(data: Partial<Partenaire> | FormData): Promise<Partenaire> {
+    const res = await post<ApiResponse<Partenaire>>(API_ENDPOINTS.admin.partners, data);
+    return res.data;
+  }
+
+  async updatePartenaire(id: number, data: Partial<Partenaire> | FormData): Promise<Partenaire> {
+    const res = await post<ApiResponse<Partenaire>>(`${API_ENDPOINTS.admin.partners}/${id}`, data);
+    return res.data;
+  }
+
+  async deletePartenaire(id: number): Promise<void> {
+    return del<void>(`${API_ENDPOINTS.admin.partners}/${id}`);
+  }
+
+  // Infrastructures
+  async getInfrastructures(): Promise<Infrastructure[]> {
+    const res = await get<ApiResponse<Infrastructure[]>>(API_ENDPOINTS.admin.infrastructures);
+    return res.data;
+  }
+
+  async getInfrastructure(id: number): Promise<Infrastructure> {
+    const res = await get<ApiResponse<Infrastructure>>(`${API_ENDPOINTS.admin.infrastructures}/${id}`);
+    return res.data;
+  }
+
+  async createInfrastructure(data: Partial<Infrastructure> | FormData): Promise<Infrastructure> {
+    const res = await post<ApiResponse<Infrastructure>>(API_ENDPOINTS.admin.infrastructures, data);
+    return res.data;
+  }
+
+  async updateInfrastructure(id: number, data: Partial<Infrastructure> | FormData): Promise<Infrastructure> {
+    const res = await post<ApiResponse<Infrastructure>>(`${API_ENDPOINTS.admin.infrastructures}/${id}`, data);
+    return res.data;
+  }
+
+  async deleteInfrastructure(id: number): Promise<void> {
+    return del<void>(`${API_ENDPOINTS.admin.infrastructures}/${id}`);
+  }
+
+  // Services
+  async getServices(): Promise<Service[]> {
+    const res = await get<ApiResponse<Service[]>>(API_ENDPOINTS.admin.services);
+    return res.data;
+  }
+
+  async getService(id: number): Promise<Service> {
+    const res = await get<ApiResponse<Service>>(`${API_ENDPOINTS.admin.services}/${id}`);
+    return res.data;
+  }
+
+  async createService(data: Partial<Service>): Promise<Service> {
+    const res = await post<ApiResponse<Service>>(API_ENDPOINTS.admin.services, data);
+    return res.data;
+  }
+
+  async updateService(id: number, data: Partial<Service>): Promise<Service> {
+    const res = await put<ApiResponse<Service>>(`${API_ENDPOINTS.admin.services}/${id}`, data);
+    return res.data;
+  }
+
+  async deleteService(id: number): Promise<void> {
+    return del<void>(`${API_ENDPOINTS.admin.services}/${id}`);
   }
 }
 

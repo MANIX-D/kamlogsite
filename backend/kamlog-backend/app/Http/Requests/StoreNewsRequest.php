@@ -130,6 +130,8 @@ class StoreNewsRequest extends BaseFormRequest
      */
     protected function prepareForValidation(): void
     {
+        parent::prepareForValidation();
+
         // Générer l'extrait automatiquement si non fourni
         if (!$this->has('extrait') && $this->has('contenu')) {
             $extrait = $this->generateExcerpt($this->contenu, 200);

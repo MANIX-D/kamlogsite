@@ -18,46 +18,46 @@ class JobOfferController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $perPage = $request->input('per_page', 15);
-        $perPage = min(max($perPage, 1), 100);
-
+        $perPage = min(max((int) $request->input('per_page', 15), 1), 100);
         $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $contractType = $request->input('contract_type');
+        $experienceLevel = $request->input('experience_level');
+        $location = $request->input('location');
+        $isUrgent = $request->has('is_urgent');
+        $isActive = $request->input('is_active');
 
-        $query = JobOffer::withCount('jobApplications');
+        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $contractType . ':' . $experienceLevel . ':' . $location . ':' . ($isUrgent ? '1' : '0') . ':' . $isActive;
 
-        // Filtrer par statut actif pour le public
-        if (!$isAdmin) {
-            $query->active()->notExpired();
-        }
+        $jobOffers = $this->remember($cacheKey, function () use ($perPage, $isAdmin, $contractType, $experienceLevel, $location, $isUrgent, $isActive) {
+            $query = JobOffer::withCount('jobApplications');
 
-        // Filtres optionnels
-        if ($request->has('contract_type')) {
-            $query->ofContractType($request->input('contract_type'));
-        }
+            if (!$isAdmin) {
+                $query->active()->notExpired();
+            }
 
-        if ($request->has('experience_level')) {
-            $query->ofExperienceLevel($request->input('experience_level'));
-        }
+            if ($contractType) {
+                $query->ofContractType($contractType);
+            }
 
-        if ($request->has('location')) {
-            $location = str_replace(['%', '_'], ['\%', '\_'], $request->input('location'));
-            $query->where('location', 'like', '%' . $location . '%');
-        }
+            if ($experienceLevel) {
+                $query->ofExperienceLevel($experienceLevel);
+            }
 
-        if ($request->has('is_urgent')) {
-            $query->urgent();
-        }
+            if ($location) {
+                $sanitized = str_replace(['%', '_'], ['\%', '\_'], $location);
+                $query->where('location', 'like', '%' . $sanitized . '%');
+            }
 
-        if ($request->has('is_active')) {
-            $query->where('is_active', $request->boolean('is_active'));
-        }
+            if ($isUrgent) {
+                $query->urgent();
+            }
 
-        // Tri
-        $query->latest();
+            if ($isActive !== null) {
+                $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
+            }
 
-        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $request->input('contract_type') . ':' . $request->input('experience_level');
+            $query->latest();
 
-        $jobOffers = $this->remember($cacheKey, function () use ($query, $perPage) {
             return $query->paginate($perPage);
         }, 1800);
 

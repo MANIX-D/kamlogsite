@@ -145,8 +145,12 @@ class AuthLogService
     protected static function incrementMetric(string $metric): void
     {
         $key = "auth_metrics:{$metric}:" . now()->format('Y-m-d');
-        $current = Cache::get($key, 0);
-        Cache::put($key, $current + 1, now()->addDays(30)); // Garder 30 jours
+
+        if (!Cache::has($key)) {
+            Cache::put($key, 0, now()->addDays(30));
+        }
+
+        Cache::increment($key);
     }
 
     /**

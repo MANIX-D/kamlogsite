@@ -18,37 +18,35 @@ class InfrastructureController extends Controller
      */
     public function index(Request $request): JsonResponse
     {
-        $perPage = $request->input('per_page', 15);
-        $perPage = min(max($perPage, 1), 100);
-
+        $perPage = min(max((int) $request->input('per_page', 15), 1), 100);
         $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $type = $request->input('type');
+        $isAvailable = $request->has('is_available');
+        $isActive = $request->input('is_active');
 
-        $query = Infrastructure::query();
+        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $type . ':' . ($isAvailable ? '1' : '0') . ':' . $isActive;
 
-        // Filtrer par statut actif pour le public
-        if (!$isAdmin) {
-            $query->active();
-        }
+        $infrastructures = $this->remember($cacheKey, function () use ($perPage, $isAdmin, $type, $isAvailable, $isActive) {
+            $query = Infrastructure::query();
 
-        // Filtres optionnels
-        if ($request->has('type')) {
-            $query->ofType($request->input('type'));
-        }
+            if (!$isAdmin) {
+                $query->active();
+            }
 
-        if ($request->has('is_available')) {
-            $query->available();
-        }
+            if ($type) {
+                $query->ofType($type);
+            }
 
-        if ($request->has('is_active')) {
-            $query->where('is_active', $request->boolean('is_active'));
-        }
+            if ($isAvailable) {
+                $query->available();
+            }
 
-        // Tri
-        $query->ordered();
+            if ($isActive !== null) {
+                $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
+            }
 
-        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $request->input('type');
+            $query->ordered();
 
-        $infrastructures = $this->remember($cacheKey, function () use ($query, $perPage) {
             return $query->paginate($perPage);
         }, 3600);
 

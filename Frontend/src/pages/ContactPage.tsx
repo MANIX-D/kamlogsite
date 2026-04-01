@@ -16,11 +16,11 @@ export default function ContactPage() {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [formData, setFormData] = useState({
-    name: '',
+    nom: '',
     email: '',
-    phone: '',
-    company: '',
-    subject: '',
+    telephone: '',
+    entreprise: '',
+    sujet: '',
     message: ''
   });
   const [submitting, setSubmitting] = useState(false);
@@ -44,7 +44,7 @@ export default function ContactPage() {
   };
 
   const validateForm = (): boolean => {
-    if (!formData.name.trim()) {
+    if (!formData.nom.trim()) {
       setError(t('contact.form.validation.name'));
       return false;
     }
@@ -55,12 +55,12 @@ export default function ContactPage() {
       return false;
     }
 
-    if (!formData.phone.trim()) {
+    if (!formData.telephone.trim()) {
       setError(t('contact.form.validation.phone'));
       return false;
     }
 
-    if (!formData.subject) {
+    if (!formData.sujet) {
       setError(t('contact.form.validation.subject'));
       return false;
     }
@@ -88,11 +88,11 @@ export default function ContactPage() {
 
       setSuccess(true);
       setFormData({
-        name: '',
+        nom: '',
         email: '',
-        phone: '',
-        company: '',
-        subject: '',
+        telephone: '',
+        entreprise: '',
+        sujet: '',
         message: ''
       });
 
@@ -229,9 +229,9 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
-                    name="name"
+                    name="nom"
                     required
-                    value={formData.name}
+                    value={formData.nom}
                     onChange={handleChange}
                     disabled={submitting}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
@@ -263,9 +263,9 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="tel"
-                    name="phone"
+                    name="telephone"
                     required
-                    value={formData.phone}
+                    value={formData.telephone}
                     onChange={handleChange}
                     disabled={submitting}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
@@ -279,8 +279,8 @@ export default function ContactPage() {
                   </label>
                   <input
                     type="text"
-                    name="company"
-                    value={formData.company}
+                    name="entreprise"
+                    value={formData.entreprise}
                     onChange={handleChange}
                     disabled={submitting}
                     className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
@@ -294,9 +294,9 @@ export default function ContactPage() {
                   {t('contact.form.fields.subject')} *
                 </label>
                 <select
-                  name="subject"
+                  name="sujet"
                   required
-                  value={formData.subject}
+                  value={formData.sujet}
                   onChange={handleChange}
                   disabled={submitting}
                   className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"

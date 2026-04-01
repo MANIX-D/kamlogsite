@@ -91,12 +91,12 @@ export default function AdminVisitRequests() {
     {
       key: 'status',
       label: 'Statut',
-      render: (value: string) => getStatusBadge(value)
+      render: (item: VisitRequest) => getStatusBadge(item.status)
     },
     {
       key: 'created_at',
       label: 'Reçue le',
-      render: (value: string) => new Date(value).toLocaleDateString('fr-FR')
+      render: (item: VisitRequest) => new Date(item.created_at).toLocaleDateString('fr-FR')
     },
   ];
 

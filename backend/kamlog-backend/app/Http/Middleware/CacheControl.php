@@ -9,6 +9,17 @@ use Symfony\Component\HttpFoundation\Response;
 class CacheControl
 {
     /**
+     * Cache time rules: [regex pattern => [max-age, stale-while-revalidate]]
+     * Compiled once, matched in order.
+     */
+    private const CACHE_RULES = [
+        '#^api/v1/(services|partners|infrastructures)$#' => [3600, 600],
+        '#^api/v1/(services|partners|infrastructures)/\d+$#' => [3600, 300],
+        '#^api/v1/news#' => [900, 300],
+        '#^api/v1/(jobs|announcements)#' => [1800, 600],
+    ];
+
+    /**
      * Ajouter les headers de cache appropriés
      */
     public function handle(Request $request, Closure $next): Response
@@ -17,20 +28,21 @@ class CacheControl
 
         // Ne pas cacher les requêtes authentifiées
         if ($request->user()) {
-            $response->headers->set('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
+            $response->headers->set('Cache-Control', 'no-store, no-cache, private, must-revalidate, max-age=0');
             $response->headers->set('Pragma', 'no-cache');
-            $response->headers->set('Expires', 'Sat, 01 Jan 2000 00:00:00 GMT');
             return $response;
         }
 
         // Cache pour les requêtes GET publiques
         if ($request->isMethod('GET') && $response->isSuccessful()) {
-            // Déterminer la durée de cache selon l'endpoint
-            $cacheTime = $this->getCacheTime($request);
+            [$maxAge, $staleRevalidate] = $this->getCacheTimes($request);
 
-            if ($cacheTime > 0) {
-                $response->headers->set('Cache-Control', 'public, max-age=' . $cacheTime);
-                $response->headers->set('Expires', gmdate('D, d M Y H:i:s', time() + $cacheTime) . ' GMT');
+            if ($maxAge > 0) {
+                // s-maxage for CDN/reverse proxy, max-age for browser
+                $response->headers->set(
+                    'Cache-Control',
+                    "public, max-age={$maxAge}, s-maxage={$maxAge}, stale-while-revalidate={$staleRevalidate}"
+                );
             }
         }
 
@@ -38,28 +50,18 @@ class CacheControl
     }
 
     /**
-     * Déterminer la durée de cache selon l'endpoint
+     * Déterminer la durée de cache [max-age, stale-while-revalidate] selon l'endpoint
      */
-    private function getCacheTime(Request $request): int
+    private function getCacheTimes(Request $request): array
     {
         $path = $request->path();
 
-        // Services, Partners, Infrastructures : 1 heure
-        if (preg_match('#^api/v1/(services|partners|infrastructures)#', $path)) {
-            return 3600;
+        foreach (self::CACHE_RULES as $pattern => $times) {
+            if (preg_match($pattern, $path)) {
+                return $times;
+            }
         }
 
-        // News : 15 minutes
-        if (preg_match('#^api/v1/news#', $path)) {
-            return 900;
-        }
-
-        // Jobs, Announcements : 30 minutes
-        if (preg_match('#^api/v1/(jobs|announcements)#', $path)) {
-            return 1800;
-        }
-
-        // Pas de cache par défaut
-        return 0;
+        return [0, 0];
     }
 }

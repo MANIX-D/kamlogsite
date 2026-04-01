@@ -17,7 +17,6 @@ abstract class BaseFormRequest extends FormRequest
         
         return $user !== null && 
                $user->tokenCan('admin:*') &&
-               property_exists($user, 'role') &&
                isset($user->role) &&
                in_array($user->role, $roles, true);
     }
@@ -145,8 +144,8 @@ abstract class BaseFormRequest extends FormRequest
             return null;
         }
 
-        $nom = property_exists($user, 'nom') && isset($user->nom) ? $user->nom : '';
-        $prenom = property_exists($user, 'prenom') && isset($user->prenom) ? $user->prenom : '';
+        $nom = isset($user->nom) ? $user->nom : '';
+        $prenom = isset($user->prenom) ? $user->prenom : '';
         
         $fullName = trim($nom . ' ' . $prenom);
         
