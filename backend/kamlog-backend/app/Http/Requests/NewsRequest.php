@@ -13,6 +13,20 @@ class NewsRequest extends FormRequest
         return true;
     }
 
+    protected function prepareForValidation(): void
+    {
+        if (!$this->filled('slug_fr') && $this->filled('titre_fr')) {
+            $this->merge([
+                'slug_fr' => \Illuminate\Support\Str::slug($this->input('titre_fr')),
+            ]);
+        }
+        if (!$this->filled('slug_en') && $this->filled('titre_en')) {
+            $this->merge([
+                'slug_en' => \Illuminate\Support\Str::slug($this->input('titre_en')),
+            ]);
+        }
+    }
+
     public function rules(): array
     {
         $newsId = $this->route('id') ?? $this->route('news');

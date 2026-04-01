@@ -95,15 +95,18 @@ export default function AdminActualites() {
     setSubmitting(true);
 
     try {
-      const submitData = {
+      const submitData: Record<string, any> = {
         titre_fr: formData.titre_fr,
         titre_en: formData.titre_en,
         contenu_fr: formData.contenu_fr,
         contenu_en: formData.contenu_en,
         type: formData.type,
         date_publication: formData.date_publication,
-        image: formData.image || undefined,
       };
+      // image field expects a URL string, not a File object
+      if (editingItem?.image && !formData.image) {
+        submitData.image = editingItem.image;
+      }
 
       if (editingItem) {
         await adminApiService.updateActualite(editingItem.id, submitData);
