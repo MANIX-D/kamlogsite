@@ -5,6 +5,7 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -30,6 +31,7 @@ class User extends Authenticatable
         'is_active',
         'last_login_at',
         'last_login_ip',
+        'email_verified_at',
     ];
 
     /**
@@ -58,9 +60,25 @@ class User extends Authenticatable
     }
 
     /**
+     * Relation: Permissions granulaires (pour les éditeurs)
+     */
+    public function permissions(): HasMany
+    {
+        return $this->hasMany(UserPermission::class);
+    }
+
+    /**
+     * Relation: Invitations émises par cet utilisateur
+     */
+    public function sentInvitations(): HasMany
+    {
+        return $this->hasMany(UserInvitation::class, 'invited_by');
+    }
+
+    /**
      * Relation: Un admin peut avoir traité plusieurs messages de contact
      */
-    public function contactMessages()
+    public function contactMessages(): HasMany
     {
         return $this->hasMany(ContactMessage::class);
     }
@@ -68,7 +86,7 @@ class User extends Authenticatable
     /**
      * Relation: Un admin peut avoir traité plusieurs demandes de visite
      */
-    public function visitRequests()
+    public function visitRequests(): HasMany
     {
         return $this->hasMany(VisitRequest::class);
     }
@@ -76,7 +94,7 @@ class User extends Authenticatable
     /**
      * Relation: Un admin peut avoir traité plusieurs candidatures
      */
-    public function jobApplications()
+    public function jobApplications(): HasMany
     {
         return $this->hasMany(JobApplication::class);
     }
@@ -84,7 +102,7 @@ class User extends Authenticatable
     /**
      * Relation: Un admin peut avoir traité plusieurs demandes de devis
      */
-    public function quoteRequests()
+    public function quoteRequests(): HasMany
     {
         return $this->hasMany(QuoteRequest::class);
     }
@@ -127,6 +145,64 @@ class User extends Authenticatable
     public function hasAnyRole(array $roles): bool
     {
         return in_array($this->role, $roles, true);
+    }
+
+    /**
+     * Vérifier si l'utilisateur a accès à une section donnée.
+     * - super_admin et admin : accès complet implicite
+     * - editor : vérification dans user_permissions
+     *
+     * @param string $section  Section concernée (ex: 'actualites')
+     * @param string $action   'read' | 'write' | 'delete'
+     */
+    public function hasPermission(string $section, string $action = 'read'): bool
+    {
+        if ($this->isAdmin()) {
+            return true; // super_admin et admin ont tout
+        }
+
+        if (!$this->isEditor()) {
+            return false;
+        }
+
+        $column = match ($action) {
+            'write'  => 'can_write',
+            'delete' => 'can_delete',
+            default  => 'can_read',
+        };
+
+        $permission = $this->permissions()
+            ->where('section', $section)
+            ->first();
+
+        return $permission?->$column === true;
+    }
+
+    /**
+     * Retourner toutes les permissions formatées pour les réponses API
+     */
+    public function getFormattedPermissions(): array
+    {
+        if ($this->isAdmin()) {
+            // Admin et super_admin ont accès à tout
+            return array_fill_keys(UserPermission::SECTIONS, [
+                'read' => true, 'write' => true, 'delete' => true,
+            ]);
+        }
+
+        if (!$this->isEditor()) {
+            return [];
+        }
+
+        $perms = [];
+        foreach ($this->permissions as $perm) {
+            $perms[$perm->section] = [
+                'read'   => $perm->can_read,
+                'write'  => $perm->can_write,
+                'delete' => $perm->can_delete,
+            ];
+        }
+        return $perms;
     }
 
     /**

@@ -20,6 +20,14 @@ import AdminMessages from './pages/admin/AdminMessages';
 import AdminNewsletter from './pages/admin/AdminNewsletter';
 import AdminVisitRequests from './pages/admin/AdminVisitRequests';
 import AdminQuotes from './pages/admin/AdminQuotes';
+import AdminServices from './pages/admin/AdminServices';
+import AdminPartenaires from './pages/admin/AdminPartenaires';
+import AdminInfrastructures from './pages/admin/AdminInfrastructures';
+import AdminUsers from './pages/admin/AdminUsers';
+import AdminRegister from './pages/admin/AdminRegister';
+import AdminForgotPassword from './pages/admin/AdminForgotPassword';
+import AdminVerifyCode from './pages/admin/AdminVerifyCode';
+import AdminResetPassword from './pages/admin/AdminResetPassword';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import LoadingPage from './components/LoadingPage';
 
@@ -46,6 +54,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/register/:token" element={<AdminRegister />} />
+        <Route path="/admin/forgot-password" element={<AdminForgotPassword />} />
+        <Route path="/admin/verify-code/:token" element={<AdminVerifyCode />} />
+        <Route path="/admin/reset-password/:token" element={<AdminResetPassword />} />
 
         <Route
           path="/admin/*"
@@ -56,6 +68,9 @@ function App() {
           }
         >
           <Route path="dashboard" element={<AdminDashboard />} />
+          <Route path="services" element={<AdminServices />} />
+          <Route path="partners" element={<AdminPartenaires />} />
+          <Route path="infrastructures" element={<AdminInfrastructures />} />
           <Route path="actualites" element={<AdminActualites />} />
           <Route path="announcements" element={<AdminAnnouncements />} />
           <Route path="job-offers" element={<AdminJobOffers />} />
@@ -63,6 +78,7 @@ function App() {
           <Route path="messages" element={<AdminMessages />} />
           <Route path="newsletter" element={<AdminNewsletter />} />
           <Route path="visit-requests" element={<AdminVisitRequests />} />
+          <Route path="users" element={<AdminUsers />} />
         </Route>
 
         <Route

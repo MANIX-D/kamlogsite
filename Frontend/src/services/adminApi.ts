@@ -368,6 +368,178 @@ class AdminApiService {
   async deleteService(id: number): Promise<void> {
     return del<void>(`${API_ENDPOINTS.admin.services}/${id}`);
   }
+
+  // ─── Users ─────────────────────────────────────────────────
+
+  async getUsers(): Promise<AdminUser[]> {
+    const res = await get<ApiResponse<AdminUser[]>>(API_ENDPOINTS.admin.users);
+    return res.data;
+  }
+
+  async getUser(id: number): Promise<AdminUser> {
+    const res = await get<ApiResponse<AdminUser>>(`${API_ENDPOINTS.admin.users}/${id}`);
+    return res.data;
+  }
+
+  async updateUser(id: number, data: Partial<AdminUser>): Promise<AdminUser> {
+    const res = await put<ApiResponse<AdminUser>>(`${API_ENDPOINTS.admin.users}/${id}`, data);
+    return res.data;
+  }
+
+  async toggleUserActive(id: number): Promise<AdminUser> {
+    const res = await put<ApiResponse<AdminUser>>(`${API_ENDPOINTS.admin.users}/${id}/toggle-active`, {});
+    return res.data;
+  }
+
+  async updateUserPermissions(id: number, permissions: SectionPermission[]): Promise<AdminUser> {
+    const res = await put<ApiResponse<AdminUser>>(
+      `${API_ENDPOINTS.admin.users}/${id}/permissions`,
+      { permissions }
+    );
+    return res.data;
+  }
+
+  async deleteUser(id: number): Promise<void> {
+    return del<void>(`${API_ENDPOINTS.admin.users}/${id}`);
+  }
+
+  // ─── Invitations ───────────────────────────────────────────
+
+  async getInvitations(): Promise<UserInvitation[]> {
+    const res = await get<ApiResponse<UserInvitation[]>>(API_ENDPOINTS.admin.invitations);
+    return res.data;
+  }
+
+  async createInvitation(data: {
+    email: string;
+    role: string;
+    permissions?: SectionPermission[];
+  }): Promise<UserInvitation> {
+    const res = await post<ApiResponse<UserInvitation>>(API_ENDPOINTS.admin.invitations, data);
+    return res.data;
+  }
+
+  async revokeInvitation(id: number): Promise<void> {
+    return del<void>(`${API_ENDPOINTS.admin.invitations}/${id}`);
+  }
+
+  // ─── Public Invitation Routes (no auth) ────────────────────
+
+  async validateInvitationToken(token: string): Promise<InvitationValidation> {
+    const res = await get<ApiResponse<InvitationValidation>>(
+      API_ENDPOINTS.invitations.validate(token)
+    );
+    return res.data;
+  }
+
+  async registerFromInvitation(
+    token: string,
+    data: { name: string; password: string; password_confirmation: string }
+  ): Promise<{ name: string; email: string; role: string }> {
+    const res = await post<ApiResponse<{ name: string; email: string; role: string }>>(
+      API_ENDPOINTS.invitations.register(token),
+      data,
+    );
+    return res.data;
+  }
+
+  // ─── Password Reset (no auth) ──────────────────────────────
+
+  async sendPasswordResetLink(email: string): Promise<{ message: string }> {
+    const res = await post<ApiResponse<never>>(
+      API_ENDPOINTS.passwordReset.send,
+      { email },
+    );
+    return { message: res.message || 'Email envoyé' };
+  }
+
+  async validateResetToken(token: string): Promise<{
+    email: string;
+    expires_at: string;
+    verified: boolean;
+  }> {
+    const res = await get<ApiResponse<{
+      email: string;
+      expires_at: string;
+      verified: boolean;
+    }>>(API_ENDPOINTS.passwordReset.validate(token));
+    return res.data;
+  }
+
+  async verifyResetCode(token: string, code: string): Promise<{ message: string }> {
+    const res = await post<ApiResponse<never>>(
+      API_ENDPOINTS.passwordReset.verifyCode(token),
+      { code },
+    );
+    return { message: res.message || 'Code vérifié' };
+  }
+
+  async resetPassword(
+    token: string,
+    data: { password: string; password_confirmation: string }
+  ): Promise<{ message: string }> {
+    const res = await post<ApiResponse<never>>(
+      API_ENDPOINTS.passwordReset.reset(token),
+      data,
+    );
+    return { message: res.message || 'Mot de passe réinitialisé' };
+  }
 }
+
+// ─── Types Utilisateurs ────────────────────────────────────
+
+export interface AdminUser {
+  id: number;
+  name: string;
+  email: string;
+  role: 'super_admin' | 'admin' | 'editor';
+  avatar: string | null;
+  phone: string | null;
+  is_active: boolean;
+  last_login_at: string | null;
+  created_at: string;
+  permissions: Record<string, { read: boolean; write: boolean; delete: boolean }>;
+}
+
+export interface UserInvitation {
+  id: number;
+  email: string;
+  role: string;
+  permissions: Record<string, { read: boolean; write: boolean; delete: boolean }> | null;
+  status: 'pending' | 'accepted' | 'expired';
+  invited_by: { id: number; name: string } | null;
+  accepted_by: { id: number; name: string } | null;
+  accepted_at: string | null;
+  expires_at: string;
+  created_at: string;
+}
+
+export interface SectionPermission {
+  section: string;
+  can_read: boolean;
+  can_write: boolean;
+  can_delete: boolean;
+}
+
+export interface InvitationValidation {
+  email: string;
+  role: string;
+  permissions: Record<string, { read: boolean; write: boolean; delete: boolean }> | null;
+  expires_at: string;
+  invited_by: string;
+}
+
+export const SECTION_LABELS: Record<string, string> = {
+  actualites: 'Actualités',
+  announcements: 'Annonces',
+  job_offers: 'Offres d\'emploi',
+  quotes: 'Demandes de devis',
+  messages: 'Messages',
+  newsletter: 'Newsletter',
+  visit_requests: 'Demandes de visite',
+  services: 'Services',
+  partners: 'Partenaires',
+  infrastructures: 'Infrastructures',
+};
 
 export const adminApiService = new AdminApiService();

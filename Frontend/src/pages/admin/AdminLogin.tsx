@@ -1,5 +1,5 @@
 import { useState, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { LogIn, Lock, Mail, AlertCircle } from 'lucide-react';
 import { authService } from '../../services/auth';
 
@@ -126,6 +126,15 @@ export default function AdminLogin() {
               )}
             </button>
           </form>
+
+          <p className="text-center text-sm text-slate-500 mt-6">
+            <Link
+              to="/admin/forgot-password"
+              className="text-blue-600 hover:text-blue-700 font-medium"
+            >
+              Mot de passe oublié ?
+            </Link>
+          </p>
         </div>
       </div>
     </div>

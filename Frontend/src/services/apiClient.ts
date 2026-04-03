@@ -12,7 +12,8 @@ const apiClient: AxiosInstance = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('auth_token');
+    // Read token from sessionStorage (avoids circular import with auth.ts)
+    const token = sessionStorage.getItem('auth_token');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
@@ -31,10 +32,25 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
+      // Clear all session data
+      sessionStorage.removeItem('auth_token');
+      sessionStorage.removeItem('user');
+      sessionStorage.removeItem('auth_token_expiry');
+      // Also clean up old localStorage entries
       localStorage.removeItem('auth_token');
       localStorage.removeItem('user');
-      window.location.href = '/admin/login';
+
+      // Only redirect if we're on an admin page (avoid redirect loops)
+      if (window.location.pathname.startsWith('/admin') && 
+          !window.location.pathname.includes('/admin/login')) {
+        window.location.href = '/admin/login';
+      }
     }
+
+    if (error.response?.status === 403) {
+      console.warn('Access denied: insufficient permissions');
+    }
+
     return Promise.reject(error);
   }
 );

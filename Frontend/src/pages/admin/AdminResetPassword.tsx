@@ -1,0 +1,223 @@
+import { useState, useEffect, FormEvent } from 'react';
+import { useParams, useNavigate, Link } from 'react-router-dom';
+import { Lock, AlertCircle, CheckCircle, KeyRound, ArrowLeft } from 'lucide-react';
+import { adminApiService } from '../../services/adminApi';
+
+export default function AdminResetPassword() {
+  const { token } = useParams<{ token: string }>();
+  const navigate = useNavigate();
+
+  const [validating, setValidating] = useState(true);
+  const [tokenError, setTokenError] = useState<string | null>(null);
+
+  const [formData, setFormData] = useState({
+    password: '',
+    password_confirmation: '',
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
+
+  useEffect(() => {
+    if (!token) {
+      setTokenError('Lien invalide.');
+      setValidating(false);
+      return;
+    }
+
+    const validate = async () => {
+      try {
+        const data = await adminApiService.validateResetToken(token);
+
+        // If code hasn't been verified yet, redirect back to verify page
+        if (!data.verified) {
+          navigate(`/admin/verify-code/${token}`, { replace: true });
+          return;
+        }
+      } catch (err: any) {
+        setTokenError(err?.response?.data?.message || 'Ce lien est invalide ou a expiré.');
+      } finally {
+        setValidating(false);
+      }
+    };
+
+    validate();
+  }, [token, navigate]);
+
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
+    setError(null);
+
+    if (formData.password !== formData.password_confirmation) {
+      setError('Les mots de passe ne correspondent pas.');
+      return;
+    }
+
+    if (formData.password.length < 8) {
+      setError('Le mot de passe doit contenir au moins 8 caractères.');
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      await adminApiService.resetPassword(token!, formData);
+      setSuccess(true);
+      setTimeout(() => {
+        navigate('/admin/login');
+      }, 3000);
+    } catch (err: any) {
+      setError(err?.response?.data?.message || 'Erreur lors de la réinitialisation.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // ─── Loading ───────────────────────────────────────────
+  if (validating) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-400 border-t-transparent mx-auto mb-4" />
+          <p className="text-slate-300 font-medium">Vérification du lien...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Token Error ────────────────────────────────────────
+  if (tokenError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
+            <AlertCircle className="text-red-600" size={32} />
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">Lien invalide</h1>
+          <p className="text-slate-600 mb-6">{tokenError}</p>
+          <Link
+            to="/admin/forgot-password"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+          >
+            <ArrowLeft size={16} />
+            Demander un nouveau lien
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Success ────────────────────────────────────────────
+  if (success) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+            <CheckCircle className="text-green-600" size={32} />
+          </div>
+          <h1 className="text-2xl font-bold text-slate-900 mb-2">
+            Mot de passe réinitialisé !
+          </h1>
+          <p className="text-slate-600 mb-6">
+            Vous allez être redirigé vers la page de connexion...
+          </p>
+          <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-600 border-t-transparent mx-auto" />
+        </div>
+      </div>
+    );
+  }
+
+  // ─── Reset Form ─────────────────────────────────────────
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
+      <div className="max-w-md w-full">
+        <div className="bg-white rounded-2xl shadow-2xl p-8">
+          <div className="text-center mb-8">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
+              <KeyRound className="text-blue-600" size={32} />
+            </div>
+            <h1 className="text-3xl font-bold text-slate-900 mb-2">
+              Nouveau mot de passe
+            </h1>
+            <p className="text-slate-600">
+              Choisissez un nouveau mot de passe sécurisé.
+            </p>
+          </div>
+
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-start gap-3">
+              <AlertCircle className="text-red-600 flex-shrink-0 mt-0.5" size={20} />
+              <p className="text-sm text-red-800">{error}</p>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label htmlFor="password" className="block text-sm font-medium text-slate-700 mb-2">
+                Nouveau mot de passe
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+                <input
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                  minLength={8}
+                  className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                  placeholder="••••••••"
+                />
+              </div>
+              <p className="text-xs text-slate-500 mt-1">
+                Min. 8 caractères, 1 majuscule, 1 chiffre, 1 caractère spécial (@$!%*#?&)
+              </p>
+            </div>
+
+            <div>
+              <label htmlFor="password_confirmation" className="block text-sm font-medium text-slate-700 mb-2">
+                Confirmer le mot de passe
+              </label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+                <input
+                  type="password"
+                  id="password_confirmation"
+                  name="password_confirmation"
+                  value={formData.password_confirmation}
+                  onChange={handleChange}
+                  required
+                  className="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
+                  placeholder="••••••••"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? (
+                <>
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
+                  <span>Réinitialisation...</span>
+                </>
+              ) : (
+                <>
+                  <KeyRound size={20} />
+                  <span>Réinitialiser le mot de passe</span>
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}

@@ -3,7 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminAuthController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Admin\MetricsController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PartnerController;
@@ -40,6 +43,21 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
     // -------------------- Auth Admin --------------------
     Route::prefix('admin/auth')->group(function () {
         Route::post('/login', [AdminAuthController::class, 'login'])
+            ->middleware('throttle:login');
+    });
+
+    // -------------------- Mot de passe oublié (Public) --------------------
+    Route::prefix('password-reset')->middleware('throttle:login')->group(function () {
+        Route::post('/send', [PasswordResetController::class, 'sendResetLink']);
+        Route::get('/{token}/validate', [PasswordResetController::class, 'validateToken']);
+        Route::post('/{token}/verify-code', [PasswordResetController::class, 'verifyCode']);
+        Route::post('/{token}/reset', [PasswordResetController::class, 'resetPassword']);
+    });
+
+    // -------------------- Invitations (Public) --------------------
+    Route::prefix('invitations')->group(function () {
+        Route::get('/{token}/validate', [InvitationController::class, 'validateToken']);
+        Route::post('/{token}/register', [InvitationController::class, 'register'])
             ->middleware('throttle:login');
     });
 
@@ -130,9 +148,27 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
                 Route::get('/auth/today', [MetricsController::class, 'today']);
                 Route::get('/auth/period', [MetricsController::class, 'period']);
             });
+        });
 
-            // Gestion des utilisateurs (à implémenter)
-            // Route::apiResource('users', UserController::class);
+        // -------------------- Gestion Utilisateurs & Invitations (Super Admin + Admin) --------------------
+        Route::prefix('admin')->middleware(['role:super_admin,admin'])->group(function () {
+            
+            // Utilisateurs
+            Route::prefix('users')->group(function () {
+                Route::get('/', [UserController::class, 'index']);
+                Route::get('/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
+                Route::put('/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
+                Route::put('/{id}/toggle-active', [UserController::class, 'toggleActive'])->where('id', '[0-9]+');
+                Route::put('/{id}/permissions', [UserController::class, 'updatePermissions'])->where('id', '[0-9]+');
+                Route::delete('/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
+            });
+
+            // Invitations
+            Route::prefix('invitations')->group(function () {
+                Route::get('/', [InvitationController::class, 'index']);
+                Route::post('/', [InvitationController::class, 'store']);
+                Route::delete('/{id}', [InvitationController::class, 'destroy'])->where('id', '[0-9]+');
+            });
         });
 
         // -------------------- Admin & Super Admin --------------------

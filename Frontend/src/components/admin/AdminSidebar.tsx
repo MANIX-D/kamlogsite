@@ -9,19 +9,56 @@ import {
   Calendar,
   FileText,
   X,
+  Wrench,
+  Handshake,
+  Building2,
+  Users,
 } from 'lucide-react';
+import { authService } from '../../services/auth';
 
 interface AdminSidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
+// Map sidebar items to their permission section keys
+const SECTION_MAP: Record<string, string> = {
+  '/admin/services': 'services',
+  '/admin/partners': 'partners',
+  '/admin/infrastructures': 'infrastructures',
+  '/admin/actualites': 'actualites',
+  '/admin/announcements': 'announcements',
+  '/admin/job-offers': 'job_offers',
+  '/admin/quotes': 'quotes',
+  '/admin/messages': 'messages',
+  '/admin/newsletter': 'newsletter',
+  '/admin/visit-requests': 'visit_requests',
+};
+
 export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
+  const user = authService.getUser();
+  const isEditorOrHigher = user?.role === 'super_admin' || user?.role === 'admin';
+
   const navItems = [
     {
       to: '/admin/dashboard',
       icon: LayoutDashboard,
       label: 'Dashboard',
+    },
+    {
+      to: '/admin/services',
+      icon: Wrench,
+      label: 'Services',
+    },
+    {
+      to: '/admin/partners',
+      icon: Handshake,
+      label: 'Partenaires',
+    },
+    {
+      to: '/admin/infrastructures',
+      icon: Building2,
+      label: 'Infrastructures',
     },
     {
       to: '/admin/actualites',
@@ -60,6 +97,17 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
     },
   ];
 
+  // Filter nav items based on editor permissions
+  const filteredNavItems = navItems.filter(item => {
+    const section = SECTION_MAP[item.to];
+    // Dashboard is always visible
+    if (!section) return true;
+    // super_admin and admin see everything
+    if (isEditorOrHigher) return true;
+    // editor: check permissions
+    return authService.hasPermission(section, 'read');
+  });
+
   return (
     <>
       <div
@@ -85,7 +133,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
         </div>
 
         <nav className="p-4 space-y-2">
-          {navItems.map((item) => {
+          {filteredNavItems.map((item) => {
             const Icon = item.icon;
             return (
               <NavLink
@@ -105,6 +153,31 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
               </NavLink>
             );
           })}
+
+          {/* Utilisateurs & Rôles — visible uniquement pour super_admin et admin */}
+          {isEditorOrHigher && (
+            <>
+              <div className="pt-4 pb-2 px-4">
+                <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
+                  Administration
+                </p>
+              </div>
+              <NavLink
+                to="/admin/users"
+                onClick={() => onClose()}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
+                    isActive
+                      ? 'bg-blue-600 text-white'
+                      : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                  }`
+                }
+              >
+                <Users size={20} />
+                <span className="font-medium">Utilisateurs & Rôles</span>
+              </NavLink>
+            </>
+          )}
         </nav>
       </aside>
     </>

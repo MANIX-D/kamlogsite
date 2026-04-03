@@ -29,12 +29,20 @@ export default function NewsPage() {
     fetchNews();
   }, [activeFilter, currentPage]);
 
+  // Map frontend filter types to backend DB types
+  const typeMap: Record<string, string | undefined> = {
+    all: undefined,
+    article: 'article',
+    announcement: 'annonce',
+    job: 'offre',
+  };
+
   const fetchNews = async () => {
     setLoading(true);
     setError(null);
     try {
       const params = {
-        type: activeFilter === 'all' ? undefined : activeFilter,
+        type: typeMap[activeFilter],
         page: currentPage,
         per_page: 9,
       };
@@ -83,7 +91,9 @@ export default function NewsPage() {
   };
 
   const formatDate = (dateString: string) => {
+    if (!dateString) return '—';
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '—';
     return new Intl.DateTimeFormat('fr-FR', {
       year: 'numeric',
       month: 'long',

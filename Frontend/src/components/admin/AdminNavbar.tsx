@@ -10,8 +10,8 @@ export default function AdminNavbar({ onMenuClick }: AdminNavbarProps) {
   const navigate = useNavigate();
   const user = authService.getUser();
 
-  const handleLogout = () => {
-    authService.logout();
+  const handleLogout = async () => {
+    await authService.logout();
     navigate('/admin/login');
   };
 

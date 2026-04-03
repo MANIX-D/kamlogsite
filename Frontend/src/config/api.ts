@@ -35,5 +35,21 @@ export const API_ENDPOINTS = {
     dashboard: '/admin/dashboard',
     files: '/admin/files',
     storage: '/admin/storage',
+    users: '/admin/users',
+    invitations: '/admin/invitations',
+  },
+
+  // Public invitation routes (no auth required)
+  invitations: {
+    validate: (token: string) => `/invitations/${token}/validate`,
+    register: (token: string) => `/invitations/${token}/register`,
+  },
+
+  // Public password reset routes (no auth required)
+  passwordReset: {
+    send: '/password-reset/send',
+    validate: (token: string) => `/password-reset/${token}/validate`,
+    verifyCode: (token: string) => `/password-reset/${token}/verify-code`,
+    reset: (token: string) => `/password-reset/${token}/reset`,
   },
 };

@@ -76,6 +76,7 @@ class AdminAuthController extends Controller
                 ],
                 'token' => $token,
                 'abilities' => $abilities,
+                'permissions' => $admin->getFormattedPermissions(),
             ],
         ], 200);
     }
@@ -144,6 +145,7 @@ class AdminAuthController extends Controller
                 'is_active' => $admin->is_active,
                 'last_login_at' => $admin->last_login_at,
                 'created_at' => $admin->created_at,
+                'permissions' => $admin->getFormattedPermissions(),
             ],
         ], 200);
     }
