@@ -7,7 +7,7 @@ export const API_ENDPOINTS = {
   partners: '/partners',
   infrastructures: '/infrastructures',
   contact: '/contact',
-  newsletter: '/newsletter',
+  newsletter: '/newsletter/subscribe',
   visitRequest: '/visit-requests',
   quoteRequest: '/quote-requests',
   uploadCV: '/upload/cv',

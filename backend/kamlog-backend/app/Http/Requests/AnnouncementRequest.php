@@ -25,7 +25,7 @@ class AnnouncementRequest extends FormRequest
             'is_active' => ['nullable', 'boolean'],
             'is_popup' => ['nullable', 'boolean'],
             'start_date' => ['nullable', 'date'],
-            'end_date' => ['nullable', 'date', 'after:start_date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:start_date'],
         ];
     }
 

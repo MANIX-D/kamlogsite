@@ -4,7 +4,6 @@ import { API_BASE_URL } from '../config/api';
 const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
     'Accept': 'application/json',
   },
   withCredentials: true,

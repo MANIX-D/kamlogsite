@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Mail, CheckCircle } from 'lucide-react';
+import { Mail, CheckCircle, Trash2 } from 'lucide-react';
 import { adminApiService, Message } from '../../services/adminApi';
 
 export default function AdminMessages() {
@@ -29,6 +29,17 @@ export default function AdminMessages() {
     } catch (err) {
       console.error('Error marking message as read:', err);
       alert('Erreur lors de la mise à jour');
+    }
+  };
+
+  const handleDelete = async (message: Message) => {
+    if (!confirm('Êtes-vous sûr de vouloir supprimer ce message ?')) return;
+    try {
+      await adminApiService.deleteMessage(message.id);
+      fetchMessages();
+    } catch (err) {
+      console.error('Error deleting message:', err);
+      alert('Erreur lors de la suppression');
     }
   };
 
@@ -100,6 +111,13 @@ export default function AdminMessages() {
                     <span>Marquer comme lu</span>
                   </button>
                 )}
+                <button
+                  onClick={() => handleDelete(message)}
+                  className="flex items-center gap-2 px-3 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
+                >
+                  <Trash2 size={16} />
+                  <span>Supprimer</span>
+                </button>
               </div>
 
               <div className="mb-3">

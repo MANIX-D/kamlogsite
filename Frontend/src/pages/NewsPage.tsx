@@ -29,20 +29,12 @@ export default function NewsPage() {
     fetchNews();
   }, [activeFilter, currentPage]);
 
-  // Map frontend filter types to backend DB types
-  const typeMap: Record<string, string | undefined> = {
-    all: undefined,
-    article: 'article',
-    announcement: 'annonce',
-    job: 'offre',
-  };
-
   const fetchNews = async () => {
     setLoading(true);
     setError(null);
     try {
       const params = {
-        type: typeMap[activeFilter],
+        type: activeFilter === 'all' ? undefined : activeFilter,
         page: currentPage,
         per_page: 9,
       };
@@ -90,8 +82,10 @@ export default function NewsPage() {
     }
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString: string | null | undefined) => {
+    if (!dateString) return '—';
     const date = new Date(dateString);
+    if (isNaN(date.getTime())) return '—';
     return new Intl.DateTimeFormat('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -192,8 +186,7 @@ export default function NewsPage() {
               {news.map((item, index) => {
                 const TypeIcon = getTypeIcon(item.type);
                 const isJob = item.type === 'job';
-                const hasDetailPage = isJob;
-                const linkTo = isJob ? `/jobs/${item.id}` : '#';
+                const linkTo = isJob ? `/jobs/${item.id}` : `/news/${item.id}`;
 
                 const cardContent = (
                   <>
@@ -242,19 +235,17 @@ export default function NewsPage() {
                         </div>
                       )}
 
-                      {hasDetailPage && (
-                        <div className="flex items-center text-[#1f3878] font-bold text-sm group-hover:gap-2 transition-all duration-300">
-                          {t('news.readMore')}
-                          <span className="ml-1 group-hover:translate-x-2 transition-transform duration-300 inline-block">→</span>
-                        </div>
-                      )}
+                      <div className="flex items-center text-[#1f3878] font-bold text-sm group-hover:gap-2 transition-all duration-300">
+                        {t('news.readMore')}
+                        <span className="ml-1 group-hover:translate-x-2 transition-transform duration-300 inline-block">→</span>
+                      </div>
                     </div>
                   </>
                 );
 
                 const cardClass = `bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group opacity-0 animate-fadeInUp`;
 
-                return hasDetailPage ? (
+                return (
                   <Link
                     key={item.id}
                     to={linkTo}
@@ -263,14 +254,6 @@ export default function NewsPage() {
                   >
                     {cardContent}
                   </Link>
-                ) : (
-                  <div
-                    key={item.id}
-                    className={cardClass}
-                    style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
-                  >
-                    {cardContent}
-                  </div>
                 );
               })}
             </div>

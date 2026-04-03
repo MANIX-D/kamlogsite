@@ -126,7 +126,14 @@ class NewsController extends Controller
      */
     public function store(NewsRequest $request): JsonResponse
     {
-        $news = News::create($request->validated());
+        $data = $request->validated();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('news', 'public');
+        }
+
+        $news = News::create($data);
 
         // Invalider le cache
         $this->flushCache();
@@ -145,7 +152,14 @@ class NewsController extends Controller
             return $this->notFoundResponse('Actualité non trouvée');
         }
 
-        $news->update($request->validated());
+        $data = $request->validated();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('news', 'public');
+        }
+
+        $news->update($data);
 
         // Invalider le cache
         $this->flushCache();

@@ -74,7 +74,19 @@ class InfrastructureController extends Controller
      */
     public function store(InfrastructureRequest $request): JsonResponse
     {
-        $infrastructure = Infrastructure::create($request->validated());
+        $data = $request->validated();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('infrastructures', 'public');
+        }
+
+        // Default type if not provided
+        if (empty($data['type'])) {
+            $data['type'] = 'autre';
+        }
+
+        $infrastructure = Infrastructure::create($data);
 
         $this->flushCache();
 
@@ -92,7 +104,14 @@ class InfrastructureController extends Controller
             return $this->notFoundResponse('Infrastructure non trouvée');
         }
 
-        $infrastructure->update($request->validated());
+        $data = $request->validated();
+
+        // Handle image upload
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->file('image')->store('infrastructures', 'public');
+        }
+
+        $infrastructure->update($data);
 
         $this->flushCache();
 

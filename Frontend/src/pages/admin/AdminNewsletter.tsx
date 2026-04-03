@@ -35,12 +35,17 @@ export default function AdminNewsletter() {
   };
 
   const handleExport = () => {
-    const emails = subscribers.map((s) => s.email).join('\n');
-    const blob = new Blob([emails], { type: 'text/plain' });
+    const csvHeader = 'Email,Date d\'inscription\n';
+    const csvRows = subscribers.map((s) => {
+      const date = new Date(s.created_at).toLocaleDateString('fr-FR');
+      return `${s.email},${date}`;
+    }).join('\n');
+    const csvContent = csvHeader + csvRows;
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' });
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `newsletter-subscribers-${new Date().toISOString().split('T')[0]}.txt`;
+    a.download = `newsletter-subscribers-${new Date().toISOString().split('T')[0]}.csv`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

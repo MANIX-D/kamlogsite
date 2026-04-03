@@ -5,9 +5,11 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
+import ServiceDetailPage from './pages/ServiceDetailPage';
 import InfrastructuresPage from './pages/InfrastructuresPage';
 import PartnersPage from './pages/PartnersPage';
 import NewsPage from './pages/NewsPage';
+import NewsDetailPage from './pages/NewsDetailPage';
 import ContactPage from './pages/ContactPage';
 import JobDetailPage from './pages/JobDetailPage';
 import AdminLogin from './pages/admin/AdminLogin';
@@ -90,9 +92,11 @@ function App() {
                 <Route path="/" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/services" element={<ServicesPage />} />
+                <Route path="/services/:id" element={<ServiceDetailPage />} />
                 <Route path="/infrastructures" element={<InfrastructuresPage />} />
                 <Route path="/partners" element={<PartnersPage />} />
                 <Route path="/news" element={<NewsPage />} />
+                <Route path="/news/:id" element={<NewsDetailPage />} />
                 <Route path="/jobs/:id" element={<JobDetailPage />} />
                 <Route path="/contact" element={<ContactPage />} />
               </Routes>

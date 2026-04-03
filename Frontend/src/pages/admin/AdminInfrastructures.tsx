@@ -19,6 +19,7 @@ export default function AdminInfrastructures() {
     description_en: '',
     surface: '',
     capacite: '',
+    type: 'autre',
     image: null as File | null,
   });
 
@@ -48,6 +49,7 @@ export default function AdminInfrastructures() {
         description_en: item.description_en,
         surface: item.surface || '',
         capacite: item.capacite || '',
+        type: (item as any).type || 'autre',
         image: null,
       });
       if (item.image) {
@@ -62,6 +64,7 @@ export default function AdminInfrastructures() {
         description_en: '',
         surface: '',
         capacite: '',
+        type: 'autre',
         image: null,
       });
       setImagePreview(null);
@@ -99,6 +102,7 @@ export default function AdminInfrastructures() {
       submitData.append('description_en', formData.description_en);
       submitData.append('surface', formData.surface);
       submitData.append('capacite', formData.capacite);
+      submitData.append('type', formData.type);
       if (formData.image) {
         submitData.append('image', formData.image);
       }
@@ -219,7 +223,7 @@ export default function AdminInfrastructures() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Surface
@@ -248,6 +252,25 @@ export default function AdminInfrastructures() {
                 placeholder="Ex: 1000 conteneurs"
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Type
+              </label>
+              <select
+                value={formData.type}
+                onChange={(e) =>
+                  setFormData({ ...formData, type: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="entrepot">Entrepôt</option>
+                <option value="bureau">Bureau</option>
+                <option value="atelier">Atelier</option>
+                <option value="showroom">Showroom</option>
+                <option value="autre">Autre</option>
+              </select>
             </div>
           </div>
 

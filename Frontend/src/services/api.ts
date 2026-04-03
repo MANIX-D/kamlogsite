@@ -56,7 +56,7 @@ export interface Actualite {
   titre_en: string;
   contenu_fr: string;
   contenu_en: string;
-  type: 'article' | 'announcement' | 'job';
+  type: 'article' | 'annonce' | 'offre';
   image?: string;
   date_publication: string;
   created_at: string;

@@ -79,7 +79,22 @@ class PartnerController extends Controller
      */
     public function store(PartnerRequest $request): JsonResponse
     {
-        $partner = Partner::create($request->validated());
+        $data = $request->validated();
+
+        // Handle logo upload
+        if ($request->hasFile('logo_url')) {
+            $data['logo_url'] = $request->file('logo_url')->store('partners', 'public');
+        }
+
+        // Set defaults if not provided
+        if (empty($data['category'])) {
+            $data['category'] = 'autre';
+        }
+        if (empty($data['partnership_level'])) {
+            $data['partnership_level'] = 'standard';
+        }
+
+        $partner = Partner::create($data);
 
         $this->flushCache();
 
@@ -97,7 +112,14 @@ class PartnerController extends Controller
             return $this->notFoundResponse('Partenaire non trouvé');
         }
 
-        $partner->update($request->validated());
+        $data = $request->validated();
+
+        // Handle logo upload
+        if ($request->hasFile('logo_url')) {
+            $data['logo_url'] = $request->file('logo_url')->store('partners', 'public');
+        }
+
+        $partner->update($data);
 
         $this->flushCache();
 

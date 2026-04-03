@@ -267,6 +267,15 @@ class AdminApiService {
   }
 
   async updateVisitRequestStatus(id: number, status: 'pending' | 'confirmed' | 'cancelled'): Promise<VisitRequest> {
+    if (status === 'confirmed') {
+      const res = await post<ApiResponse<VisitRequest>>(`${API_ENDPOINTS.admin.visitRequests}/${id}/confirm`, {});
+      return res.data;
+    }
+    if (status === 'cancelled') {
+      const res = await post<ApiResponse<VisitRequest>>(`${API_ENDPOINTS.admin.visitRequests}/${id}/cancel`, {});
+      return res.data;
+    }
+    // For 'pending', use PUT to reset status
     const res = await put<ApiResponse<VisitRequest>>(`${API_ENDPOINTS.admin.visitRequests}/${id}`, { status });
     return res.data;
   }

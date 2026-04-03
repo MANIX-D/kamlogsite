@@ -95,23 +95,42 @@ export default function AdminActualites() {
     setSubmitting(true);
 
     try {
-      const submitData: Record<string, any> = {
-        titre_fr: formData.titre_fr,
-        titre_en: formData.titre_en,
-        contenu_fr: formData.contenu_fr,
-        contenu_en: formData.contenu_en,
-        type: formData.type,
-        date_publication: formData.date_publication,
-      };
-      // image field expects a URL string, not a File object
-      if (editingItem?.image && !formData.image) {
-        submitData.image = editingItem.image;
-      }
+      if (formData.image) {
+        // Use FormData when an image file is selected
+        const submitData = new FormData();
+        submitData.append('titre_fr', formData.titre_fr);
+        submitData.append('titre_en', formData.titre_en);
+        submitData.append('contenu_fr', formData.contenu_fr);
+        submitData.append('contenu_en', formData.contenu_en);
+        submitData.append('type', formData.type);
+        submitData.append('date_publication', formData.date_publication);
+        submitData.append('image', formData.image);
 
-      if (editingItem) {
-        await adminApiService.updateActualite(editingItem.id, submitData);
+        if (editingItem) {
+          submitData.append('_method', 'PUT');
+          await adminApiService.updateActualite(editingItem.id, submitData as any);
+        } else {
+          await adminApiService.createActualite(submitData as any);
+        }
       } else {
-        await adminApiService.createActualite(submitData);
+        // No image file — send as JSON
+        const submitData: Record<string, any> = {
+          titre_fr: formData.titre_fr,
+          titre_en: formData.titre_en,
+          contenu_fr: formData.contenu_fr,
+          contenu_en: formData.contenu_en,
+          type: formData.type,
+          date_publication: formData.date_publication,
+        };
+        if (editingItem?.image) {
+          submitData.image = editingItem.image;
+        }
+
+        if (editingItem) {
+          await adminApiService.updateActualite(editingItem.id, submitData);
+        } else {
+          await adminApiService.createActualite(submitData);
+        }
       }
 
       fetchActualites();
@@ -166,8 +185,10 @@ export default function AdminActualites() {
     {
       key: 'date_publication',
       label: 'Date',
-      render: (item: Actualite) =>
-        new Date(item.date_publication).toLocaleDateString('fr-FR'),
+      render: (item: Actualite) => {
+        const d = new Date(item.date_publication);
+        return isNaN(d.getTime()) ? '—' : d.toLocaleDateString('fr-FR');
+      },
     },
   ];
 

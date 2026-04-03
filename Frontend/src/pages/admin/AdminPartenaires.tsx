@@ -237,14 +237,20 @@ export default function AdminPartenaires() {
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Catégorie
               </label>
-              <input
-                type="text"
+              <select
                 value={formData.category}
                 onChange={(e) =>
                   setFormData({ ...formData, category: e.target.value })
                 }
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
+              >
+                <option value="">-- Sélectionner --</option>
+                <option value="logistique">Logistique</option>
+                <option value="transport">Transport</option>
+                <option value="technologie">Technologie</option>
+                <option value="financier">Financier</option>
+                <option value="autre">Autre</option>
+              </select>
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">

@@ -97,9 +97,10 @@ export default function ServicesPage() {
                 const color = colors[index % colors.length];
 
                 return (
-                  <div
+                  <Link
                     key={service.id}
-                    className={`bg-gradient-to-br ${color.bg} rounded-2xl p-8 border-2 ${color.border} hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1`}
+                    to={`/services/${service.id}`}
+                    className={`block bg-gradient-to-br ${color.bg} rounded-2xl p-8 border-2 ${color.border} hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1`}
                     style={{ animationDelay: `${index * 100}ms` }}
                   >
                     <div className={`w-14 h-14 ${color.iconBg} rounded-xl flex items-center justify-center mb-6`}>
@@ -110,10 +111,13 @@ export default function ServicesPage() {
                     <h3 className="text-xl font-bold text-[#1F3878] mb-3">
                       {lang === 'fr' ? service.nom_fr : service.nom_en}
                     </h3>
-                    <p className="text-gray-700 leading-relaxed">
+                    <p className="text-gray-700 leading-relaxed mb-4">
                       {lang === 'fr' ? service.description_fr : service.description_en}
                     </p>
-                  </div>
+                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#1F3878]">
+                      {t('services.page.learnMore', 'En savoir plus')} →
+                    </span>
+                  </Link>
                 );
               })}
             </div>

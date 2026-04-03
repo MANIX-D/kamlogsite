@@ -30,6 +30,7 @@ class NewsRequest extends FormRequest
     public function rules(): array
     {
         $newsId = $this->route('id') ?? $this->route('news');
+        $isUpdate = $this->isMethod('put') || $this->isMethod('patch') || $this->input('_method') === 'PUT';
         
         return [
             'titre_fr' => ['required', 'string', 'max:255'],
@@ -39,7 +40,7 @@ class NewsRequest extends FormRequest
             'slug_fr' => ['required', 'string', 'max:255', 'unique:news,slug_fr,' . $newsId],
             'slug_en' => ['required', 'string', 'max:255', 'unique:news,slug_en,' . $newsId],
             'type' => ['required', 'in:article,annonce,offre'],
-            'image' => ['nullable', 'string', 'max:255'],
+            'image' => [$isUpdate ? 'nullable' : 'nullable', 'sometimes'],
             'image_alt_fr' => ['nullable', 'string', 'max:255'],
             'image_alt_en' => ['nullable', 'string', 'max:255'],
             'date_publication' => ['nullable', 'date'],
