@@ -11,9 +11,13 @@ export interface Announcement {
   content_fr: string;
   content_en: string;
   image?: string;
+  type: 'info' | 'alerte' | 'maintenance' | 'promotion';
   is_active: boolean;
-  priority: number;
-  published_at: string;
+  priority: 'low' | 'normal' | 'high' | 'urgent';
+  is_popup?: boolean;
+  start_date?: string;
+  end_date?: string;
+  published_at?: string;
   expires_at?: string;
   created_at: string;
   updated_at: string;

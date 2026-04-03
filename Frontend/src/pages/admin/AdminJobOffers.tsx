@@ -21,7 +21,7 @@ export default function AdminJobOffers() {
     requirements_en: '',
     location: '',
     contract_type: 'CDI',
-    experience_level: 'Débutant',
+    experience_level: 'junior',
     salary_range: '',
     application_deadline: '',
     is_active: true,
@@ -53,7 +53,7 @@ export default function AdminJobOffers() {
       requirements_en: '',
       location: '',
       contract_type: 'CDI',
-      experience_level: 'Débutant',
+      experience_level: 'junior',
       salary_range: '',
       application_deadline: '',
       is_active: true,
@@ -302,10 +302,10 @@ export default function AdminJobOffers() {
                 onChange={(e) => setFormData({ ...formData, experience_level: e.target.value })}
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
-                <option value="Débutant">Débutant</option>
-                <option value="Intermédiaire">Intermédiaire</option>
-                <option value="Confirmé">Confirmé</option>
-                <option value="Expert">Expert</option>
+                <option value="junior">Débutant</option>
+                <option value="confirme">Confirmé</option>
+                <option value="senior">Senior</option>
+                <option value="expert">Expert</option>
               </select>
             </div>
             <div>

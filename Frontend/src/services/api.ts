@@ -1,6 +1,42 @@
 import { get, post } from './apiClient';
 import { API_ENDPOINTS } from '../config/api';
 
+// ── Helpers ──────────────────────────────────────────────
+
+const getLang = (): 'fr' | 'en' => {
+  const lang = localStorage.getItem('i18nextLng') || 'fr';
+  return lang.startsWith('en') ? 'en' : 'fr';
+};
+
+const localized = (item: any, field: string): string => {
+  const lang = getLang();
+  return item[`${field}_${lang}`] || item[`${field}_fr`] || '';
+};
+
+const stripHtml = (html: string): string =>
+  html.replace(/<[^>]*>/g, '').replace(/&[^;]+;/g, ' ').trim();
+
+const makeExcerpt = (html: string, maxLen = 160): string => {
+  const text = stripHtml(html);
+  return text.length > maxLen ? text.substring(0, maxLen) + '...' : text;
+};
+
+// ── Actual API response structure from the backend ──────
+
+interface ApiSuccessResponse<T> {
+  success: boolean;
+  data: T;
+  message?: string;
+  pagination?: {
+    current_page: number;
+    last_page: number;
+    per_page: number;
+    total: number;
+  };
+}
+
+// ── Public Interfaces ────────────────────────────────────
+
 export interface Service {
   id: number;
   nom_fr: string;
@@ -35,7 +71,31 @@ export interface NewsItem {
   type: 'article' | 'announcement' | 'job';
   image_url?: string;
   published_at: string;
+  date_publication?: string;
   location?: string;
+  slug?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface JobOffer {
+  id: number;
+  title: string;
+  content: string;
+  requirements?: string;
+  benefits?: string;
+  location: string;
+  contract_type: string;
+  experience_level: string;
+  salary_range?: string;
+  department?: string;
+  application_deadline?: string;
+  is_active: boolean;
+  is_urgent: boolean;
+  applications_count?: number;
+  image_url?: string;
+  published_at: string;
+  skills: string[];
   created_at: string;
   updated_at: string;
 }
@@ -96,6 +156,7 @@ export interface VisitRequest {
 }
 
 export interface ApiResponse<T> {
+  success: boolean;
   data: T;
   message?: string;
 }
@@ -108,9 +169,84 @@ export interface PaginatedResponse<T> {
   total: number;
 }
 
+// ── Data mappers ─────────────────────────────────────────
+
+function mapNewsItem(raw: any): NewsItem {
+  return {
+    id: raw.id,
+    title: raw.titre_fr ? localized(raw, 'titre') : localized(raw, 'title'),
+    excerpt: makeExcerpt(raw.contenu_fr ? localized(raw, 'contenu') : localized(raw, 'content')),
+    content: raw.contenu_fr ? localized(raw, 'contenu') : localized(raw, 'content'),
+    type: raw.type,
+    image_url: raw.image || undefined,
+    published_at: raw.date_publication || raw.created_at,
+    date_publication: raw.date_publication,
+    location: raw.location,
+    slug: raw.slug_fr ? localized(raw, 'slug') : undefined,
+    created_at: raw.created_at,
+    updated_at: raw.updated_at,
+  };
+}
+
+function mapJobOffer(raw: any): JobOffer {
+  return {
+    id: raw.id,
+    title: localized(raw, 'title'),
+    content: localized(raw, 'description'),
+    requirements: localized(raw, 'requirements') || undefined,
+    benefits: localized(raw, 'benefits') || undefined,
+    location: raw.location || '',
+    contract_type: raw.contract_type || '',
+    experience_level: raw.experience_level || '',
+    salary_range: raw.salary_range,
+    department: raw.department,
+    application_deadline: raw.application_deadline,
+    is_active: raw.is_active,
+    is_urgent: raw.is_urgent,
+    applications_count: raw.job_applications_count || raw.applications_count,
+    image_url: raw.image || undefined,
+    published_at: raw.created_at,
+    skills: [],
+    created_at: raw.created_at,
+    updated_at: raw.updated_at,
+  };
+}
+
+function mapJobToNewsItem(raw: any): NewsItem {
+  return {
+    id: raw.id,
+    title: localized(raw, 'title'),
+    excerpt: makeExcerpt(localized(raw, 'description')),
+    content: localized(raw, 'description'),
+    type: 'job',
+    image_url: raw.image || undefined,
+    published_at: raw.created_at,
+    location: raw.location,
+    created_at: raw.created_at,
+    updated_at: raw.updated_at,
+  };
+}
+
+function mapAnnouncementToNewsItem(raw: any): NewsItem {
+  return {
+    id: raw.id,
+    title: localized(raw, 'title'),
+    excerpt: makeExcerpt(localized(raw, 'content')),
+    content: localized(raw, 'content'),
+    type: 'announcement',
+    image_url: raw.image || undefined,
+    published_at: raw.start_date || raw.created_at,
+    created_at: raw.created_at,
+    updated_at: raw.updated_at,
+  };
+}
+
+// ── API Service ──────────────────────────────────────────
+
 class ApiService {
   async getServices(): Promise<Service[]> {
-    return get<Service[]>(API_ENDPOINTS.services);
+    const res = await get<ApiSuccessResponse<Service[]>>(API_ENDPOINTS.services);
+    return res.data;
   }
 
   async getActualites(params?: {
@@ -118,19 +254,20 @@ class ApiService {
     page?: number;
     per_page?: number;
   }): Promise<PaginatedResponse<Actualite>> {
-    const searchParams = new URLSearchParams();
-    if (params?.type) searchParams.append('type', params.type);
-    if (params?.page) searchParams.append('page', params.page.toString());
-    if (params?.per_page) searchParams.append('per_page', params.per_page.toString());
-
-    const query = searchParams.toString();
-    const endpoint = `${API_ENDPOINTS.actualites}${query ? `?${query}` : ''}`;
-
-    return get<PaginatedResponse<Actualite>>(endpoint);
+    const endpoint = this.buildUrl(API_ENDPOINTS.actualites, params);
+    const res = await get<ApiSuccessResponse<Actualite[]>>(endpoint);
+    return {
+      data: res.data || [],
+      current_page: res.pagination?.current_page || 1,
+      last_page: res.pagination?.last_page || 1,
+      per_page: res.pagination?.per_page || 12,
+      total: res.pagination?.total || (res.data || []).length,
+    };
   }
 
   async getActualite(id: number): Promise<Actualite> {
-    return get<Actualite>(`${API_ENDPOINTS.actualites}/${id}`);
+    const res = await get<ApiSuccessResponse<Actualite>>(`${API_ENDPOINTS.actualites}/${id}`);
+    return res.data;
   }
 
   async getNews(params?: {
@@ -138,23 +275,72 @@ class ApiService {
     page?: number;
     per_page?: number;
   }): Promise<PaginatedResponse<NewsItem>> {
-    const searchParams = new URLSearchParams();
-    if (params?.type) searchParams.append('type', params.type);
-    if (params?.page) searchParams.append('page', params.page.toString());
-    if (params?.per_page) searchParams.append('per_page', params.per_page.toString());
+    const type = params?.type;
+    const page = params?.page || 1;
+    const perPage = params?.per_page || 9;
 
-    const query = searchParams.toString();
-    const endpoint = `${API_ENDPOINTS.actualites}${query ? `?${query}` : ''}`;
+    // Single-type filters: fetch from the dedicated endpoint
+    if (type === 'article') {
+      const endpoint = this.buildUrl(API_ENDPOINTS.actualites, { page, per_page: perPage });
+      const res = await get<ApiSuccessResponse<any[]>>(endpoint);
+      return this.wrapPaginated(res, mapNewsItem);
+    }
 
-    return get<PaginatedResponse<NewsItem>>(endpoint);
+    if (type === 'job') {
+      const endpoint = this.buildUrl('/jobs', { page, per_page: perPage });
+      const res = await get<ApiSuccessResponse<any[]>>(endpoint);
+      return this.wrapPaginated(res, mapJobToNewsItem);
+    }
+
+    if (type === 'announcement') {
+      const endpoint = this.buildUrl('/announcements', { page, per_page: perPage });
+      const res = await get<ApiSuccessResponse<any[]>>(endpoint);
+      return this.wrapPaginated(res, mapAnnouncementToNewsItem);
+    }
+
+    // "all" — fetch from all 3 endpoints in parallel and combine
+    const [newsRes, jobsRes, announcementsRes] = await Promise.all([
+      get<ApiSuccessResponse<any[]>>(this.buildUrl(API_ENDPOINTS.actualites, { per_page: 50 })),
+      get<ApiSuccessResponse<any[]>>(this.buildUrl('/jobs', { per_page: 50 })),
+      get<ApiSuccessResponse<any[]>>(this.buildUrl('/announcements', { per_page: 50 })),
+    ]);
+
+    const allItems = [
+      ...(newsRes.data || []).map(mapNewsItem),
+      ...(jobsRes.data || []).map(mapJobToNewsItem),
+      ...(announcementsRes.data || []).map(mapAnnouncementToNewsItem),
+    ].sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
+
+    const start = (page - 1) * perPage;
+    const paged = allItems.slice(start, start + perPage);
+
+    return {
+      data: paged,
+      current_page: page,
+      last_page: Math.ceil(allItems.length / perPage) || 1,
+      per_page: perPage,
+      total: allItems.length,
+    };
+  }
+
+  async getNewsItem(id: number): Promise<NewsItem> {
+    const res = await get<ApiSuccessResponse<any>>(`${API_ENDPOINTS.actualites}/${id}`);
+    return mapNewsItem(res.data);
+  }
+
+  async getJobOffer(id: number): Promise<ApiResponse<JobOffer>> {
+    const res = await get<ApiSuccessResponse<any>>(`/jobs/${id}`);
+    return { success: res.success, data: mapJobOffer(res.data), message: res.message };
   }
 
   async getPartners(): Promise<Partner[]> {
-    return get<Partner[]>(API_ENDPOINTS.partners);
+    const res = await get<ApiSuccessResponse<Partner[]>>(API_ENDPOINTS.partners);
+    return res.data;
   }
 
   async getInfrastructures(): Promise<Infrastructure[]> {
-    return get<Infrastructure[]>(API_ENDPOINTS.infrastructures);
+    const res = await get<ApiSuccessResponse<Infrastructure[]>>(API_ENDPOINTS.infrastructures);
+    return res.data;
   }
 
   async submitContactForm(data: ContactMessage): Promise<ApiResponse<any>> {
@@ -173,11 +359,37 @@ class ApiService {
     jobId: number,
     formData: FormData
   ): Promise<ApiResponse<any>> {
-    return post<ApiResponse<any>>(`${API_ENDPOINTS.actualites}/${jobId}/apply`, formData);
+    return post<ApiResponse<any>>(`/jobs/${jobId}/apply`, formData);
   }
 
   async submitQuoteRequest(data: any): Promise<ApiResponse<any>> {
     return post<ApiResponse<any>>(API_ENDPOINTS.quoteRequest, data);
+  }
+
+  private wrapPaginated<T>(
+    res: ApiSuccessResponse<any[]>,
+    mapper: (raw: any) => T
+  ): PaginatedResponse<T> {
+    return {
+      data: (res.data || []).map(mapper),
+      current_page: res.pagination?.current_page || 1,
+      last_page: res.pagination?.last_page || 1,
+      per_page: res.pagination?.per_page || 12,
+      total: res.pagination?.total || (res.data || []).length,
+    };
+  }
+
+  private buildUrl(base: string, params?: Record<string, any>): string {
+    const searchParams = new URLSearchParams();
+    if (params) {
+      Object.entries(params).forEach(([key, val]) => {
+        if (val !== undefined && val !== null) {
+          searchParams.append(key, val.toString());
+        }
+      });
+    }
+    const query = searchParams.toString();
+    return query ? `${base}?${query}` : base;
   }
 }
 

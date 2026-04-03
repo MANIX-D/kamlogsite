@@ -17,6 +17,7 @@ export default function AdminAnnouncements() {
     title_en: '',
     content_fr: '',
     content_en: '',
+    type: 'info' as string,
     priority: 'normal' as string,
     is_active: true,
   });
@@ -43,6 +44,7 @@ export default function AdminAnnouncements() {
       title_en: '',
       content_fr: '',
       content_en: '',
+      type: 'info',
       priority: 'normal',
       is_active: true,
     });
@@ -56,6 +58,7 @@ export default function AdminAnnouncements() {
       title_en: announcement.title_en,
       content_fr: announcement.content_fr,
       content_en: announcement.content_en,
+      type: (announcement as any).type || 'info',
       priority: String(announcement.priority || 'normal'),
       is_active: announcement.is_active,
     });
@@ -81,7 +84,7 @@ export default function AdminAnnouncements() {
       if (editingAnnouncement) {
         await adminApiService.updateAnnouncement(editingAnnouncement.id, formData as any);
       } else {
-        await adminApiService.createAnnouncement(formData);
+        await adminApiService.createAnnouncement(formData as any);
       }
       setIsModalOpen(false);
       await loadAnnouncements();
@@ -208,6 +211,19 @@ export default function AdminAnnouncements() {
           </div>
 
           <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">Type</label>
+              <select
+                value={formData.type}
+                onChange={(e) => setFormData({ ...formData, type: e.target.value })}
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="info">Information</option>
+                <option value="alerte">Alerte</option>
+                <option value="maintenance">Maintenance</option>
+                <option value="promotion">Promotion</option>
+              </select>
+            </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">Priorité</label>
               <select

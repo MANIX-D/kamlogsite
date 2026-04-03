@@ -91,9 +91,7 @@ export default function NewsPage() {
   };
 
   const formatDate = (dateString: string) => {
-    if (!dateString) return '—';
     const date = new Date(dateString);
-    if (isNaN(date.getTime())) return '—';
     return new Intl.DateTimeFormat('fr-FR', {
       year: 'numeric',
       month: 'long',
@@ -194,15 +192,11 @@ export default function NewsPage() {
               {news.map((item, index) => {
                 const TypeIcon = getTypeIcon(item.type);
                 const isJob = item.type === 'job';
-                const linkTo = isJob ? `/jobs/${item.id}` : `/news/${item.id}`;
+                const hasDetailPage = isJob;
+                const linkTo = isJob ? `/jobs/${item.id}` : '#';
 
-                return (
-                  <Link
-                    key={item.id}
-                    to={linkTo}
-                    className={`bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group opacity-0 animate-fadeInUp`}
-                    style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
-                  >
+                const cardContent = (
+                  <>
                     {item.image_url ? (
                       <div className="h-56 overflow-hidden relative">
                         <img
@@ -229,7 +223,7 @@ export default function NewsPage() {
                         </span>
                         <span className="flex items-center gap-1.5 text-xs text-gray-500 font-medium">
                           <Calendar size={14} />
-                          {formatDate(item.published_at)}
+                          {formatDate(item.published_at || item.date_publication)}
                         </span>
                       </div>
 
@@ -244,16 +238,39 @@ export default function NewsPage() {
                       {isJob && (
                         <div className="flex items-center gap-2 text-sm text-gray-500 mb-4 pb-4 border-b border-gray-100">
                           <MapPin size={16} className="text-[#1f3878]" />
-                          <span className="font-medium">{(item as any).location || 'Douala, Cameroun'}</span>
+                          <span className="font-medium">{item.location || 'Douala, Cameroun'}</span>
                         </div>
                       )}
 
-                      <div className="flex items-center text-[#1f3878] font-bold text-sm group-hover:gap-2 transition-all duration-300">
-                        {t('news.readMore')}
-                        <span className="ml-1 group-hover:translate-x-2 transition-transform duration-300 inline-block">→</span>
-                      </div>
+                      {hasDetailPage && (
+                        <div className="flex items-center text-[#1f3878] font-bold text-sm group-hover:gap-2 transition-all duration-300">
+                          {t('news.readMore')}
+                          <span className="ml-1 group-hover:translate-x-2 transition-transform duration-300 inline-block">→</span>
+                        </div>
+                      )}
                     </div>
+                  </>
+                );
+
+                const cardClass = `bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group opacity-0 animate-fadeInUp`;
+
+                return hasDetailPage ? (
+                  <Link
+                    key={item.id}
+                    to={linkTo}
+                    className={cardClass}
+                    style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
+                  >
+                    {cardContent}
                   </Link>
+                ) : (
+                  <div
+                    key={item.id}
+                    className={cardClass}
+                    style={{ animationDelay: `${index * 100}ms`, animationFillMode: 'forwards' }}
+                  >
+                    {cardContent}
+                  </div>
                 );
               })}
             </div>

@@ -108,6 +108,11 @@ return Application::configure(basePath: dirname(__DIR__))
             }
         });
 
+        // ── HttpResponseException : laisser passer la réponse embarquée (rate limiting, validation, etc.) ──
+        $exceptions->render(function (\Illuminate\Http\Exceptions\HttpResponseException $e, Request $request) {
+            return $e->getResponse();
+        });
+
         // ── Catch-all : ne jamais exposer de stack trace en production ──
         $exceptions->render(function (\Throwable $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
