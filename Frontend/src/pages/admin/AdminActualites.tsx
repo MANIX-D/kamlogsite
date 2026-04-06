@@ -18,8 +18,9 @@ export default function AdminActualites() {
     titre_en: '',
     contenu_fr: '',
     contenu_en: '',
-    type: 'article' as 'article' | 'annonce' | 'offre',
+    type: 'article' as 'article' | 'annonce',
     date_publication: new Date().toISOString().split('T')[0],
+    is_published: true,
     image: null as File | null,
   });
 
@@ -49,8 +50,9 @@ export default function AdminActualites() {
         titre_en: item.titre_en,
         contenu_fr: item.contenu_fr,
         contenu_en: item.contenu_en,
-        type: item.type,
+        type: (item.type === 'offre' ? 'article' : item.type) as 'article' | 'annonce',
         date_publication: item.date_publication.split('T')[0],
+        is_published: (item as any).is_published ?? true,
         image: null,
       });
       if (item.image) {
@@ -65,6 +67,7 @@ export default function AdminActualites() {
         contenu_en: '',
         type: 'article',
         date_publication: new Date().toISOString().split('T')[0],
+        is_published: true,
         image: null,
       });
       setImagePreview(null);
@@ -104,6 +107,7 @@ export default function AdminActualites() {
         submitData.append('contenu_en', formData.contenu_en);
         submitData.append('type', formData.type);
         submitData.append('date_publication', formData.date_publication);
+        submitData.append('is_published', formData.is_published ? '1' : '0');
         submitData.append('image', formData.image);
 
         if (editingItem) {
@@ -121,6 +125,7 @@ export default function AdminActualites() {
           contenu_en: formData.contenu_en,
           type: formData.type,
           date_publication: formData.date_publication,
+          is_published: formData.is_published,
         };
         if (editingItem?.image) {
           submitData.image = editingItem.image;
@@ -220,7 +225,6 @@ export default function AdminActualites() {
           <option value="">Tous les types</option>
           <option value="article">Articles</option>
           <option value="annonce">Annonces</option>
-          <option value="offre">Offres</option>
         </select>
       </div>
 
@@ -282,14 +286,13 @@ export default function AdminActualites() {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    type: e.target.value as 'article' | 'annonce' | 'offre',
+                    type: e.target.value as 'article' | 'annonce',
                   })
                 }
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="article">Article</option>
                 <option value="annonce">Annonce</option>
-                <option value="offre">Offre</option>
               </select>
             </div>
 
@@ -307,6 +310,20 @@ export default function AdminActualites() {
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
+          </div>
+
+          <div className="flex items-center pt-2">
+            <label className="flex items-center gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.is_published}
+                onChange={(e) =>
+                  setFormData({ ...formData, is_published: e.target.checked })
+                }
+                className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+              />
+              <span className="text-sm font-medium text-slate-700">Publié (visible sur le site)</span>
+            </label>
           </div>
 
           <div className="grid grid-cols-2 gap-4">

@@ -19,7 +19,7 @@ class AnnouncementController extends Controller
     public function index(Request $request): JsonResponse
     {
         $perPage = min(max((int) $request->input('per_page', 10), 1), 100);
-        $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
         $type = $request->input('type');
         $priority = $request->input('priority');
         $isPopup = $request->has('is_popup');

@@ -21,7 +21,7 @@ class NewsController extends Controller
         $perPage = $request->input('per_page', 12);
         $perPage = min(max($perPage, 1), 100);
 
-        $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
         $type = $request->input('type');
         $isFeatured = $request->input('is_featured');
         $isPublished = $request->input('is_published');
@@ -73,7 +73,7 @@ class NewsController extends Controller
         }
 
         // Vérifier si l'actualité est publiée pour le public
-        if ((!$request->user() || !$request->user()->tokenCan('admin:*')) && !$news->is_published) {
+        if ((!$request->user() || !($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'))) && !$news->is_published) {
             return $this->notFoundResponse('Actualité non trouvée');
         }
 
@@ -96,7 +96,7 @@ class NewsController extends Controller
         }
         
         $slugColumn = $lang === 'en' ? 'slug_en' : 'slug_fr';
-        $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
 
         $cacheKey = 'slug:' . $slug . ':' . $lang . ':' . ($isAdmin ? 'admin' : 'public');
 

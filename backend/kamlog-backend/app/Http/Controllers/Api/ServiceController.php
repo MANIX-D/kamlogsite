@@ -21,7 +21,7 @@ class ServiceController extends Controller
         $perPage = $request->input('per_page', 15);
         $perPage = min(max($perPage, 1), 100);
 
-        $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
         $isActive = $request->input('is_active');
 
         // Générer une clé de cache unique

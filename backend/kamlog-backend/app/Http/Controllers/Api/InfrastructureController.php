@@ -19,7 +19,7 @@ class InfrastructureController extends Controller
     public function index(Request $request): JsonResponse
     {
         $perPage = min(max((int) $request->input('per_page', 15), 1), 100);
-        $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
         $type = $request->input('type');
         $isAvailable = $request->has('is_available');
         $isActive = $request->input('is_active');

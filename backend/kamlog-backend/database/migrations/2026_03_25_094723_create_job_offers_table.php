@@ -26,7 +26,7 @@ return new class extends Migration
             $table->enum('experience_level', ['junior', 'confirme', 'senior', 'expert']);
             $table->string('salary_range', 100)->nullable();
             $table->string('department', 100)->nullable();
-            $table->date('application_deadline');
+            $table->date('application_deadline')->nullable();
             $table->boolean('is_active')->default(true);
             $table->boolean('is_urgent')->default(false);
             $table->integer('applications_count')->default(0);

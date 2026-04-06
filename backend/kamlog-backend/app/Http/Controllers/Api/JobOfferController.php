@@ -19,7 +19,7 @@ class JobOfferController extends Controller
     public function index(Request $request): JsonResponse
     {
         $perPage = min(max((int) $request->input('per_page', 15), 1), 100);
-        $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
         $contractType = $request->input('contract_type');
         $experienceLevel = $request->input('experience_level');
         $location = $request->input('location');

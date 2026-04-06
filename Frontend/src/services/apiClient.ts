@@ -11,10 +11,13 @@ const apiClient: AxiosInstance = axios.create({
 
 apiClient.interceptors.request.use(
   (config) => {
-    // Read token from sessionStorage (avoids circular import with auth.ts)
-    const token = sessionStorage.getItem('auth_token');
-    if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+    // Only send auth token for admin API routes (not public endpoints)
+    const isAdminRoute = config.url?.includes('/admin/') || config.url?.startsWith('admin/');
+    if (isAdminRoute) {
+      const token = sessionStorage.getItem('auth_token');
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
     }
 
     const currentLanguage = localStorage.getItem('i18nextLng') || 'fr';

@@ -82,7 +82,10 @@ class JobOffer extends Model
      */
     public function scopeNotExpired($query)
     {
-        return $query->where('application_deadline', '>=', now()->toDateString());
+        return $query->where(function ($q) {
+            $q->whereNull('application_deadline')
+              ->orWhere('application_deadline', '>=', now()->toDateString());
+        });
     }
 
     /**

@@ -281,7 +281,7 @@ class ApiService {
 
     // Single-type filters: fetch from the dedicated endpoint
     if (type === 'article') {
-      const endpoint = this.buildUrl(API_ENDPOINTS.actualites, { page, per_page: perPage });
+      const endpoint = this.buildUrl(API_ENDPOINTS.actualites, { type: 'article', page, per_page: perPage });
       const res = await get<ApiSuccessResponse<any[]>>(endpoint);
       return this.wrapPaginated(res, mapNewsItem);
     }
@@ -299,8 +299,9 @@ class ApiService {
     }
 
     // "all" — fetch from all 3 endpoints in parallel and combine
+    // Only fetch type=article from /news to avoid duplicates with /jobs and /announcements
     const [newsRes, jobsRes, announcementsRes] = await Promise.all([
-      get<ApiSuccessResponse<any[]>>(this.buildUrl(API_ENDPOINTS.actualites, { per_page: 50 })),
+      get<ApiSuccessResponse<any[]>>(this.buildUrl(API_ENDPOINTS.actualites, { type: 'article', per_page: 50 })),
       get<ApiSuccessResponse<any[]>>(this.buildUrl('/jobs', { per_page: 50 })),
       get<ApiSuccessResponse<any[]>>(this.buildUrl('/announcements', { per_page: 50 })),
     ]);

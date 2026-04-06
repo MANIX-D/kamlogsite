@@ -19,7 +19,7 @@ class PartnerController extends Controller
     public function index(Request $request): JsonResponse
     {
         $perPage = min(max((int) $request->input('per_page', 20), 1), 100);
-        $isAdmin = $request->user() && $request->user()->tokenCan('admin:*');
+        $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
         $category = $request->input('category');
         $level = $request->input('partnership_level');
         $isFeatured = $request->has('is_featured');

@@ -29,6 +29,13 @@ export default function NewsPage() {
     fetchNews();
   }, [activeFilter, currentPage]);
 
+  // Refetch when user switches back to this tab (e.g. after admin changes)
+  useEffect(() => {
+    const handleFocus = () => fetchNews();
+    window.addEventListener('focus', handleFocus);
+    return () => window.removeEventListener('focus', handleFocus);
+  }, [activeFilter, currentPage]);
+
   const fetchNews = async () => {
     setLoading(true);
     setError(null);

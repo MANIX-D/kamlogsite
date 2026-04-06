@@ -62,7 +62,10 @@ class Announcement extends Model
     public function scopeCurrent($query)
     {
         $today = now()->toDateString();
-        return $query->where('start_date', '<=', $today)
+        return $query->where(function ($q) use ($today) {
+                         $q->whereNull('start_date')
+                           ->orWhere('start_date', '<=', $today);
+                     })
                      ->where(function ($q) use ($today) {
                          $q->whereNull('end_date')
                            ->orWhere('end_date', '>=', $today);

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->enum('type', ['info', 'alerte', 'maintenance', 'promotion'])->default('info');
             $table->boolean('is_active')->default(true);
             $table->boolean('is_popup')->default(false);
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->string('background_color', 20)->nullable();
             $table->string('text_color', 20)->nullable();
