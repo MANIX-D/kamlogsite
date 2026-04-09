@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Calendar, User, Mail, Phone, Building2, MessageSquare } from 'lucide-react';
-import { apiService } from '../services/api';
+import { apiService, Infrastructure } from '../services/api';
 
 interface VisitRequestModalProps {
   isOpen: boolean;
@@ -18,12 +18,21 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
     preferredDate: '',
     preferredTime: '',
     type_visite: 'guidee' as 'guidee' | 'autonome' | 'virtuelle' | 'rencontre',
-    infrastructure: '',
+    infrastructure_id: '',
     message: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [infrastructures, setInfrastructures] = useState<Infrastructure[]>([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      apiService.getInfrastructures()
+        .then(data => setInfrastructures(data))
+        .catch(err => console.error('Error loading infrastructures:', err));
+    }
+  }, [isOpen]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -45,6 +54,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
         heure: formData.preferredTime,
         type_visite: formData.type_visite,
         message: formData.message || undefined,
+        infrastructure_id: formData.infrastructure_id ? Number(formData.infrastructure_id) : undefined,
       });
 
       setSubmitSuccess(true);
@@ -59,7 +69,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
           preferredDate: '',
           preferredTime: '',
           type_visite: 'guidee',
-          infrastructure: '',
+          infrastructure_id: '',
           message: ''
         });
       }, 2000);
@@ -250,18 +260,18 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                       {t('visitRequest.form.infrastructure')}
                     </label>
                     <select
-                      id="infrastructure"
-                      name="infrastructure"
-                      value={formData.infrastructure}
+                      id="infrastructure_id"
+                      name="infrastructure_id"
+                      value={formData.infrastructure_id}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1F3878] focus:outline-none transition-colors"
                     >
                       <option value="">{t('visitRequest.form.infrastructureOptions.select')}</option>
-                      <option value="magasin-cale">{t('visitRequest.form.infrastructureOptions.warehouse')}</option>
-                      <option value="parc-conteneurs">{t('visitRequest.form.infrastructureOptions.containers')}</option>
-                      <option value="silos">{t('visitRequest.form.infrastructureOptions.silos')}</option>
-                      <option value="entrepot-udeac">{t('visitRequest.form.infrastructureOptions.udeac')}</option>
-                      <option value="toutes">{t('visitRequest.form.infrastructureOptions.all')}</option>
+                      {infrastructures.map(infra => (
+                        <option key={infra.id} value={infra.id}>
+                          {t('lang') === 'en' ? infra.nom_en : infra.nom_fr}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

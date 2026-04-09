@@ -87,7 +87,34 @@ export default function AdminVisitRequests() {
     { key: 'name', label: 'Nom' },
     { key: 'email', label: 'Email' },
     { key: 'phone', label: 'Téléphone' },
-    { key: 'date', label: 'Date souhaitée' },
+    {
+      key: 'date',
+      label: 'Date souhaitée',
+      render: (item: VisitRequest) => new Date(item.date).toLocaleDateString('fr-FR')
+    },
+    {
+      key: 'heure',
+      label: 'Heure',
+      render: (item: VisitRequest) => item.heure || '—'
+    },
+    {
+      key: 'type_visite',
+      label: 'Type de visite',
+      render: (item: VisitRequest) => {
+        const labels: Record<string, string> = {
+          guidee: 'Visite guidée',
+          autonome: 'Visite autonome',
+          virtuelle: 'Visite virtuelle',
+          rencontre: 'Rencontre',
+        };
+        return item.type_visite ? labels[item.type_visite] || item.type_visite : '—';
+      }
+    },
+    {
+      key: 'infrastructure',
+      label: 'Infrastructure',
+      render: (item: VisitRequest) => item.infrastructure?.nom_fr || '—'
+    },
     {
       key: 'status',
       label: 'Statut',
@@ -245,9 +272,46 @@ export default function AdminVisitRequests() {
                     </label>
                     <div className="flex items-center gap-2 text-gray-900">
                       <Calendar className="w-4 h-4 text-gray-400" />
-                      {new Date(selectedRequest.date).toLocaleDateString('fr-FR')}
+                      {new Date(selectedRequest.date).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
                     </div>
                   </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Heure souhaitée
+                    </label>
+                    <div className="flex items-center gap-2 text-gray-900">
+                      <Clock className="w-4 h-4 text-gray-400" />
+                      {selectedRequest.heure || '—'}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Type de visite
+                    </label>
+                    <div className="flex items-center gap-2 text-gray-900">
+                      <Calendar className="w-4 h-4 text-gray-400" />
+                      {selectedRequest.type_visite ? {
+                        guidee: 'Visite guidée',
+                        autonome: 'Visite autonome',
+                        virtuelle: 'Visite virtuelle',
+                        rencontre: 'Rencontre',
+                      }[selectedRequest.type_visite] || selectedRequest.type_visite : '—'}
+                    </div>
+                  </div>
+
+                  {selectedRequest.infrastructure && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Infrastructure
+                      </label>
+                      <div className="flex items-center gap-2 text-gray-900">
+                        <Building2 className="w-4 h-4 text-gray-400" />
+                        {selectedRequest.infrastructure.nom_fr}
+                      </div>
+                    </div>
+                  )}
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">

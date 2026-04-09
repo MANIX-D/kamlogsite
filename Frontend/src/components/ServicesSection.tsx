@@ -27,7 +27,7 @@ const SERVICES: ServiceKey[] = [
     subtitleKey: 'services.transport.subtitle',
     descriptionKey: 'services.transport.description',
     detailsKey: 'services.transport.details',
-    image: 'https://images.pexels.com/photos/1258412/pexels-photo-1258412.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/images/service-transport.jpeg',
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const SERVICES: ServiceKey[] = [
     subtitleKey: 'services.containers.subtitle',
     descriptionKey: 'services.containers.description',
     detailsKey: 'services.containers.details',
-    image: 'https://images.pexels.com/photos/3962289/pexels-photo-3962289.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/images/service-conteneurs.PNG',
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const SERVICES: ServiceKey[] = [
     subtitleKey: 'services.customs.subtitle',
     descriptionKey: 'services.customs.description',
     detailsKey: 'services.customs.details',
-    image: 'https://images.pexels.com/photos/3962284/pexels-photo-3962284.jpeg?auto=compress&cs=tinysrgb&w=800',
+    image: '/images/service-transit.jpg',
   },
 ];
 

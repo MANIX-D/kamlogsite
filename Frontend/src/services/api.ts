@@ -340,8 +340,8 @@ class ApiService {
   }
 
   async getInfrastructures(): Promise<Infrastructure[]> {
-    const res = await get<ApiSuccessResponse<Infrastructure[]>>(API_ENDPOINTS.infrastructures);
-    return res.data;
+    const res = await get<any>(`${API_ENDPOINTS.infrastructures}?per_page=100`);
+    return Array.isArray(res.data) ? res.data : res.data?.data || [];
   }
 
   async submitContactForm(data: ContactMessage): Promise<ApiResponse<any>> {

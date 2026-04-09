@@ -82,7 +82,7 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute -top-6 -right-6 w-full h-full bg-red-600/10 rounded-lg"></div>
               <img
-                src="https://images.pexels.com/photos/8961491/pexels-photo-8961491.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                src="/images/about-installations.jpg"
                 alt="KAMLOG Port Facilities"
                 className="relative w-full h-[500px] object-cover rounded-lg shadow-2xl"
               />
@@ -98,7 +98,7 @@ export default function AboutPage() {
             <div className="relative order-2 lg:order-1">
               <div className="absolute -bottom-6 -left-6 w-full h-full bg-[#1F3878]/10 rounded-lg"></div>
               <img
-                src="https://images.pexels.com/photos/5214408/pexels-photo-5214408.jpeg?auto=compress&cs=tinysrgb&w=1600"
+                src="/images/about-equip.jpg"
                 alt="KAMLOG Team"
                 className="relative w-full h-[600px] object-cover rounded-lg shadow-2xl"
               />

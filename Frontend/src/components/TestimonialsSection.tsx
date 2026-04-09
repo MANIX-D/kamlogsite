@@ -16,21 +16,21 @@ const TESTIMONIALS: TestimonialKey[] = [
     companyKey: 'testimonials.client1.company',
     textKey: 'testimonials.client1.text',
     rating: 5,
-    image: 'https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=1200'
+    image: '/images/hero-kamlog-port.jpg'
   },
   {
     id: 2,
     companyKey: 'testimonials.client2.company',
     textKey: 'testimonials.client2.text',
     rating: 5,
-    image: 'https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=1200'
+    image: '/images/hero-kamlog-port.jpg'
   },
   {
     id: 3,
     companyKey: 'testimonials.client3.company',
     textKey: 'testimonials.client3.text',
     rating: 5,
-    image: 'https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=1200'
+    image: '/images/hero-kamlog-port.jpg'
   }
 ];
 

@@ -105,7 +105,15 @@ export interface VisitRequest {
   phone: string;
   company?: string;
   date: string;
+  heure?: string;
+  type_visite?: 'guidee' | 'autonome' | 'virtuelle' | 'rencontre';
   message?: string;
+  infrastructure_id?: number;
+  infrastructure?: {
+    id: number;
+    nom_fr: string;
+    nom_en: string;
+  };
   status: 'pending' | 'confirmed' | 'cancelled';
   created_at: string;
   updated_at: string;
@@ -294,9 +302,21 @@ class AdminApiService {
     return res.data;
   }
 
-  async updateQuoteStatus(id: number, status: 'nouveau' | 'en_cours' | 'envoyé' | 'accepte' | 'refuse'): Promise<Quote> {
-    const res = await put<ApiResponse<Quote>>(`${API_ENDPOINTS.admin.quotes}/${id}`, { status });
+  async updateQuote(
+    id: number,
+    data: Partial<{
+      status: Quote['status'];
+      estimated_amount: number | null;
+      notes_admin: string | null;
+      user_id: number | null;
+    }>
+  ): Promise<Quote> {
+    const res = await put<ApiResponse<Quote>>(`${API_ENDPOINTS.admin.quotes}/${id}`, data);
     return res.data;
+  }
+
+  async updateQuoteStatus(id: number, status: 'nouveau' | 'en_cours' | 'envoyé' | 'accepte' | 'refuse'): Promise<Quote> {
+    return this.updateQuote(id, { status });
   }
 
   async deleteQuote(id: number): Promise<void> {

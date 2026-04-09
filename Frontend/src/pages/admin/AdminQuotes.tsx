@@ -18,20 +18,6 @@ const STATUS_COLORS: Record<string, string> = {
   refuse: 'bg-red-100 text-red-800',
 };
 
-const PRIORITY_LABELS: Record<string, string> = {
-  basse: 'Basse',
-  normale: 'Normale',
-  haute: 'Haute',
-  urgente: 'Urgente',
-};
-
-const PRIORITY_COLORS: Record<string, string> = {
-  basse: 'bg-gray-100 text-gray-700',
-  normale: 'bg-blue-50 text-blue-700',
-  haute: 'bg-orange-100 text-orange-700',
-  urgente: 'bg-red-100 text-red-700',
-};
-
 const SERVICE_LABELS: Record<string, string> = {
   logistique: 'Logistique',
   stockage: 'Stockage',
@@ -43,6 +29,8 @@ export default function AdminQuotes() {
   const [quotes, setQuotes] = useState<Quote[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedQuote, setSelectedQuote] = useState<Quote | null>(null);
+  const [isSavingAdminFields, setIsSavingAdminFields] = useState(false);
+  const [saveAdminFieldsStatus, setSaveAdminFieldsStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     fetchQuotes();
@@ -59,12 +47,31 @@ export default function AdminQuotes() {
     }
   };
 
-  const handleUpdateStatus = async (id: number, newStatus: Quote['status']) => {
+  const handleSaveAdminFields = async () => {
+    if (!selectedQuote) return;
+
+    const parsedEstimatedAmount =
+      selectedQuote.estimated_amount && selectedQuote.estimated_amount !== ''
+        ? Number(selectedQuote.estimated_amount)
+        : null;
+
     try {
-      await adminApiService.updateQuoteStatus(id, newStatus);
-      fetchQuotes();
+      setIsSavingAdminFields(true);
+      setSaveAdminFieldsStatus('idle');
+      const updatedQuote = await adminApiService.updateQuote(selectedQuote.id, {
+        status: selectedQuote.status,
+        estimated_amount: parsedEstimatedAmount,
+        notes_admin: selectedQuote.notes_admin?.trim() ? selectedQuote.notes_admin : null,
+      });
+
+      setSelectedQuote(updatedQuote);
+      setSaveAdminFieldsStatus('success');
+      await fetchQuotes();
     } catch (error) {
-      console.error('Error updating quote status:', error);
+      console.error('Error updating quote admin fields:', error);
+      setSaveAdminFieldsStatus('error');
+    } finally {
+      setIsSavingAdminFields(false);
     }
   };
 
@@ -107,7 +114,6 @@ export default function AdminQuotes() {
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Contact</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Service</th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Priorité</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Statut</th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">Date</th>
                   <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">Actions</th>
@@ -125,11 +131,6 @@ export default function AdminQuotes() {
                       {SERVICE_LABELS[quote.service_type] || quote.service_type}
                     </td>
                     <td className="px-6 py-4">
-                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${PRIORITY_COLORS[quote.priority] || 'bg-gray-100 text-gray-700'}`}>
-                        {PRIORITY_LABELS[quote.priority] || quote.priority}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
                       <span className={`px-2 py-1 rounded-full text-xs font-medium ${STATUS_COLORS[quote.status] || 'bg-gray-100 text-gray-800'}`}>
                         {STATUS_LABELS[quote.status] || quote.status}
                       </span>
@@ -140,7 +141,10 @@ export default function AdminQuotes() {
                     <td className="px-6 py-4 text-right">
                       <div className="flex items-center justify-end gap-2">
                         <button
-                          onClick={() => setSelectedQuote(quote)}
+                          onClick={() => {
+                            setSaveAdminFieldsStatus('idle');
+                            setSelectedQuote(quote);
+                          }}
                           className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                           title="Voir détails"
                         >
@@ -170,7 +174,10 @@ export default function AdminQuotes() {
             <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
               <h2 className="text-xl font-bold text-gray-900">Détails de la demande de devis</h2>
               <button
-                onClick={() => setSelectedQuote(null)}
+                onClick={() => {
+                  setSaveAdminFieldsStatus('idle');
+                  setSelectedQuote(null);
+                }}
                 className="text-slate-400 hover:text-slate-600 transition-colors"
               >
                 <X size={24} />
@@ -265,7 +272,6 @@ export default function AdminQuotes() {
                       value={selectedQuote.status}
                       onChange={(e) => {
                         const newStatus = e.target.value as Quote['status'];
-                        handleUpdateStatus(selectedQuote.id, newStatus);
                         setSelectedQuote({ ...selectedQuote, status: newStatus });
                       }}
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -277,23 +283,38 @@ export default function AdminQuotes() {
                       <option value="refuse">Refusé</option>
                     </select>
                   </div>
+
                   <div>
-                    <label className="block text-sm font-medium text-slate-700 mb-1">Priorité</label>
-                    <span className={`inline-block px-3 py-2 rounded-full text-sm font-medium ${PRIORITY_COLORS[selectedQuote.priority] || 'bg-gray-100'}`}>
-                      {PRIORITY_LABELS[selectedQuote.priority] || selectedQuote.priority}
-                    </span>
+                    <label className="block text-sm font-medium text-slate-700 mb-1">Montant estimé (FCFA)</label>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={selectedQuote.estimated_amount ?? ''}
+                      onChange={(e) => setSelectedQuote({ ...selectedQuote, estimated_amount: e.target.value })}
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      placeholder="Ex: 1500000"
+                    />
                   </div>
                 </div>
-                {selectedQuote.estimated_amount && (
-                  <div>
-                    <p className="text-sm text-slate-500">Montant estimé</p>
-                    <p className="font-medium text-gray-900">{selectedQuote.estimated_amount} FCFA</p>
+                <div>
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Notes administrateur</label>
+                  <textarea
+                    rows={4}
+                    value={selectedQuote.notes_admin ?? ''}
+                    onChange={(e) => setSelectedQuote({ ...selectedQuote, notes_admin: e.target.value })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder="Ajouter une note interne..."
+                  />
+                </div>
+                {saveAdminFieldsStatus === 'success' && (
+                  <div className="text-sm text-green-700 bg-green-50 border border-green-200 rounded-lg px-3 py-2">
+                    Modifications enregistrées avec succès.
                   </div>
                 )}
-                {selectedQuote.notes_admin && (
-                  <div>
-                    <p className="text-sm text-slate-500 mb-1">Notes administrateur</p>
-                    <p className="text-gray-900 whitespace-pre-wrap bg-yellow-50 rounded-lg p-3 border border-yellow-200">{selectedQuote.notes_admin}</p>
+                {saveAdminFieldsStatus === 'error' && (
+                  <div className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
+                    Échec de l'enregistrement. Veuillez réessayer.
                   </div>
                 )}
                 <div className="text-sm text-slate-400">
@@ -302,9 +323,19 @@ export default function AdminQuotes() {
               </div>
             </div>
 
-            <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 flex justify-end">
+            <div className="sticky bottom-0 bg-white border-t border-gray-200 px-6 py-4 flex justify-end gap-3">
               <button
-                onClick={() => setSelectedQuote(null)}
+                onClick={handleSaveAdminFields}
+                disabled={isSavingAdminFields}
+                className="px-6 py-2 bg-[#1F3878] text-white rounded-lg hover:bg-[#172a5d] transition-colors disabled:opacity-60"
+              >
+                {isSavingAdminFields ? 'Enregistrement...' : 'Enregistrer'}
+              </button>
+              <button
+                onClick={() => {
+                  setSaveAdminFieldsStatus('idle');
+                  setSelectedQuote(null);
+                }}
                 className="px-6 py-2 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300 transition-colors"
               >
                 Fermer

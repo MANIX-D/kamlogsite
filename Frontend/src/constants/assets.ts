@@ -1,6 +1,6 @@
 export const ASSETS = {
-  logo: '/New_Logo_KAMLOG_sans_bg_(1).png',
-  heroBg: 'https://images.pexels.com/photos/3962286/pexels-photo-3962286.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  logo: '/images/New_Logo_KAMLOG_sans_bg_(1).png',
+  heroBg: '/images/hero-kamlog-port.jpg',
 };
 
 export const PARTNERS = [

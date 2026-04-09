@@ -767,6 +767,13 @@
       "companyPlaceholder": "Nom de votre entreprise",
       "date": "Date souhaitée",
       "time": "Heure souhaitée",
+      "visitType": "Type de visite",
+      "visitTypeOptions": {
+        "guided": "Visite guidée",
+        "autonomous": "Visite autonome",
+        "virtual": "Visite virtuelle",
+        "meeting": "Rencontre"
+      },
       "infrastructure": "Infrastructure à visiter",
       "infrastructureOptions": {
         "select": "Sélectionnez une infrastructure",
