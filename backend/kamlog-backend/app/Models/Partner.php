@@ -22,6 +22,8 @@ class Partner extends Model
         'description_fr',
         'description_en',
         'category',
+        'sector_fr',
+        'sector_en',
         'website',
         'email',
         'phone',

@@ -2,10 +2,12 @@ import { useTranslation } from 'react-i18next';
 import { Building2, Handshake, Globe, Award } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { apiService, Partner } from '../services/api';
 
 export default function PartnersPage() {
   const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
+  const [partners, setPartners] = useState<Partner[]>([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -13,58 +15,56 @@ export default function PartnersPage() {
     const timer = setTimeout(() => {
       setIsVisible(true);
     }, 100);
+    
+    // Load partners from API
+    apiService.getPartners()
+      .then(data => {
+        setPartners(data.filter(p => p.is_active));
+      })
+      .catch(err => {
+        console.error('Error loading partners:', err);
+      });
+    
     return () => clearTimeout(timer);
   }, []);
 
-  const partnerCategories = [
-    {
-      id: 'maritime',
-      icon: Globe,
-      title: t('partners.categories.maritime.title'),
-      description: t('partners.categories.maritime.description'),
-      partners: [
-        { name: 'CMA CGM', logo: 'https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.maritime') },
-        { name: 'MSC', logo: 'https://images.pexels.com/photos/2226458/pexels-photo-2226458.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.maritime') },
-        { name: 'Maersk', logo: 'https://images.pexels.com/photos/1117210/pexels-photo-1117210.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.maritime') },
-      ]
-    },
-    {
-      id: 'logistics',
-      icon: Building2,
-      title: t('partners.categories.logistics.title'),
-      description: t('partners.categories.logistics.description'),
-      partners: [
-        { name: 'DHL', logo: 'https://images.pexels.com/photos/4246120/pexels-photo-4246120.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.logistics') },
-        { name: 'Bollore Logistics', logo: 'https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.logistics') },
-        { name: 'SDV', logo: 'https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.logistics') },
-      ]
-    },
-    {
-      id: 'industrial',
-      icon: Award,
-      title: t('partners.categories.industrial.title'),
-      description: t('partners.categories.industrial.description'),
-      partners: [
-        { name: 'Total Energies', logo: 'https://images.pexels.com/photos/257700/pexels-photo-257700.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.industrial') },
-        { name: 'COTCO', logo: 'https://images.pexels.com/photos/1388944/pexels-photo-1388944.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.industrial') },
-        { name: 'SONARA', logo: 'https://images.pexels.com/photos/3568518/pexels-photo-3568518.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.industrial') },
-      ]
-    },
-    {
-      id: 'institutional',
-      icon: Handshake,
-      title: t('partners.categories.institutional.title'),
-      description: t('partners.categories.institutional.description'),
-      partners: [
-        { name: 'Port Autonome de Douala', logo: 'https://images.pexels.com/photos/2144326/pexels-photo-2144326.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.institutional') },
-        { name: 'Port de Kribi', logo: 'https://images.pexels.com/photos/2144325/pexels-photo-2144325.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.institutional') },
-        { name: 'Douanes Cameroun', logo: 'https://images.pexels.com/photos/5668837/pexels-photo-5668837.jpeg?auto=compress&cs=tinysrgb&w=200', sector: t('partners.sectors.institutional') },
-      ]
-    }
-  ];
+  // Group partners by category - map old categories to new ones
+  const categoryMapping: Record<string, { id: string; icon: any; titleKey: string; descKey: string }> = {
+    'transport': { id: 'maritime', icon: Globe, titleKey: 'partners.categories.maritime.title', descKey: 'partners.categories.maritime.description' },
+    'logistique': { id: 'logistics', icon: Building2, titleKey: 'partners.categories.logistics.title', descKey: 'partners.categories.logistics.description' },
+    'maritime': { id: 'maritime', icon: Globe, titleKey: 'partners.categories.maritime.title', descKey: 'partners.categories.maritime.description' },
+    'logistics': { id: 'logistics', icon: Building2, titleKey: 'partners.categories.logistics.title', descKey: 'partners.categories.logistics.description' },
+    'industrial': { id: 'industrial', icon: Award, titleKey: 'partners.categories.industrial.title', descKey: 'partners.categories.industrial.description' },
+    'institutional': { id: 'institutional', icon: Handshake, titleKey: 'partners.categories.institutional.title', descKey: 'partners.categories.institutional.description' },
+    'autre': { id: 'industrial', icon: Award, titleKey: 'partners.categories.industrial.title', descKey: 'partners.categories.industrial.description' },
+  };
+
+  // Get unique categories from partners
+  const uniqueCategories = Array.from(new Set(partners.map(p => {
+    const mapping = categoryMapping[p.category || ''];
+    return mapping ? mapping.id : null;
+  }).filter(Boolean)));
+
+  const partnerCategories = uniqueCategories.map(catId => {
+    const catConfig = Object.values(categoryMapping).find(c => c.id === catId);
+    if (!catConfig) return null;
+    
+    return {
+      id: catId,
+      icon: catConfig.icon,
+      title: t(catConfig.titleKey),
+      description: t(catConfig.descKey),
+      partners: partners
+        .filter(p => {
+          const mapping = categoryMapping[p.category || ''];
+          return mapping && mapping.id === catId;
+        })
+        .sort((a, b) => (a.display_order || 0) - (b.display_order || 0))
+    };
+  }).filter((cat): cat is NonNullable<typeof cat> => cat !== null && cat.partners.length > 0);
 
   const stats = [
-    { value: '50+', label: t('partners.stats.partners') },
+    { value: `${partners.length}+`, label: t('partners.stats.partners') },
     { value: '15+', label: t('partners.stats.countries') },
     { value: '5', label: t('partners.stats.years') },
     { value: '100%', label: t('partners.stats.satisfaction') }
@@ -127,7 +127,7 @@ export default function PartnersPage() {
           </div>
 
           <div className="space-y-20">
-            {partnerCategories.map((category, categoryIndex) => {
+            {partnerCategories.map((category) => {
               const Icon = category.icon;
               return (
                 <div key={category.id} className="relative">
@@ -146,24 +146,30 @@ export default function PartnersPage() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {category.partners.map((partner, index) => (
+                    {category.partners.map((partner) => (
                       <div
-                        key={index}
+                        key={partner.id}
                         className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
                       >
                         <div className="h-48 overflow-hidden bg-gray-100">
-                          <img
-                            src={partner.logo}
-                            alt={partner.name}
-                            className="w-full h-full object-cover"
-                          />
+                          {partner.logo_url ? (
+                            <img
+                              src={partner.logo_url}
+                              alt={t('lang') === 'en' ? partner.name_en : partner.name_fr}
+                              className="w-full h-full object-cover"
+                            />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center text-gray-400">
+                              <Building2 size={64} />
+                            </div>
+                          )}
                         </div>
                         <div className="p-6">
                           <h4 className="text-xl font-bold text-gray-900 mb-2">
-                            {partner.name}
+                            {t('lang') === 'en' ? partner.name_en : partner.name_fr}
                           </h4>
                           <p className="text-sm text-[#1f3878] font-medium">
-                            {partner.sector}
+                            {t('lang') === 'en' ? (partner.sector_en || partner.sector_fr) : (partner.sector_fr || partner.sector_en)}
                           </p>
                         </div>
                       </div>

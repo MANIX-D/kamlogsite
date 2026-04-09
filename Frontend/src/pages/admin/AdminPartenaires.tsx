@@ -15,11 +15,10 @@ export default function AdminPartenaires() {
   const [formData, setFormData] = useState({
     name_fr: '',
     name_en: '',
-    description_fr: '',
-    description_en: '',
     category: '',
-    website: '',
     logo: null as File | null,
+    is_featured: false,
+    display_order: 0,
   });
 
   useEffect(() => {
@@ -44,11 +43,10 @@ export default function AdminPartenaires() {
       setFormData({
         name_fr: item.name_fr,
         name_en: item.name_en,
-        description_fr: item.description_fr || '',
-        description_en: item.description_en || '',
         category: item.category || '',
-        website: item.website || '',
         logo: null,
+        is_featured: item.is_featured || false,
+        display_order: item.display_order || 0,
       });
       if (item.logo_url) {
         setImagePreview(item.logo_url);
@@ -58,11 +56,10 @@ export default function AdminPartenaires() {
       setFormData({
         name_fr: '',
         name_en: '',
-        description_fr: '',
-        description_en: '',
         category: '',
-        website: '',
         logo: null,
+        is_featured: false,
+        display_order: 0,
       });
       setImagePreview(null);
     }
@@ -95,10 +92,9 @@ export default function AdminPartenaires() {
       const submitData = new FormData();
       submitData.append('name_fr', formData.name_fr);
       submitData.append('name_en', formData.name_en);
-      submitData.append('description_fr', formData.description_fr);
-      submitData.append('description_en', formData.description_en);
       submitData.append('category', formData.category);
-      submitData.append('website', formData.website);
+      submitData.append('is_featured', formData.is_featured ? '1' : '0');
+      submitData.append('display_order', formData.display_order.toString());
       if (formData.logo) {
         submitData.append('logo_url', formData.logo);
       }
@@ -154,12 +150,17 @@ export default function AdminPartenaires() {
       label: 'Nom (FR)',
     },
     {
-      key: 'name_en',
-      label: 'Nom (EN)',
-    },
-    {
       key: 'category',
       label: 'Catégorie',
+      render: (item: Partenaire) => {
+        const categoryLabels: Record<string, string> = {
+          maritime: 'Partenaires maritimes',
+          logistics: 'Partenaires logistiques',
+          industrial: 'Partenaires industriels',
+          institutional: 'Partenaires institutionnels',
+        };
+        return categoryLabels[item.category || ''] || item.category || '—';
+      },
     },
     {
       key: 'created_at',
@@ -174,7 +175,7 @@ export default function AdminPartenaires() {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold text-slate-900">Partenaires</h1>
-          <p className="text-slate-600 mt-2">Gérer les partenaires</p>
+          <p className="text-slate-600 mt-2">Gérer les partenaires affichés sur la page publique</p>
         </div>
         <button
           onClick={() => handleOpenModal()}
@@ -204,7 +205,7 @@ export default function AdminPartenaires() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Nom (Français)
+                Nom (Français) *
               </label>
               <input
                 type="text"
@@ -218,7 +219,7 @@ export default function AdminPartenaires() {
             </div>
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
-                Nom (English)
+                Nom (English) *
               </label>
               <input
                 type="text"
@@ -232,77 +233,32 @@ export default function AdminPartenaires() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Catégorie
-              </label>
-              <select
-                value={formData.category}
-                onChange={(e) =>
-                  setFormData({ ...formData, category: e.target.value })
-                }
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              >
-                <option value="">-- Sélectionner --</option>
-                <option value="logistique">Logistique</option>
-                <option value="transport">Transport</option>
-                <option value="technologie">Technologie</option>
-                <option value="financier">Financier</option>
-                <option value="autre">Autre</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Site web
-              </label>
-              <input
-                type="url"
-                value={formData.website}
-                onChange={(e) =>
-                  setFormData({ ...formData, website: e.target.value })
-                }
-                placeholder="https://..."
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Description (Français)
-              </label>
-              <textarea
-                value={formData.description_fr}
-                onChange={(e) =>
-                  setFormData({ ...formData, description_fr: e.target.value })
-                }
-                rows={4}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Description (English)
-              </label>
-              <textarea
-                value={formData.description_en}
-                onChange={(e) =>
-                  setFormData({ ...formData, description_en: e.target.value })
-                }
-                rows={4}
-                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
+          <div>
+            <label className="block text-sm font-medium text-slate-700 mb-2">
+              Catégorie *
+            </label>
+            <select
+              value={formData.category}
+              onChange={(e) =>
+                setFormData({ ...formData, category: e.target.value })
+              }
+              required
+              className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="">-- Sélectionner une catégorie --</option>
+              <option value="maritime">Partenaires maritimes</option>
+              <option value="logistics">Partenaires logistiques</option>
+              <option value="industrial">Partenaires industriels</option>
+              <option value="institutional">Partenaires institutionnels</option>
+            </select>
           </div>
 
           <div>
             <label className="block text-sm font-medium text-slate-700 mb-2">
               Logo
             </label>
-            <div className="flex items-center gap-4">
-              <label className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer transition-colors">
+            <div className="space-y-3">
+              <label className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer transition-colors w-fit">
                 <ImageIcon size={20} />
                 <span>Choisir un logo</span>
                 <input
@@ -313,12 +269,49 @@ export default function AdminPartenaires() {
                 />
               </label>
               {imagePreview && (
-                <img
-                  src={imagePreview}
-                  alt="Preview"
-                  className="w-20 h-20 object-cover rounded-lg"
-                />
+                <div className="bg-white rounded-2xl shadow-lg overflow-hidden max-w-sm">
+                  <div className="h-48 overflow-hidden bg-gray-100">
+                    <img
+                      src={imagePreview}
+                      alt="Preview"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="p-4">
+                    <p className="text-sm font-medium text-gray-900">{formData.name_fr || 'Nom du partenaire'}</p>
+                  </div>
+                </div>
               )}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
+                <input
+                  type="checkbox"
+                  checked={formData.is_featured}
+                  onChange={(e) =>
+                    setFormData({ ...formData, is_featured: e.target.checked })
+                  }
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                />
+                Partenaire en vedette
+              </label>
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Ordre d'affichage
+              </label>
+              <input
+                type="number"
+                min="0"
+                value={formData.display_order}
+                onChange={(e) =>
+                  setFormData({ ...formData, display_order: parseInt(e.target.value) || 0 })
+                }
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
           </div>
         </div>

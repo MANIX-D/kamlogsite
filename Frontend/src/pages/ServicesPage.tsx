@@ -2,14 +2,11 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import QuoteRequestModal from '../components/QuoteRequestModal';
-import { apiService, Service } from '../services/api';
 
 export default function ServicesPage() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
-  const [dynamicServices, setDynamicServices] = useState<Service[]>([]);
-  const [servicesLoading, setServicesLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -19,25 +16,6 @@ export default function ServicesPage() {
     }, 100);
     return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        setServicesLoading(true);
-        const data = await apiService.getServices();
-        // Handle both array and wrapped response
-        const servicesList = Array.isArray(data) ? data : (data as any)?.data || [];
-        setDynamicServices(servicesList.filter((s: Service) => s.is_active));
-      } catch (err) {
-        console.error('Error loading services:', err);
-      } finally {
-        setServicesLoading(false);
-      }
-    };
-    fetchServices();
-  }, []);
-
-  const lang = i18n.language || 'fr';
 
 
 
@@ -69,67 +47,6 @@ export default function ServicesPage() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        {/* ===== Dynamic Services from Database ===== */}
-        {!servicesLoading && dynamicServices.length > 0 && (
-          <div className="mb-24">
-            <div className="text-center mb-16">
-              <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
-                <span className="text-white font-semibold text-sm tracking-wider">
-                  {t('services.page.dynamicTag', 'NOS SERVICES')}
-                </span>
-              </div>
-              <h2 className="text-5xl font-bold text-[#1F3878] mb-6">
-                {t('services.page.dynamicTitle', 'Ce que nous proposons')}
-              </h2>
-              <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {dynamicServices.map((service, index) => {
-                const colors = [
-                  { bg: 'from-blue-50 to-blue-100', border: 'border-blue-200', icon: 'text-blue-600', iconBg: 'bg-blue-100' },
-                  { bg: 'from-green-50 to-green-100', border: 'border-green-200', icon: 'text-green-600', iconBg: 'bg-green-100' },
-                  { bg: 'from-orange-50 to-orange-100', border: 'border-orange-200', icon: 'text-orange-600', iconBg: 'bg-orange-100' },
-                  { bg: 'from-red-50 to-red-100', border: 'border-red-200', icon: 'text-red-600', iconBg: 'bg-red-100' },
-                  { bg: 'from-cyan-50 to-cyan-100', border: 'border-cyan-200', icon: 'text-cyan-600', iconBg: 'bg-cyan-100' },
-                  { bg: 'from-slate-50 to-slate-100', border: 'border-slate-200', icon: 'text-slate-600', iconBg: 'bg-slate-100' },
-                ];
-                const color = colors[index % colors.length];
-
-                return (
-                  <Link
-                    key={service.id}
-                    to={`/services/${service.id}`}
-                    className={`block bg-gradient-to-br ${color.bg} rounded-2xl p-8 border-2 ${color.border} hover:shadow-xl transition-all duration-300 transform hover:scale-105 hover:-translate-y-1`}
-                    style={{ animationDelay: `${index * 100}ms` }}
-                  >
-                    <div className={`w-14 h-14 ${color.iconBg} rounded-xl flex items-center justify-center mb-6`}>
-                      <svg className={`w-7 h-7 ${color.icon}`} fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
-                      </svg>
-                    </div>
-                    <h3 className="text-xl font-bold text-[#1F3878] mb-3">
-                      {lang === 'fr' ? service.nom_fr : service.nom_en}
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed mb-4">
-                      {lang === 'fr' ? service.description_fr : service.description_en}
-                    </p>
-                    <span className="inline-flex items-center gap-1 text-sm font-semibold text-[#1F3878]">
-                      {t('services.page.learnMore', 'En savoir plus')} →
-                    </span>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        )}
-
-        {servicesLoading && (
-          <div className="mb-24 text-center py-16">
-            <div className="animate-spin rounded-full h-12 w-12 border-4 border-[#1F3878] border-t-transparent mx-auto mb-4"></div>
-            <p className="text-gray-500 font-medium">{t('services.page.loading', 'Chargement des services...')}</p>
-          </div>
-        )}
         <div className="mt-24 bg-white rounded-3xl shadow-2xl p-12 transform hover:scale-[1.01] transition-transform duration-300">
           <div className="text-center mb-16">
             <div className="inline-block mb-4 px-6 py-2 bg-[#1F3878] rounded-full">

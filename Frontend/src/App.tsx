@@ -22,9 +22,8 @@ import AdminMessages from './pages/admin/AdminMessages';
 import AdminNewsletter from './pages/admin/AdminNewsletter';
 import AdminVisitRequests from './pages/admin/AdminVisitRequests';
 import AdminQuotes from './pages/admin/AdminQuotes';
-import AdminServices from './pages/admin/AdminServices';
-import AdminPartenaires from './pages/admin/AdminPartenaires';
 import AdminInfrastructures from './pages/admin/AdminInfrastructures';
+import AdminPartenaires from './pages/admin/AdminPartenaires';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminRegister from './pages/admin/AdminRegister';
 import AdminForgotPassword from './pages/admin/AdminForgotPassword';
@@ -70,7 +69,6 @@ function App() {
           }
         >
           <Route path="dashboard" element={<AdminDashboard />} />
-          <Route path="services" element={<AdminServices />} />
           <Route path="partners" element={<AdminPartenaires />} />
           <Route path="infrastructures" element={<AdminInfrastructures />} />
           <Route path="actualites" element={<AdminActualites />} />

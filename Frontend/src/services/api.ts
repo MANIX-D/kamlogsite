@@ -108,9 +108,12 @@ export interface Partner {
   description_fr?: string;
   description_en?: string;
   category?: string;
+  sector_fr?: string;
+  sector_en?: string;
   website?: string;
-  display_order: number;
-  is_active: boolean;
+  display_order?: number;
+  is_active?: boolean;
+  is_featured?: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -335,8 +338,9 @@ class ApiService {
   }
 
   async getPartners(): Promise<Partner[]> {
-    const res = await get<ApiSuccessResponse<Partner[]>>(API_ENDPOINTS.partners);
-    return res.data;
+    const res = await get<any>(`${API_ENDPOINTS.partners}?per_page=100`);
+    // Handle paginated response
+    return Array.isArray(res.data) ? res.data : res.data?.data || [];
   }
 
   async getInfrastructures(): Promise<Infrastructure[]> {

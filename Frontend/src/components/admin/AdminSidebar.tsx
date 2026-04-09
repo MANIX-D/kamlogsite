@@ -9,7 +9,6 @@ import {
   Calendar,
   FileText,
   X,
-  Wrench,
   Handshake,
   Building2,
   Users,
@@ -23,7 +22,6 @@ interface AdminSidebarProps {
 
 // Map sidebar items to their permission section keys
 const SECTION_MAP: Record<string, string> = {
-  '/admin/services': 'services',
   '/admin/partners': 'partners',
   '/admin/infrastructures': 'infrastructures',
   '/admin/actualites': 'actualites',
@@ -44,11 +42,6 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
       to: '/admin/dashboard',
       icon: LayoutDashboard,
       label: 'Dashboard',
-    },
-    {
-      to: '/admin/services',
-      icon: Wrench,
-      label: 'Services',
     },
     {
       to: '/admin/partners',

@@ -34,6 +34,8 @@ export interface Partenaire {
   description_fr?: string;
   description_en?: string;
   category?: string;
+  sector_fr?: string;
+  sector_en?: string;
   website?: string;
   email?: string;
   phone?: string;
