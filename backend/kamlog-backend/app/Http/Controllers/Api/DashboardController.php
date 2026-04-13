@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\ContactMessage;
 use App\Models\News;
-use App\Models\Service;
 use App\Models\User;
 use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
@@ -24,14 +23,16 @@ class DashboardController extends Controller
     public function stats(): JsonResponse
     {
         $stats = Cache::remember('dashboard:stats', 300, function () {
-            $serviceCounts = Service::query()
-                ->selectRaw('COUNT(*) as total')
-                ->selectRaw('SUM(CASE WHEN is_active = 1 AND deleted_at IS NULL THEN 1 ELSE 0 END) as active')
-                ->first();
-
+            // Count all news items (articles + annonces + offres)
             $newsCounts = News::query()
                 ->selectRaw('COUNT(*) as total')
                 ->selectRaw('SUM(CASE WHEN is_published = 1 AND deleted_at IS NULL THEN 1 ELSE 0 END) as published')
+                ->selectRaw('SUM(CASE WHEN type = "article" AND deleted_at IS NULL THEN 1 ELSE 0 END) as total_articles')
+                ->selectRaw('SUM(CASE WHEN type = "article" AND is_published = 1 AND deleted_at IS NULL THEN 1 ELSE 0 END) as published_articles')
+                ->selectRaw('SUM(CASE WHEN type = "annonce" AND deleted_at IS NULL THEN 1 ELSE 0 END) as total_annonces')
+                ->selectRaw('SUM(CASE WHEN type = "annonce" AND is_published = 1 AND deleted_at IS NULL THEN 1 ELSE 0 END) as published_annonces')
+                ->selectRaw('SUM(CASE WHEN type = "offre" AND deleted_at IS NULL THEN 1 ELSE 0 END) as total_offres')
+                ->selectRaw('SUM(CASE WHEN type = "offre" AND is_published = 1 AND deleted_at IS NULL THEN 1 ELSE 0 END) as published_offres')
                 ->first();
 
             $messageCounts = ContactMessage::query()
@@ -45,10 +46,14 @@ class DashboardController extends Controller
                 ->first();
 
             return [
-                'total_services' => (int) $serviceCounts->total,
-                'active_services' => (int) $serviceCounts->active,
                 'total_news' => (int) $newsCounts->total,
                 'published_news' => (int) $newsCounts->published,
+                'total_articles' => (int) $newsCounts->total_articles,
+                'published_articles' => (int) $newsCounts->published_articles,
+                'total_annonces' => (int) $newsCounts->total_annonces,
+                'published_annonces' => (int) $newsCounts->published_annonces,
+                'total_offres' => (int) $newsCounts->total_offres,
+                'published_offres' => (int) $newsCounts->published_offres,
                 'total_messages' => (int) $messageCounts->total,
                 'unread_messages' => (int) $messageCounts->unread,
                 'total_users' => (int) $userCounts->total,

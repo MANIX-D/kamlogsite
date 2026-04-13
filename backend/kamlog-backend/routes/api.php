@@ -7,12 +7,9 @@ use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Admin\MetricsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\InvitationController;
-use App\Http\Controllers\Api\ServiceController;
 use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\PartnerController;
 use App\Http\Controllers\Api\InfrastructureController;
-use App\Http\Controllers\Api\JobOfferController;
-use App\Http\Controllers\Api\AnnouncementController;
 use App\Http\Controllers\Api\ContactMessageController;
 use App\Http\Controllers\Api\NewsletterSubscriberController;
 use App\Http\Controllers\Api\VisitRequestController;
@@ -20,7 +17,6 @@ use App\Http\Controllers\Api\QuoteRequestController;
 use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\StorageController;
-use App\Http\Controllers\Api\JobApplicationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,12 +58,6 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
             ->middleware('throttle:login');
     });
 
-    // -------------------- Services (Public) --------------------
-    Route::prefix('services')->group(function () {
-        Route::get('/', [ServiceController::class, 'index']);
-        Route::get('/{id}', [ServiceController::class, 'show'])->where('id', '[0-9]+');
-    });
-
     // -------------------- Actualités (Public) --------------------
     Route::prefix('news')->group(function () {
         Route::get('/', [NewsController::class, 'index']);
@@ -85,21 +75,6 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
     Route::prefix('infrastructures')->group(function () {
         Route::get('/', [InfrastructureController::class, 'index']);
         Route::get('/{id}', [InfrastructureController::class, 'show'])->where('id', '[0-9]+');
-    });
-
-    // -------------------- Offres d'Emploi (Public) --------------------
-    Route::prefix('jobs')->group(function () {
-        Route::get('/', [JobOfferController::class, 'index']);
-        Route::get('/{id}', [JobOfferController::class, 'show'])->where('id', '[0-9]+');
-        Route::post('/{id}/apply', [JobApplicationController::class, 'store'])
-            ->where('id', '[0-9]+')
-            ->middleware('throttle:public-form');
-    });
-
-    // -------------------- Annonces (Public) --------------------
-    Route::prefix('announcements')->group(function () {
-        Route::get('/', [AnnouncementController::class, 'index']);
-        Route::get('/{id}', [AnnouncementController::class, 'show'])->where('id', '[0-9]+');
     });
 
     // -------------------- Formulaires Publics (avec rate limiting) --------------------
@@ -181,12 +156,6 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
             // Tableau de bord
             Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
 
-            // Lecture — Services
-            Route::prefix('services')->group(function () {
-                Route::get('/', [ServiceController::class, 'index']);
-                Route::get('/{id}', [ServiceController::class, 'show'])->where('id', '[0-9]+');
-            });
-
             // Lecture — Actualités
             Route::prefix('news')->group(function () {
                 Route::get('/', [NewsController::class, 'index']);
@@ -203,18 +172,6 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
             Route::prefix('infrastructures')->group(function () {
                 Route::get('/', [InfrastructureController::class, 'index']);
                 Route::get('/{id}', [InfrastructureController::class, 'show'])->where('id', '[0-9]+');
-            });
-
-            // Lecture — Offres d'emploi
-            Route::prefix('jobs')->group(function () {
-                Route::get('/', [JobOfferController::class, 'index']);
-                Route::get('/{id}', [JobOfferController::class, 'show'])->where('id', '[0-9]+');
-            });
-
-            // Lecture — Annonces
-            Route::prefix('announcements')->group(function () {
-                Route::get('/', [AnnouncementController::class, 'index']);
-                Route::get('/{id}', [AnnouncementController::class, 'show'])->where('id', '[0-9]+');
             });
 
             // Lecture — Messages
@@ -244,14 +201,6 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
         // -------------------- Admin & Super Admin — Écriture --------------------
         Route::prefix('admin')->middleware(['role:super_admin,admin', 'throttle:admin-write'])->group(function () {
 
-            // Services — CUD
-            Route::prefix('services')->group(function () {
-                Route::post('/', [ServiceController::class, 'store']);
-                Route::put('/{id}', [ServiceController::class, 'update'])->where('id', '[0-9]+');
-                Route::delete('/{id}', [ServiceController::class, 'destroy'])->where('id', '[0-9]+');
-                Route::post('/{id}/restore', [ServiceController::class, 'restore'])->where('id', '[0-9]+');
-            });
-
             // Actualités — CUD
             Route::prefix('news')->group(function () {
                 Route::post('/', [NewsController::class, 'store']);
@@ -274,22 +223,6 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
                 Route::put('/{id}', [InfrastructureController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/{id}', [InfrastructureController::class, 'destroy'])->where('id', '[0-9]+');
                 Route::post('/{id}/restore', [InfrastructureController::class, 'restore'])->where('id', '[0-9]+');
-            });
-
-            // Offres d'emploi — CUD
-            Route::prefix('jobs')->group(function () {
-                Route::post('/', [JobOfferController::class, 'store']);
-                Route::put('/{id}', [JobOfferController::class, 'update'])->where('id', '[0-9]+');
-                Route::delete('/{id}', [JobOfferController::class, 'destroy'])->where('id', '[0-9]+');
-                Route::post('/{id}/restore', [JobOfferController::class, 'restore'])->where('id', '[0-9]+');
-            });
-
-            // Annonces — CUD
-            Route::prefix('announcements')->group(function () {
-                Route::post('/', [AnnouncementController::class, 'store']);
-                Route::put('/{id}', [AnnouncementController::class, 'update'])->where('id', '[0-9]+');
-                Route::delete('/{id}', [AnnouncementController::class, 'destroy'])->where('id', '[0-9]+');
-                Route::post('/{id}/restore', [AnnouncementController::class, 'restore'])->where('id', '[0-9]+');
             });
 
             // Messages — Écriture

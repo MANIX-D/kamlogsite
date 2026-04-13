@@ -1,5 +1,5 @@
 import { useEffect, useState, FormEvent } from 'react';
-import { Plus, Image as ImageIcon } from 'lucide-react';
+import { Plus, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
 import { adminApiService, Partenaire } from '../../services/adminApi';
 import DataTable from '../../components/admin/DataTable';
 import FormModal from '../../components/admin/FormModal';
@@ -128,6 +128,25 @@ export default function AdminPartenaires() {
     }
   };
 
+  const handleToggleActive = async (item: Partenaire) => {
+    try {
+      const updateData = {
+        name_fr: item.name_fr,
+        name_en: item.name_en,
+        category: item.category || '',
+        is_active: !item.is_active,
+        is_featured: item.is_featured || false,
+        display_order: item.display_order || 0,
+      };
+
+      await adminApiService.updatePartenaire(item.id, updateData);
+      fetchPartenaires();
+    } catch (err) {
+      console.error('Error toggling active status:', err);
+      alert('Erreur lors de la modification du statut');
+    }
+  };
+
   const columns = [
     {
       key: 'logo_url',
@@ -161,6 +180,35 @@ export default function AdminPartenaires() {
         };
         return categoryLabels[item.category || ''] || item.category || '—';
       },
+    },
+    {
+      key: 'is_active',
+      label: 'Statut',
+      render: (item: Partenaire) => (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleToggleActive(item);
+          }}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+            item.is_active
+              ? 'bg-green-100 text-green-700 hover:bg-green-200'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          {item.is_active ? (
+            <>
+              <Eye size={14} />
+              <span>Actif</span>
+            </>
+          ) : (
+            <>
+              <EyeOff size={14} />
+              <span>Inactif</span>
+            </>
+          )}
+        </button>
+      ),
     },
     {
       key: 'created_at',

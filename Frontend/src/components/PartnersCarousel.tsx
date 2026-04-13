@@ -1,16 +1,41 @@
 import { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
-import { PARTNERS } from '../constants/assets';
 import { useTranslation } from 'react-i18next';
+import { apiService } from '../services/api';
+
+interface Partner {
+  id: number;
+  name_fr: string;
+  name_en: string;
+  logo_url?: string;
+}
 
 export default function PartnersCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlay, setIsAutoPlay] = useState(true);
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [loading, setLoading] = useState(true);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const itemsPerView = 5;
-  const totalItems = PARTNERS.length;
+  const totalItems = partners.length;
+
+  useEffect(() => {
+    fetchPartners();
+  }, []);
+
+  const fetchPartners = async () => {
+    try {
+      setLoading(true);
+      const data = await apiService.getPartners();
+      setPartners(data);
+    } catch (err) {
+      console.error('Error fetching partners:', err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (!isAutoPlay) return;
@@ -33,13 +58,30 @@ export default function PartnersCarousel() {
   };
 
   const getVisibleItems = () => {
+    if (totalItems === 0) return [];
     const items = [];
     for (let i = 0; i < itemsPerView; i++) {
       const index = (currentIndex + i) % totalItems;
-      items.push(PARTNERS[index]);
+      items.push(partners[index]);
     }
     return items;
   };
+
+  if (loading) {
+    return (
+      <section className="w-full py-20 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center text-gray-500">
+            {t('common.loading', 'Chargement...')}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (partners.length === 0) {
+    return null;
+  }
 
   return (
     <section className="w-full py-20 bg-white">
@@ -64,10 +106,10 @@ export default function PartnersCarousel() {
               >
                 <div className="bg-gray-50 rounded-lg p-8 h-40 flex items-center justify-center border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 group">
                   <img
-                    src={partner.logo}
-                    alt={partner.name}
+                    src={partner.logo_url || 'https://via.placeholder.com/200x80?text=Logo'}
+                    alt={i18n.language === 'fr' ? partner.name_fr : partner.name_en}
                     className="max-h-20 max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
-                    title={partner.name}
+                    title={i18n.language === 'fr' ? partner.name_fr : partner.name_en}
                   />
                 </div>
               </div>

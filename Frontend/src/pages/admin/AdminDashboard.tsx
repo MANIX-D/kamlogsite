@@ -1,21 +1,10 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Newspaper, Mail, Users, LayoutDashboard, Clock, FileText, Megaphone, Briefcase } from 'lucide-react';
-import { adminApiService, Message, Actualite } from '../../services/adminApi';
-
-interface Stats {
-  total_services: number;
-  total_news: number;
-  total_messages: number;
-  total_users: number;
-  unread_messages: number;
-  active_services: number;
-  published_news: number;
-  active_users: number;
-}
+import { Mail, Users, Clock, FileText, Megaphone, Briefcase } from 'lucide-react';
+import { adminApiService, Message, Actualite, DashboardStats } from '../../services/adminApi';
 
 export default function AdminDashboard() {
-  const [stats, setStats] = useState<Stats | null>(null);
+  const [stats, setStats] = useState<DashboardStats | null>(null);
   const [recentMessages, setRecentMessages] = useState<Message[]>([]);
   const [recentNews, setRecentNews] = useState<Actualite[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,16 +35,23 @@ export default function AdminDashboard() {
   const statCards = stats
     ? [
         {
-          title: 'Actualités',
-          value: `${stats.published_news} / ${stats.total_news}`,
-          icon: Newspaper,
+          title: 'Articles',
+          value: `${stats.published_articles} / ${stats.total_articles}`,
+          icon: FileText,
           color: 'bg-blue-500',
           bgColor: 'bg-blue-50',
         },
         {
-          title: 'Services actifs',
-          value: `${stats.active_services} / ${stats.total_services}`,
-          icon: LayoutDashboard,
+          title: 'Annonces',
+          value: `${stats.published_annonces} / ${stats.total_annonces}`,
+          icon: Megaphone,
+          color: 'bg-orange-500',
+          bgColor: 'bg-orange-50',
+        },
+        {
+          title: 'Offres d\'emploi',
+          value: `${stats.published_offres} / ${stats.total_offres}`,
+          icon: Briefcase,
           color: 'bg-green-500',
           bgColor: 'bg-green-50',
         },
@@ -63,8 +59,8 @@ export default function AdminDashboard() {
           title: 'Messages reçus',
           value: `${stats.total_messages} (${stats.unread_messages} non lus)`,
           icon: Mail,
-          color: 'bg-orange-500',
-          bgColor: 'bg-orange-50',
+          color: 'bg-purple-500',
+          bgColor: 'bg-purple-50',
         },
         {
           title: 'Utilisateurs',

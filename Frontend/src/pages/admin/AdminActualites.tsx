@@ -1,5 +1,5 @@
 import { useEffect, useState, FormEvent } from 'react';
-import { Plus, Filter, Image as ImageIcon } from 'lucide-react';
+import { Plus, Filter, Image as ImageIcon, Eye, EyeOff } from 'lucide-react';
 import { adminApiService, Actualite } from '../../services/adminApi';
 import DataTable from '../../components/admin/DataTable';
 import FormModal from '../../components/admin/FormModal';
@@ -18,7 +18,7 @@ export default function AdminActualites() {
     titre_en: '',
     contenu_fr: '',
     contenu_en: '',
-    type: 'article' as 'article' | 'annonce',
+    type: 'article' as 'article' | 'annonce' | 'offre',
     date_publication: new Date().toISOString().split('T')[0],
     is_published: true,
     image: null as File | null,
@@ -50,7 +50,7 @@ export default function AdminActualites() {
         titre_en: item.titre_en,
         contenu_fr: item.contenu_fr,
         contenu_en: item.contenu_en,
-        type: (item.type === 'offre' ? 'article' : item.type) as 'article' | 'annonce',
+        type: item.type as 'article' | 'annonce' | 'offre',
         date_publication: item.date_publication.split('T')[0],
         is_published: (item as any).is_published ?? true,
         image: null,
@@ -161,6 +161,26 @@ export default function AdminActualites() {
     }
   };
 
+  const handleTogglePublished = async (item: Actualite) => {
+    try {
+      const updateData = {
+        titre_fr: item.titre_fr,
+        titre_en: item.titre_en,
+        contenu_fr: item.contenu_fr,
+        contenu_en: item.contenu_en,
+        type: item.type,
+        date_publication: item.date_publication.split('T')[0],
+        is_published: !item.is_published,
+      };
+
+      await adminApiService.updateActualite(item.id, updateData);
+      fetchActualites();
+    } catch (err) {
+      console.error('Error toggling published status:', err);
+      alert('Erreur lors de la modification de la visibilité');
+    }
+  };
+
   const columns = [
     {
       key: 'titre_fr',
@@ -195,6 +215,35 @@ export default function AdminActualites() {
         return isNaN(d.getTime()) ? '—' : d.toLocaleDateString('fr-FR');
       },
     },
+    {
+      key: 'is_published',
+      label: 'Visibilité',
+      render: (item: Actualite) => (
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            handleTogglePublished(item);
+          }}
+          className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+            item.is_published
+              ? 'bg-green-100 text-green-700 hover:bg-green-200'
+              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+          }`}
+        >
+          {item.is_published ? (
+            <>
+              <Eye size={14} />
+              <span>Actif</span>
+            </>
+          ) : (
+            <>
+              <EyeOff size={14} />
+              <span>Inactif</span>
+            </>
+          )}
+        </button>
+      ),
+    },
   ];
 
   return (
@@ -225,6 +274,7 @@ export default function AdminActualites() {
           <option value="">Tous les types</option>
           <option value="article">Articles</option>
           <option value="annonce">Annonces</option>
+          <option value="offre">Offres d'emploi</option>
         </select>
       </div>
 
@@ -286,13 +336,14 @@ export default function AdminActualites() {
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    type: e.target.value as 'article' | 'annonce',
+                    type: e.target.value as 'article' | 'annonce' | 'offre',
                   })
                 }
                 className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               >
                 <option value="article">Article</option>
                 <option value="annonce">Annonce</option>
+                <option value="offre">Offre d'emploi</option>
               </select>
             </div>
 

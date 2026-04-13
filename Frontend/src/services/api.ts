@@ -175,12 +175,18 @@ export interface PaginatedResponse<T> {
 // ── Data mappers ─────────────────────────────────────────
 
 function mapNewsItem(raw: any): NewsItem {
+  // Map backend types (annonce, offre) to frontend types (announcement, job)
+  let mappedType: 'article' | 'announcement' | 'job' = 'article';
+  if (raw.type === 'annonce') mappedType = 'announcement';
+  else if (raw.type === 'offre') mappedType = 'job';
+  else if (raw.type === 'article') mappedType = 'article';
+
   return {
     id: raw.id,
     title: raw.titre_fr ? localized(raw, 'titre') : localized(raw, 'title'),
     excerpt: makeExcerpt(raw.contenu_fr ? localized(raw, 'contenu') : localized(raw, 'content')),
     content: raw.contenu_fr ? localized(raw, 'contenu') : localized(raw, 'content'),
-    type: raw.type,
+    type: mappedType,
     image_url: raw.image || undefined,
     published_at: raw.date_publication || raw.created_at,
     date_publication: raw.date_publication,
@@ -210,35 +216,6 @@ function mapJobOffer(raw: any): JobOffer {
     image_url: raw.image || undefined,
     published_at: raw.created_at,
     skills: [],
-    created_at: raw.created_at,
-    updated_at: raw.updated_at,
-  };
-}
-
-function mapJobToNewsItem(raw: any): NewsItem {
-  return {
-    id: raw.id,
-    title: localized(raw, 'title'),
-    excerpt: makeExcerpt(localized(raw, 'description')),
-    content: localized(raw, 'description'),
-    type: 'job',
-    image_url: raw.image || undefined,
-    published_at: raw.created_at,
-    location: raw.location,
-    created_at: raw.created_at,
-    updated_at: raw.updated_at,
-  };
-}
-
-function mapAnnouncementToNewsItem(raw: any): NewsItem {
-  return {
-    id: raw.id,
-    title: localized(raw, 'title'),
-    excerpt: makeExcerpt(localized(raw, 'content')),
-    content: localized(raw, 'content'),
-    type: 'announcement',
-    image_url: raw.image || undefined,
-    published_at: raw.start_date || raw.created_at,
     created_at: raw.created_at,
     updated_at: raw.updated_at,
   };
@@ -282,49 +259,19 @@ class ApiService {
     const page = params?.page || 1;
     const perPage = params?.per_page || 9;
 
-    // Single-type filters: fetch from the dedicated endpoint
-    if (type === 'article') {
-      const endpoint = this.buildUrl(API_ENDPOINTS.actualites, { type: 'article', page, per_page: perPage });
-      const res = await get<ApiSuccessResponse<any[]>>(endpoint);
-      return this.wrapPaginated(res, mapNewsItem);
-    }
+    // Map frontend types (announcement, job) to backend types (annonce, offre)
+    let backendType = type;
+    if (type === 'announcement') backendType = 'annonce';
+    if (type === 'job') backendType = 'offre';
 
-    if (type === 'job') {
-      const endpoint = this.buildUrl('/jobs', { page, per_page: perPage });
-      const res = await get<ApiSuccessResponse<any[]>>(endpoint);
-      return this.wrapPaginated(res, mapJobToNewsItem);
-    }
-
-    if (type === 'announcement') {
-      const endpoint = this.buildUrl('/announcements', { page, per_page: perPage });
-      const res = await get<ApiSuccessResponse<any[]>>(endpoint);
-      return this.wrapPaginated(res, mapAnnouncementToNewsItem);
-    }
-
-    // "all" — fetch from all 3 endpoints in parallel and combine
-    // Only fetch type=article from /news to avoid duplicates with /jobs and /announcements
-    const [newsRes, jobsRes, announcementsRes] = await Promise.all([
-      get<ApiSuccessResponse<any[]>>(this.buildUrl(API_ENDPOINTS.actualites, { type: 'article', per_page: 50 })),
-      get<ApiSuccessResponse<any[]>>(this.buildUrl('/jobs', { per_page: 50 })),
-      get<ApiSuccessResponse<any[]>>(this.buildUrl('/announcements', { per_page: 50 })),
-    ]);
-
-    const allItems = [
-      ...(newsRes.data || []).map(mapNewsItem),
-      ...(jobsRes.data || []).map(mapJobToNewsItem),
-      ...(announcementsRes.data || []).map(mapAnnouncementToNewsItem),
-    ].sort((a, b) => new Date(b.published_at).getTime() - new Date(a.published_at).getTime());
-
-    const start = (page - 1) * perPage;
-    const paged = allItems.slice(start, start + perPage);
-
-    return {
-      data: paged,
-      current_page: page,
-      last_page: Math.ceil(allItems.length / perPage) || 1,
-      per_page: perPage,
-      total: allItems.length,
-    };
+    // Fetch from unified /news endpoint with type filter
+    const endpoint = this.buildUrl(API_ENDPOINTS.actualites, { 
+      type: backendType === 'all' ? undefined : backendType, 
+      page, 
+      per_page: perPage 
+    });
+    const res = await get<ApiSuccessResponse<any[]>>(endpoint);
+    return this.wrapPaginated(res, mapNewsItem);
   }
 
   async getNewsItem(id: number): Promise<NewsItem> {

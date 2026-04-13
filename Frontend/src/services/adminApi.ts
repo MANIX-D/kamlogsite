@@ -2,15 +2,19 @@ import { get, post, put, del } from './apiClient';
 import { API_ENDPOINTS } from '../config/api';
 import { Announcement, JobOffer } from '../types';
 
-interface DashboardStats {
-  total_services: number;
+export interface DashboardStats {
   total_news: number;
   total_messages: number;
   total_users: number;
   unread_messages: number;
-  active_services: number;
   published_news: number;
   active_users: number;
+  total_articles: number;
+  published_articles: number;
+  total_annonces: number;
+  published_annonces: number;
+  total_offres: number;
+  published_offres: number;
 }
 
 export interface Actualite {
@@ -22,6 +26,7 @@ export interface Actualite {
   type: 'article' | 'annonce' | 'offre';
   image?: string;
   date_publication: string;
+  is_published: boolean;
   created_at: string;
   updated_at: string;
 }
@@ -168,12 +173,12 @@ class AdminApiService {
     return res.data;
   }
 
-  async createActualite(data: Partial<Actualite>): Promise<Actualite> {
+  async createActualite(data: Partial<Actualite> | FormData): Promise<Actualite> {
     const res = await post<ApiResponse<Actualite>>(API_ENDPOINTS.admin.actualites, data);
     return res.data;
   }
 
-  async updateActualite(id: number, data: Partial<Actualite>): Promise<Actualite> {
+  async updateActualite(id: number, data: Partial<Actualite> | FormData): Promise<Actualite> {
     const res = await put<ApiResponse<Actualite>>(`${API_ENDPOINTS.admin.actualites}/${id}`, data);
     return res.data;
   }
@@ -342,7 +347,7 @@ class AdminApiService {
   }
 
   async updatePartenaire(id: number, data: Partial<Partenaire> | FormData): Promise<Partenaire> {
-    const res = await post<ApiResponse<Partenaire>>(`${API_ENDPOINTS.admin.partners}/${id}`, data);
+    const res = await put<ApiResponse<Partenaire>>(`${API_ENDPOINTS.admin.partners}/${id}`, data);
     return res.data;
   }
 
