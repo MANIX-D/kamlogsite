@@ -5,13 +5,19 @@ const apiClient: AxiosInstance = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Accept': 'application/json',
+    'Content-Type': 'application/json',
   },
   withCredentials: true,
 });
 
 apiClient.interceptors.request.use(
   (config) => {
-    // Only send auth token for admin API routes (not public endpoints)
+    // Supprimer Content-Type si FormData (le navigateur le gère avec le bon boundary)
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+
+    // Injecter le token Bearer uniquement sur les routes admin
     const isAdminRoute = config.url?.includes('/admin/') || config.url?.startsWith('admin/');
     if (isAdminRoute) {
       const token = sessionStorage.getItem('auth_token');
@@ -34,23 +40,30 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Clear all session data
+      // Nettoyer la session
       sessionStorage.removeItem('auth_token');
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('auth_token_expiry');
-      // Also clean up old localStorage entries
+      sessionStorage.removeItem('user_permissions');
       localStorage.removeItem('auth_token');
       localStorage.removeItem('user');
 
-      // Only redirect if we're on an admin page (avoid redirect loops)
-      if (window.location.pathname.startsWith('/admin') && 
-          !window.location.pathname.includes('/admin/login')) {
+      // Rediriger vers le login si on est sur une page admin
+      if (
+        window.location.pathname.startsWith('/admin') &&
+        !window.location.pathname.includes('/admin/login')
+      ) {
         window.location.href = '/admin/login';
       }
     }
 
     if (error.response?.status === 403) {
-      console.warn('Access denied: insufficient permissions');
+      // Déclencher un événement global pour afficher un toast
+      window.dispatchEvent(new CustomEvent('kamlog:forbidden', {
+        detail: {
+          message: error.response?.data?.message || 'Accès refusé : permissions insuffisantes.',
+        },
+      }));
     }
 
     return Promise.reject(error);

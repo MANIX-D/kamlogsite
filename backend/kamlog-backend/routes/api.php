@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\PasswordResetController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\MetricsController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\InvitationController;
@@ -115,30 +116,34 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
                 ->middleware('throttle:10,1');
         });
 
+        // -------------------- Profil (tous les admins authentifiés) --------------------
+        Route::prefix('admin/profile')->group(function () {
+            Route::get('/', [ProfileController::class, 'show']);
+            Route::put('/', [ProfileController::class, 'update']);
+            Route::put('/password', [ProfileController::class, 'updatePassword']);
+        });
+
         // ============================================
         // ROUTES ADMIN PAR RÔLE
         // ============================================
 
-        // -------------------- Super Admin Uniquement --------------------
-        Route::prefix('admin')->middleware(['role:super_admin'])->group(function () {
-            
-            // Métriques d'authentification
-            Route::prefix('metrics')->group(function () {
-                Route::get('/auth/today', [MetricsController::class, 'today']);
-                Route::get('/auth/period', [MetricsController::class, 'period']);
-            });
-        });
-
-        // -------------------- Gestion Utilisateurs & Invitations (Super Admin + Admin) --------------------
+        // -------------------- Gestion Utilisateurs (Super Admin + Admin — lecture) --------------------
         Route::prefix('admin')->middleware(['role:super_admin,admin'])->group(function () {
-            
+
             // Utilisateurs
             Route::prefix('users')->group(function () {
                 Route::get('/', [UserController::class, 'index']);
                 Route::get('/{id}', [UserController::class, 'show'])->where('id', '[0-9]+');
+            });
+        });
+
+        // -------------------- Invitations (Super Admin uniquement) --------------------
+        Route::prefix('admin')->middleware(['role:super_admin'])->group(function () {
+
+            // Gestion des utilisateurs (write)
+            Route::prefix('users')->group(function () {
                 Route::put('/{id}', [UserController::class, 'update'])->where('id', '[0-9]+');
                 Route::put('/{id}/toggle-active', [UserController::class, 'toggleActive'])->where('id', '[0-9]+');
-                Route::put('/{id}/permissions', [UserController::class, 'updatePermissions'])->where('id', '[0-9]+');
                 Route::delete('/{id}', [UserController::class, 'destroy'])->where('id', '[0-9]+');
             });
 
@@ -148,10 +153,16 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
                 Route::post('/', [InvitationController::class, 'store']);
                 Route::delete('/{id}', [InvitationController::class, 'destroy'])->where('id', '[0-9]+');
             });
+
+            // Métriques d'authentification
+            Route::prefix('metrics')->group(function () {
+                Route::get('/auth/today', [MetricsController::class, 'today']);
+                Route::get('/auth/period', [MetricsController::class, 'period']);
+            });
         });
 
-        // -------------------- Tous les Admins (Editor, Admin, Super Admin) — Lecture --------------------
-        Route::prefix('admin')->middleware(['role:super_admin,admin,editor'])->group(function () {
+        // -------------------- Tous les Admins — Lecture --------------------
+        Route::prefix('admin')->middleware(['role:super_admin,admin'])->group(function () {
 
             // Tableau de bord
             Route::get('/dashboard/stats', [DashboardController::class, 'stats']);

@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserInvitation;
-use App\Models\UserPermission;
 use App\Services\InvitationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,26 +17,13 @@ class InvitationController extends Controller
 
     /**
      * Liste des invitations.
-     * super_admin : voit toutes les invitations
-     * admin       : voit uniquement les invitations pour les éditeurs
+     * Réservé au super_admin uniquement.
      */
     public function index(Request $request): JsonResponse
     {
-        $currentUser = $request->user();
-        $query = UserInvitation::with('invitedBy', 'acceptedBy');
-
-        if ($currentUser->isSuperAdmin()) {
-            // Voit tout
-        } elseif ($currentUser->isAdmin()) {
-            $query->where('role', 'editor');
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Accès refusé.',
-            ], 403);
-        }
-
-        $invitations = $query->orderByDesc('created_at')->get();
+        $invitations = UserInvitation::with('invitedBy', 'acceptedBy')
+            ->orderByDesc('created_at')
+            ->get();
 
         return response()->json([
             'success' => true,
@@ -46,7 +32,6 @@ class InvitationController extends Controller
                     'id'          => $inv->id,
                     'email'       => $inv->email,
                     'role'        => $inv->role,
-                    'permissions' => $inv->permissions,
                     'status'      => $inv->status,
                     'invited_by'  => $inv->invitedBy ? [
                         'id'   => $inv->invitedBy->id,
@@ -66,20 +51,23 @@ class InvitationController extends Controller
 
     /**
      * Créer une invitation et envoyer l'email.
+     * Réservé au super_admin uniquement.
      */
     public function store(Request $request): JsonResponse
     {
-        $currentUser = $request->user();
-
-        // Déterminer les rôles autorisés pour l'invitant
-        $allowedRoles = $currentUser->isSuperAdmin()
-            ? ['super_admin', 'admin', 'editor']
-            : ['editor']; // Un admin ne peut inviter que des éditeurs
-
         $validated = $request->validate([
-            'email'       => 'required|email|unique:users,email',
-            'role'        => ['required', 'string', Rule::in($allowedRoles)],
-            'permissions' => 'nullable|array',
+            'email' => [
+                'required',
+                'email',
+                'unique:users,email',
+            ],
+            'role'  => ['required', 'string', Rule::in(['admin'])],
+        ], [
+            'email.required' => 'L\'adresse email est requise.',
+            'email.email'    => 'L\'adresse email n\'est pas valide.',
+            'email.unique'   => 'Un compte existe déjà avec cette adresse email.',
+            'role.required'  => 'Le rôle est requis.',
+            'role.in'        => 'Seul le rôle "admin" peut être attribué par invitation.',
         ]);
 
         // Vérifier s'il n'y a pas déjà une invitation en attente pour cet email
@@ -95,27 +83,11 @@ class InvitationController extends Controller
             ], 422);
         }
 
-        // Construire les permissions formatées (pour les éditeurs)
-        $permissions = [];
-        if ($validated['role'] === 'editor' && !empty($validated['permissions'])) {
-            foreach ($validated['permissions'] as $perm) {
-                $section = $perm['section'] ?? null;
-                if ($section && in_array($section, UserPermission::SECTIONS, true)) {
-                    $permissions[$section] = [
-                        'read'   => (bool) ($perm['can_read'] ?? true),
-                        'write'  => (bool) ($perm['can_write'] ?? false),
-                        'delete' => (bool) ($perm['can_delete'] ?? false),
-                    ];
-                }
-            }
-        }
-
         try {
             $invitation = $this->invitationService->createInvitation(
-                $currentUser,
+                $request->user(),
                 $validated['email'],
                 $validated['role'],
-                $permissions,
             );
 
             return response()->json([
@@ -139,19 +111,11 @@ class InvitationController extends Controller
 
     /**
      * Révoquer une invitation en attente.
+     * Réservé au super_admin uniquement.
      */
     public function destroy(Request $request, int $id): JsonResponse
     {
-        $currentUser = $request->user();
         $invitation = UserInvitation::findOrFail($id);
-
-        // Admin ne peut révoquer que les invitations d'éditeurs
-        if (!$currentUser->isSuperAdmin() && $invitation->role !== 'editor') {
-            return response()->json([
-                'success' => false,
-                'message' => 'Accès refusé.',
-            ], 403);
-        }
 
         try {
             $this->invitationService->revokeInvitation($invitation);
@@ -184,11 +148,10 @@ class InvitationController extends Controller
             return response()->json([
                 'success' => true,
                 'data'    => [
-                    'email'       => $invitation->email,
-                    'role'        => $invitation->role,
-                    'permissions' => $invitation->permissions,
-                    'expires_at'  => $invitation->expires_at->toIso8601String(),
-                    'invited_by'  => $invitation->invitedBy?->name ?? 'KAMLOG',
+                    'email'      => $invitation->email,
+                    'role'       => $invitation->role,
+                    'expires_at' => $invitation->expires_at->toIso8601String(),
+                    'invited_by' => $invitation->invitedBy?->name ?? 'KAMLOG',
                 ],
             ]);
         } catch (\InvalidArgumentException $e) {
@@ -210,10 +173,10 @@ class InvitationController extends Controller
                 'required',
                 'string',
                 'min:8',
-                'confirmed', // Requiert password_confirmation
-                'regex:/[A-Z]/',      // Au moins une majuscule
-                'regex:/[0-9]/',      // Au moins un chiffre
-                'regex:/[@$!%*#?&]/', // Au moins un caractère spécial
+                'confirmed',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+                'regex:/[@$!%*#?&]/',
             ],
         ], [
             'password.regex' => 'Le mot de passe doit contenir au moins une majuscule, un chiffre et un caractère spécial (@$!%*#?&).',

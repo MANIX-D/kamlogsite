@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Mail\UserInvitationMail;
 use App\Models\User;
 use App\Models\UserInvitation;
-use App\Models\UserPermission;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
@@ -16,24 +15,25 @@ class InvitationService
 
     /**
      * Créer une nouvelle invitation et envoyer l'email.
+     * Seul le super_admin est autorisé à inviter (vérifié côté controller).
      *
-     * @param User   $inviter     Utilisateur qui crée l'invitation
-     * @param string $email       Email du destinataire
-     * @param string $role        Rôle à attribuer (super_admin|admin|editor)
-     * @param array  $permissions Permissions granulaires (pour les éditeurs uniquement)
-     *                            Format: [ 'actualites' => ['read'=>true,'write'=>true,'delete'=>false], ... ]
+     * @param User   $inviter Utilisateur qui crée l'invitation (super_admin)
+     * @param string $email   Email du destinataire
+     * @param string $role    Rôle à attribuer (admin uniquement)
      */
     public function createInvitation(
         User $inviter,
         string $email,
         string $role,
-        array $permissions = []
     ): UserInvitation {
-        // Vérification de hiérarchie (empêche un admin de créer un super_admin ou admin)
-        if ($inviter->isAdmin() && !$inviter->isSuperAdmin()) {
-            if ($role !== 'editor') {
-                throw new \InvalidArgumentException('Un administrateur ne peut inviter que des éditeurs.');
-            }
+        // Vérification de hiérarchie : seul le super_admin peut inviter
+        if (!$inviter->isSuperAdmin()) {
+            throw new \InvalidArgumentException('Seul le super administrateur peut envoyer des invitations.');
+        }
+
+        // Seul le rôle 'admin' peut être invité
+        if (!in_array($role, ['admin'], true)) {
+            throw new \InvalidArgumentException('Rôle invalide. Seul le rôle "admin" peut être attribué par invitation.');
         }
 
         // Invalider les invitations en attente pour ce même email
@@ -43,13 +43,12 @@ class InvitationService
             ->update(['expires_at' => now()]);
 
         // Générer un token sécurisé
-        $rawToken = $this->generateSecureToken();
+        $rawToken    = $this->generateSecureToken();
         $hashedToken = hash('sha256', $rawToken);
 
         $invitation = UserInvitation::create([
             'email'      => strtolower(trim($email)),
             'role'       => $role,
-            'permissions' => $role === 'editor' ? $permissions : null,
             'token'      => $hashedToken,
             'invited_by' => $inviter->id,
             'expires_at' => now()->addHours(self::EXPIRY_HOURS),
@@ -108,23 +107,6 @@ class InvitationService
             'is_active'         => true,
             'email_verified_at' => now(),
         ]);
-
-        // Créer les permissions granulaires si éditeur
-        if ($invitation->role === 'editor' && !empty($invitation->permissions)) {
-            foreach ($invitation->permissions as $section => $perms) {
-                if (!in_array($section, UserPermission::SECTIONS, true)) {
-                    continue;
-                }
-
-                UserPermission::create([
-                    'user_id'    => $user->id,
-                    'section'    => $section,
-                    'can_read'   => (bool) ($perms['read'] ?? true),
-                    'can_write'  => (bool) ($perms['write'] ?? false),
-                    'can_delete' => (bool) ($perms['delete'] ?? false),
-                ]);
-            }
-        }
 
         // Marquer l'invitation comme acceptée
         $invitation->update([

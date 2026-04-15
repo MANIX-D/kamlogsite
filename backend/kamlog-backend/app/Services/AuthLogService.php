@@ -122,20 +122,45 @@ class AuthLogService
 
         Cache::put($key, $attempts, now()->addHour());
 
-        // Si plus de 10 tentatives échouées en 1 heure
+        // Si plus de 10 tentatives échouées en 1 heure : alerte sécurité
         if ($attempts >= 10) {
             Log::channel('security')->alert('Activité suspecte détectée', [
-                'ip' => $ip,
-                'email' => $email,
+                'ip'              => $ip,
+                'email'           => $email,
                 'failed_attempts' => $attempts,
-                'timestamp' => now()->toIso8601String(),
+                'timestamp'       => now()->toIso8601String(),
             ]);
 
             self::incrementMetric('suspicious_activity_detected');
 
-            // Optionnel: Envoyer une notification aux admins
-            // Notification::route('mail', config('app.admin_email'))
-            //     ->notify(new SuspiciousActivityDetected($ip, $email, $attempts));
+            // Notifier tous les super_admins actifs par email
+            try {
+                $superAdmins = \App\Models\User::where('role', 'super_admin')
+                    ->where('is_active', true)
+                    ->pluck('email')
+                    ->toArray();
+
+                if (!empty($superAdmins)) {
+                    \Illuminate\Support\Facades\Mail::raw(
+                        sprintf(
+                            "[KAMLOG — Alerte Sécurité]\n\nActivité suspecte détectée.\n\nIP : %s\nEmail ciblé : %s\nTentatives échouées : %d en 1 heure\n\nDate : %s\n\nVérifiez vos logs de sécurité immédiatement.",
+                            $ip,
+                            $email,
+                            $attempts,
+                            now()->format('d/m/Y H:i:s')
+                        ),
+                        function ($message) use ($superAdmins) {
+                            $message->to($superAdmins)
+                                    ->subject('[KAMLOG] ⚠️ Alerte Sécurité — Activité Suspecte Détectée');
+                        }
+                    );
+                }
+            } catch (\Throwable $e) {
+                // Ne jamais laisser l'échec de notification crasher l'application
+                Log::channel('security')->error('Impossible d\'envoyer la notification d\'alerte', [
+                    'error' => $e->getMessage(),
+                ]);
+            }
         }
     }
 
