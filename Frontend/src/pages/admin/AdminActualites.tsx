@@ -55,7 +55,9 @@ export default function AdminActualites() {
         is_published: (item as any).is_published ?? true,
         image: null,
       });
-      if (item.image) {
+      if ((item as any).image_url) {
+        setImagePreview((item as any).image_url);
+      } else if (item.image) {
         setImagePreview(item.image);
       }
     } else {
@@ -84,6 +86,22 @@ export default function AdminActualites() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file size (2MB = 2 * 1024 * 1024 bytes)
+      const maxSize = 2 * 1024 * 1024;
+      if (file.size > maxSize) {
+        alert('L\'image ne doit pas dépasser 2 MB. Veuillez choisir une image plus petite.');
+        e.target.value = ''; // Reset input
+        return;
+      }
+
+      // Validate file type
+      const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('L\'image doit être au format JPEG, JPG, PNG, GIF ou WEBP.');
+        e.target.value = ''; // Reset input
+        return;
+      }
+
       setFormData({ ...formData, image: file });
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -140,9 +158,11 @@ export default function AdminActualites() {
 
       fetchActualites();
       handleCloseModal();
-    } catch (err) {
+    } catch (err: any) {
       console.error('Error submitting actualite:', err);
-      alert('Erreur lors de l\'enregistrement');
+      const errorMessage = err?.response?.data?.message || err?.response?.data?.errors || 'Erreur lors de l\'enregistrement';
+      console.error('Detailed error:', errorMessage);
+      alert(typeof errorMessage === 'object' ? JSON.stringify(errorMessage, null, 2) : errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -162,6 +182,15 @@ export default function AdminActualites() {
   };
 
   const handleTogglePublished = async (item: Actualite) => {
+    // Mise à jour optimiste de l'UI
+    setActualites(prev => 
+      prev.map(a => 
+        a.id === item.id 
+          ? { ...a, is_published: !a.is_published }
+          : a
+      )
+    );
+
     try {
       const updateData = {
         titre_fr: item.titre_fr,
@@ -174,9 +203,16 @@ export default function AdminActualites() {
       };
 
       await adminApiService.updateActualite(item.id, updateData);
-      fetchActualites();
     } catch (err) {
       console.error('Error toggling published status:', err);
+      // Annuler la mise à jour optimiste en cas d'erreur
+      setActualites(prev => 
+        prev.map(a => 
+          a.id === item.id 
+            ? { ...a, is_published: item.is_published }
+            : a
+        )
+      );
       alert('Erreur lors de la modification de la visibilité');
     }
   };
@@ -413,13 +449,16 @@ export default function AdminActualites() {
             <label className="block text-sm font-medium text-slate-700 mb-2">
               Image
             </label>
+            <p className="text-xs text-slate-500 mb-2">
+              Formats acceptés : JPEG, JPG, PNG, GIF, WEBP • Taille maximale : 2 MB
+            </p>
             <div className="flex items-center gap-4">
               <label className="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg cursor-pointer transition-colors">
                 <ImageIcon size={20} />
                 <span>Choisir une image</span>
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/jpeg,image/jpg,image/png,image/gif,image/webp"
                   onChange={handleImageChange}
                   className="hidden"
                 />

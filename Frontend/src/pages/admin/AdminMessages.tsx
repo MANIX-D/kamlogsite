@@ -102,22 +102,24 @@ export default function AdminMessages() {
                     </span>
                   </div>
                 </div>
-                {!message.lu && (
+                <div className="flex gap-2">
+                  {!message.lu && (
+                    <button
+                      onClick={() => handleMarkAsRead(message)}
+                      className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors"
+                    >
+                      <CheckCircle size={16} />
+                      <span>Marquer comme lu</span>
+                    </button>
+                  )}
                   <button
-                    onClick={() => handleMarkAsRead(message)}
-                    className="flex items-center gap-2 px-3 py-2 text-sm bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors"
+                    onClick={() => handleDelete(message)}
+                    className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
                   >
-                    <CheckCircle size={16} />
-                    <span>Marquer comme lu</span>
+                    <Trash2 size={16} />
+                    <span>Supprimer</span>
                   </button>
-                )}
-                <button
-                  onClick={() => handleDelete(message)}
-                  className="flex items-center gap-2 px-3 py-2 text-sm bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors"
-                >
-                  <Trash2 size={16} />
-                  <span>Supprimer</span>
-                </button>
+                </div>
               </div>
 
               <div className="mb-3">

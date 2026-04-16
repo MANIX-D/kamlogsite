@@ -41,6 +41,8 @@ class News extends Model
         'views' => 'integer',
     ];
 
+    protected $appends = ['image_url'];
+
     protected $attributes = [
         'is_published' => false,
         'is_featured' => false,
@@ -78,6 +80,24 @@ class News extends Model
     public function scopeLatestPublished($query)
     {
         return $query->orderBy('date_publication', 'desc');
+    }
+
+    /**
+     * Get the full URL for the image
+     */
+    public function getImageUrlAttribute(): ?string
+    {
+        if (!$this->image) {
+            return null;
+        }
+
+        // If image already contains full URL, return as is
+        if (str_starts_with($this->image, 'http')) {
+            return $this->image;
+        }
+
+        // Return storage URL
+        return asset('storage/' . $this->image);
     }
 
     /**

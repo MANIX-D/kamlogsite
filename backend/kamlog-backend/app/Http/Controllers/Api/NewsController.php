@@ -9,6 +9,7 @@ use App\Traits\ApiResponses;
 use App\Traits\HasCache;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class NewsController extends Controller
 {
@@ -130,13 +131,18 @@ class NewsController extends Controller
 
         // Handle image upload
         if ($request->hasFile('image')) {
-            $data['image'] = $request->file('image')->store('news', 'public');
+            $file = $request->file('image');
+            $data['image'] = $file->store('news', 'public');
+            \Log::info('Image uploaded', ['path' => $data['image'], 'original' => $file->getClientOriginalName()]);
+        } else {
+            \Log::warning('No image file in request', ['has_image_key' => $request->has('image'), 'all_keys' => array_keys($request->all())]);
         }
 
         $news = News::create($data);
 
         // Invalider le cache
         $this->flushCache();
+        Cache::forget('dashboard:stats');
 
         return $this->createdResponse($news, 'Actualité créée avec succès');
     }
@@ -163,6 +169,7 @@ class NewsController extends Controller
 
         // Invalider le cache
         $this->flushCache();
+        Cache::forget('dashboard:stats');
 
         return $this->successResponse($news->fresh(), 'Actualité mise à jour avec succès');
     }
@@ -182,6 +189,7 @@ class NewsController extends Controller
 
         // Invalider le cache
         $this->flushCache();
+        Cache::forget('dashboard:stats');
 
         return $this->successResponse(null, 'Actualité supprimée avec succès');
     }
@@ -205,6 +213,7 @@ class NewsController extends Controller
 
         // Invalider le cache
         $this->flushCache();
+        Cache::forget('dashboard:stats');
 
         return $this->successResponse($news, 'Actualité restaurée avec succès');
     }

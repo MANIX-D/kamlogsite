@@ -130,6 +130,9 @@ class ContactMessageController extends Controller
 
         $message->update($validated);
 
+        // Invalider le cache du dashboard
+        \Illuminate\Support\Facades\Cache::forget('dashboard:stats');
+
         return response()->json([
             'success' => true,
             'message' => 'Message mis à jour avec succès',
@@ -153,6 +156,9 @@ class ContactMessageController extends Controller
 
         $message->markAsRead();
 
+        // Invalider le cache du dashboard
+        \Illuminate\Support\Facades\Cache::forget('dashboard:stats');
+
         return response()->json([
             'success' => true,
             'message' => 'Message marqué comme lu',
@@ -175,6 +181,9 @@ class ContactMessageController extends Controller
         }
 
         $message->delete();
+
+        // Invalider le cache du dashboard
+        \Illuminate\Support\Facades\Cache::forget('dashboard:stats');
 
         return response()->json([
             'success' => true,

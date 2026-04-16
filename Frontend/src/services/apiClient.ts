@@ -23,6 +23,11 @@ apiClient.interceptors.request.use(
     const currentLanguage = localStorage.getItem('i18nextLng') || 'fr';
     config.headers['Accept-Language'] = currentLanguage;
 
+    // Don't set Content-Type for FormData - let browser set it with boundary
+    if (config.data instanceof FormData) {
+      delete config.headers['Content-Type'];
+    }
+
     return config;
   },
   (error) => {

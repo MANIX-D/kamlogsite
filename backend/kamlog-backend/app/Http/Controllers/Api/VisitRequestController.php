@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\VisitRequestRequest;
 use App\Http\Requests\UpdateVisitRequestRequest;
+use App\Http\Requests\VisitRequestRequest;
 use App\Models\VisitRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;

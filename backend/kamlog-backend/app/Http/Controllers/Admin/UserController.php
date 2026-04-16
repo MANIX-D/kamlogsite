@@ -115,6 +115,9 @@ class UserController extends Controller
 
         $user->update($validated);
 
+        // Invalider le cache du dashboard
+        \Illuminate\Support\Facades\Cache::forget('dashboard:stats');
+
         return response()->json([
             'success' => true,
             'message' => 'Utilisateur mis à jour avec succès.',
@@ -145,7 +148,11 @@ class UserController extends Controller
             ], 422);
         }
 
-        $user->update(['is_active' => !$user->is_active]);
+        $user->is_active = !$user->is_active;
+        $user->save();
+
+        // Invalider le cache du dashboard
+        Cache::forget('dashboard:stats');
 
         return response()->json([
             'success' => true,
@@ -233,6 +240,9 @@ class UserController extends Controller
         // Révoquer les tokens actifs
         $user->tokens()->delete();
         $user->delete();
+
+        // Invalider le cache du dashboard
+        \Illuminate\Support\Facades\Cache::forget('dashboard:stats');
 
         return response()->json([
             'success' => true,
