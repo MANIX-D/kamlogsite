@@ -17,6 +17,11 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
     /**
+     * Rôles valides dans le système
+     */
+    public const ROLES = ['super_admin', 'admin'];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var list<string>
@@ -60,15 +65,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Relation: Permissions granulaires (pour les éditeurs)
-     */
-    public function permissions(): HasMany
-    {
-        return $this->hasMany(UserPermission::class);
-    }
-
-    /**
-     * Relation: Invitations émises par cet utilisateur
+     * Relation: Invitations émises par cet utilisateur (super_admin uniquement)
      */
     public function sentInvitations(): HasMany
     {
@@ -124,14 +121,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Vérifier si l'utilisateur est éditeur
-     */
-    public function isEditor(): bool
-    {
-        return $this->role === 'editor';
-    }
-
-    /**
      * Vérifier si l'utilisateur a un rôle spécifique
      */
     public function hasRole(string $role): bool
@@ -145,64 +134,6 @@ class User extends Authenticatable
     public function hasAnyRole(array $roles): bool
     {
         return in_array($this->role, $roles, true);
-    }
-
-    /**
-     * Vérifier si l'utilisateur a accès à une section donnée.
-     * - super_admin et admin : accès complet implicite
-     * - editor : vérification dans user_permissions
-     *
-     * @param string $section  Section concernée (ex: 'actualites')
-     * @param string $action   'read' | 'write' | 'delete'
-     */
-    public function hasPermission(string $section, string $action = 'read'): bool
-    {
-        if ($this->isAdmin()) {
-            return true; // super_admin et admin ont tout
-        }
-
-        if (!$this->isEditor()) {
-            return false;
-        }
-
-        $column = match ($action) {
-            'write'  => 'can_write',
-            'delete' => 'can_delete',
-            default  => 'can_read',
-        };
-
-        $permission = $this->permissions()
-            ->where('section', $section)
-            ->first();
-
-        return $permission?->$column === true;
-    }
-
-    /**
-     * Retourner toutes les permissions formatées pour les réponses API
-     */
-    public function getFormattedPermissions(): array
-    {
-        if ($this->isAdmin()) {
-            // Admin et super_admin ont accès à tout
-            return array_fill_keys(UserPermission::SECTIONS, [
-                'read' => true, 'write' => true, 'delete' => true,
-            ]);
-        }
-
-        if (!$this->isEditor()) {
-            return [];
-        }
-
-        $perms = [];
-        foreach ($this->permissions as $perm) {
-            $perms[$perm->section] = [
-                'read'   => $perm->can_read,
-                'write'  => $perm->can_write,
-                'delete' => $perm->can_delete,
-            ];
-        }
-        return $perms;
     }
 
     /**

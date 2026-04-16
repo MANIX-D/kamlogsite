@@ -37,6 +37,8 @@ export const API_ENDPOINTS = {
     storage: '/admin/storage',
     users: '/admin/users',
     invitations: '/admin/invitations',
+    profile: '/admin/profile',
+    profilePassword: '/admin/profile/password',
   },
 
   // Public invitation routes (no auth required)

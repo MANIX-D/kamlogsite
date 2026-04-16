@@ -4,55 +4,36 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Models\UserPermission;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
 {
     /**
-     * Liste des utilisateurs (filtrée par rôle du demandeur).
+     * Liste des utilisateurs.
      * super_admin : voit tous les utilisateurs
-     * admin       : voit uniquement les éditeurs
+     * admin       : voit tous les utilisateurs (mais ne peut pas inviter)
      */
     public function index(Request $request): JsonResponse
     {
-        $currentUser = $request->user();
-        $query = User::query()->withCount('permissions');
-
-        if ($currentUser->isSuperAdmin()) {
-            // Super admin voit tout
-        } elseif ($currentUser->isAdmin()) {
-            // Admin ne voit que les éditeurs
-            $query->where('role', 'editor');
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Accès refusé.',
-            ], 403);
-        }
-
-        $users = $query->orderByDesc('created_at')->get();
-
-        // Charger les permissions pour chaque utilisateur
-        $users->load('permissions');
+        $users = User::query()
+            ->orderByDesc('created_at')
+            ->get();
 
         return response()->json([
             'success' => true,
             'data'    => $users->map(function (User $user) {
                 return [
-                    'id'              => $user->id,
-                    'name'            => $user->name,
-                    'email'           => $user->email,
-                    'role'            => $user->role,
-                    'avatar'          => $user->avatar,
-                    'phone'           => $user->phone,
-                    'is_active'       => $user->is_active,
-                    'last_login_at'   => $user->last_login_at?->toIso8601String(),
-                    'created_at'      => $user->created_at->toIso8601String(),
-                    'permissions'     => $user->getFormattedPermissions(),
+                    'id'            => $user->id,
+                    'name'          => $user->name,
+                    'email'         => $user->email,
+                    'role'          => $user->role,
+                    'avatar'        => $user->avatar,
+                    'phone'         => $user->phone,
+                    'is_active'     => $user->is_active,
+                    'last_login_at' => $user->last_login_at?->toIso8601String(),
+                    'created_at'    => $user->created_at->toIso8601String(),
                 ];
             }),
         ]);
@@ -64,9 +45,8 @@ class UserController extends Controller
     public function show(Request $request, int $id): JsonResponse
     {
         $currentUser = $request->user();
-        $user = User::with('permissions')->findOrFail($id);
+        $user        = User::findOrFail($id);
 
-        // Vérifier les droits
         if (!$this->canManageUser($currentUser, $user)) {
             return response()->json([
                 'success' => false,
@@ -86,18 +66,19 @@ class UserController extends Controller
                 'is_active'     => $user->is_active,
                 'last_login_at' => $user->last_login_at?->toIso8601String(),
                 'created_at'    => $user->created_at->toIso8601String(),
-                'permissions'   => $user->getFormattedPermissions(),
             ],
         ]);
     }
 
     /**
      * Modifier un utilisateur (name, email, phone, is_active).
+     * Un admin ne peut modifier que son propre profil via la section Paramètres.
+     * Le super_admin peut modifier n'importe qui.
      */
     public function update(Request $request, int $id): JsonResponse
     {
         $currentUser = $request->user();
-        $user = User::findOrFail($id);
+        $user        = User::findOrFail($id);
 
         if (!$this->canManageUser($currentUser, $user)) {
             return response()->json([
@@ -121,17 +102,18 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Utilisateur mis à jour avec succès.',
-            'data'    => $user->fresh()->load('permissions'),
+            'data'    => $user->fresh(),
         ]);
     }
 
     /**
      * Activer/désactiver un utilisateur.
+     * Réservé au super_admin.
      */
     public function toggleActive(Request $request, int $id): JsonResponse
     {
         $currentUser = $request->user();
-        $user = User::findOrFail($id);
+        $user        = User::findOrFail($id);
 
         if (!$this->canManageUser($currentUser, $user)) {
             return response()->json([
@@ -162,66 +144,13 @@ class UserController extends Controller
     }
 
     /**
-     * Mettre à jour les permissions d'un éditeur.
-     */
-    public function updatePermissions(Request $request, int $id): JsonResponse
-    {
-        $currentUser = $request->user();
-        $user = User::findOrFail($id);
-
-        if (!$this->canManageUser($currentUser, $user)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Accès refusé.',
-            ], 403);
-        }
-
-        if (!$user->isEditor()) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Seuls les éditeurs ont des permissions configurables.',
-            ], 422);
-        }
-
-        $validated = $request->validate([
-            'permissions'             => 'required|array',
-            'permissions.*.section'   => ['required', 'string', Rule::in(UserPermission::SECTIONS)],
-            'permissions.*.can_read'  => 'required|boolean',
-            'permissions.*.can_write' => 'required|boolean',
-            'permissions.*.can_delete'=> 'required|boolean',
-        ]);
-
-        // Supprimer les anciennes permissions
-        $user->permissions()->delete();
-
-        // Créer les nouvelles permissions
-        foreach ($validated['permissions'] as $perm) {
-            // Ne créer que si au moins un droit est accordé
-            if ($perm['can_read'] || $perm['can_write'] || $perm['can_delete']) {
-                UserPermission::create([
-                    'user_id'    => $user->id,
-                    'section'    => $perm['section'],
-                    'can_read'   => $perm['can_read'],
-                    'can_write'  => $perm['can_write'],
-                    'can_delete' => $perm['can_delete'],
-                ]);
-            }
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Permissions mises à jour avec succès.',
-            'data'    => $user->fresh()->load('permissions'),
-        ]);
-    }
-
-    /**
      * Supprimer (soft delete) un utilisateur.
+     * Réservé au super_admin.
      */
     public function destroy(Request $request, int $id): JsonResponse
     {
         $currentUser = $request->user();
-        $user = User::findOrFail($id);
+        $user        = User::findOrFail($id);
 
         if (!$this->canManageUser($currentUser, $user)) {
             return response()->json([
@@ -237,7 +166,7 @@ class UserController extends Controller
             ], 422);
         }
 
-        // Révoquer les tokens actifs
+        // Révoquer les tokens actifs avant suppression
         $user->tokens()->delete();
         $user->delete();
 
@@ -252,10 +181,10 @@ class UserController extends Controller
 
     /**
      * Vérifier si le demandeur peut gérer l'utilisateur cible.
-     * 
-     * - super_admin peut gérer tout le monde
-     * - admin peut gérer uniquement les éditeurs
-     * - editor ne peut gérer personne
+     *
+     * - super_admin peut gérer tout le monde sauf lui-même pour la suppression
+     * - admin ne peut gérer personne d'autre (la gestion de son propre profil
+     *   passe par la section Paramètres → ProfileController)
      */
     private function canManageUser(User $manager, User $target): bool
     {
@@ -263,10 +192,8 @@ class UserController extends Controller
             return true;
         }
 
-        if ($manager->isAdmin() && !$manager->isSuperAdmin()) {
-            return $target->isEditor();
-        }
-
+        // Un admin peut uniquement consulter les données (lecture)
+        // mais pas modifier d'autres comptes
         return false;
     }
 }

@@ -80,7 +80,7 @@ export default function AdminRegister() {
     switch (role) {
       case 'super_admin': return 'Super Administrateur';
       case 'admin': return 'Administrateur';
-      default: return 'Éditeur';
+      default: return 'Administrateur';
     }
   };
 
@@ -161,7 +161,7 @@ export default function AdminRegister() {
             <div className="flex items-center gap-2 mb-2">
               <Shield className="text-blue-600" size={16} />
               <span className="text-sm text-blue-900">
-                Rôle : <strong>{roleName(invitation?.role || 'editor')}</strong>
+                Rôle : <strong>{roleName(invitation?.role || 'admin')}</strong>
               </span>
             </div>
             <div className="flex items-center gap-2">

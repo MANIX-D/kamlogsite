@@ -22,6 +22,7 @@ import AdminQuotes from './pages/admin/AdminQuotes';
 import AdminInfrastructures from './pages/admin/AdminInfrastructures';
 import AdminPartenaires from './pages/admin/AdminPartenaires';
 import AdminUsers from './pages/admin/AdminUsers';
+import AdminSettings from './pages/admin/AdminSettings';
 import AdminRegister from './pages/admin/AdminRegister';
 import AdminForgotPassword from './pages/admin/AdminForgotPassword';
 import AdminVerifyCode from './pages/admin/AdminVerifyCode';
@@ -74,6 +75,7 @@ function App() {
           <Route path="newsletter" element={<AdminNewsletter />} />
           <Route path="visit-requests" element={<AdminVisitRequests />} />
           <Route path="users" element={<AdminUsers />} />
+          <Route path="settings" element={<AdminSettings />} />
         </Route>
 
         <Route

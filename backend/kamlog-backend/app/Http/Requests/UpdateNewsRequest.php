@@ -9,7 +9,7 @@ class UpdateNewsRequest extends BaseFormRequest
      */
     public function authorize(): bool
     {
-        return $this->authorizeAdmin(['super_admin', 'admin', 'editor']);
+        return $this->authorizeAdmin(['super_admin', 'admin']);
     }
 
     /**

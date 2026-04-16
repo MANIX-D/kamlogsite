@@ -427,13 +427,6 @@ class AdminApiService {
     return res.data;
   }
 
-  async updateUserPermissions(id: number, permissions: SectionPermission[]): Promise<AdminUser> {
-    const res = await put<ApiResponse<AdminUser>>(
-      `${API_ENDPOINTS.admin.users}/${id}/permissions`,
-      { permissions }
-    );
-    return res.data;
-  }
 
   async deleteUser(id: number): Promise<void> {
     return del<void>(`${API_ENDPOINTS.admin.users}/${id}`);
@@ -449,7 +442,6 @@ class AdminApiService {
   async createInvitation(data: {
     email: string;
     role: string;
-    permissions?: SectionPermission[];
   }): Promise<UserInvitation> {
     const res = await post<ApiResponse<UserInvitation>>(API_ENDPOINTS.admin.invitations, data);
     return res.data;
@@ -528,20 +520,18 @@ export interface AdminUser {
   id: number;
   name: string;
   email: string;
-  role: 'super_admin' | 'admin' | 'editor';
+  role: 'super_admin' | 'admin';
   avatar: string | null;
   phone: string | null;
   is_active: boolean;
   last_login_at: string | null;
   created_at: string;
-  permissions: Record<string, { read: boolean; write: boolean; delete: boolean }>;
 }
 
 export interface UserInvitation {
   id: number;
   email: string;
-  role: string;
-  permissions: Record<string, { read: boolean; write: boolean; delete: boolean }> | null;
+  role: 'super_admin' | 'admin';
   status: 'pending' | 'accepted' | 'expired';
   invited_by: { id: number; name: string } | null;
   accepted_by: { id: number; name: string } | null;
@@ -550,32 +540,24 @@ export interface UserInvitation {
   created_at: string;
 }
 
-export interface SectionPermission {
-  section: string;
-  can_read: boolean;
-  can_write: boolean;
-  can_delete: boolean;
-}
-
 export interface InvitationValidation {
   email: string;
-  role: string;
-  permissions: Record<string, { read: boolean; write: boolean; delete: boolean }> | null;
+  role: 'super_admin' | 'admin';
   expires_at: string;
   invited_by: string;
 }
 
-export const SECTION_LABELS: Record<string, string> = {
-  actualites: 'Actualités',
-  announcements: 'Annonces',
-  job_offers: 'Offres d\'emploi',
-  quotes: 'Demandes de devis',
-  messages: 'Messages',
-  newsletter: 'Newsletter',
-  visit_requests: 'Demandes de visite',
-  services: 'Services',
-  partners: 'Partenaires',
-  infrastructures: 'Infrastructures',
-};
+export interface UpdateProfileData {
+  name?: string;
+  email?: string;
+  phone?: string;
+}
+
+export interface UpdatePasswordData {
+  current_password: string;
+  password: string;
+  password_confirmation: string;
+}
+
 
 export const adminApiService = new AdminApiService();

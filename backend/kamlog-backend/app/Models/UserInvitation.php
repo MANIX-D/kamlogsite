@@ -10,7 +10,6 @@ class UserInvitation extends Model
     protected $fillable = [
         'email',
         'role',
-        'permissions',
         'token',
         'invited_by',
         'accepted_at',
@@ -19,10 +18,10 @@ class UserInvitation extends Model
     ];
 
     protected $casts = [
-        'permissions' => 'array',
         'accepted_at' => 'datetime',
         'expires_at'  => 'datetime',
     ];
+
 
     protected $hidden = [
         'token', // Ne jamais exposer le token en réponse JSON
