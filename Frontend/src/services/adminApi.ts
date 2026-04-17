@@ -150,10 +150,67 @@ export interface Quote {
   updated_at: string;
 }
 
+export interface JobApplication {
+  id: number;
+  job_offer_id: number;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string;
+  address?: string;
+  birth_date?: string;
+  linkedin_url?: string;
+  portfolio_url?: string;
+  cover_letter?: string;
+  cv_path?: string;
+  cv_url?: string;
+  status: 'en_attente' | 'en_cours' | 'acceptee' | 'refusee';
+  notes_admin?: string;
+  application_date: string;
+  user_id?: number;
+  created_at: string;
+  updated_at: string;
+  full_name?: string;
+  job_offer?: {
+    id: number;
+    titre_fr: string;
+    titre_en: string;
+    type: string;
+  };
+}
+
+export interface AdminActionLog {
+  id: number;
+  user_id?: number | null;
+  action: string;
+  method: string;
+  route: string;
+  description?: string | null;
+  ip_address?: string | null;
+  user_agent?: string | null;
+  metadata?: Record<string, unknown> | null;
+  created_at: string;
+  updated_at: string;
+  user?: {
+    id: number;
+    name: string;
+    email: string;
+    role: 'super_admin' | 'admin';
+  } | null;
+}
+
 interface ApiResponse<T> {
   success: boolean;
   data: T;
   message?: string;
+  pagination?: {
+    total: number;
+    per_page: number;
+    current_page: number;
+    last_page: number;
+    from?: number;
+    to?: number;
+  };
 }
 
 class AdminApiService {
@@ -511,6 +568,63 @@ class AdminApiService {
       data,
     );
     return { message: res.message || 'Mot de passe réinitialisé' };
+  }
+
+  // ─── Job Applications ──────────────────────────────────────
+
+  async getJobApplications(params?: { status?: string; job_offer_id?: number }): Promise<{ data: JobApplication[] }> {
+    let query = '';
+    if (params) {
+      const queryParams = new URLSearchParams();
+      if (params.status) queryParams.append('status', params.status);
+      if (params.job_offer_id) queryParams.append('job_offer_id', params.job_offer_id.toString());
+      query = queryParams.toString() ? `?${queryParams.toString()}` : '';
+    }
+    const res = await get<ApiResponse<JobApplication[]>>(`${API_ENDPOINTS.admin.jobApplications}${query}`);
+    return { data: res.data };
+  }
+
+  async getJobApplication(id: number): Promise<JobApplication> {
+    const res = await get<ApiResponse<JobApplication>>(`${API_ENDPOINTS.admin.jobApplications}/${id}`);
+    return res.data;
+  }
+
+  async updateJobApplicationStatus(id: number, data: { status: string; notes_admin?: string }): Promise<JobApplication> {
+    const res = await put<ApiResponse<JobApplication>>(`${API_ENDPOINTS.admin.jobApplications}/${id}/status`, data);
+    return res.data;
+  }
+
+  async deleteJobApplication(id: number): Promise<void> {
+    return del<void>(`${API_ENDPOINTS.admin.jobApplications}/${id}`);
+  }
+
+  async getActionLogs(params?: { search?: string; user_id?: number; per_page?: number; page?: number }): Promise<{
+    data: AdminActionLog[];
+    pagination: {
+      total: number;
+      per_page: number;
+      current_page: number;
+      last_page: number;
+      from?: number;
+      to?: number;
+    };
+  }> {
+    const queryParams = new URLSearchParams();
+    if (params?.search) queryParams.append('search', params.search);
+    if (params?.user_id) queryParams.append('user_id', params.user_id.toString());
+    if (params?.per_page) queryParams.append('per_page', params.per_page.toString());
+    if (params?.page) queryParams.append('page', params.page.toString());
+    const query = queryParams.toString() ? `?${queryParams.toString()}` : '';
+    const res = await get<ApiResponse<AdminActionLog[]>>(`${API_ENDPOINTS.admin.actionLogs}${query}`);
+    return {
+      data: res.data,
+      pagination: res.pagination || {
+        total: res.data.length,
+        per_page: params?.per_page || res.data.length,
+        current_page: params?.page || 1,
+        last_page: 1,
+      },
+    };
   }
 }
 

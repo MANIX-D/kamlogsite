@@ -4,6 +4,33 @@ import { adminApiService, Actualite } from '../../services/adminApi';
 import DataTable from '../../components/admin/DataTable';
 import FormModal from '../../components/admin/FormModal';
 
+const htmlToPlainText = (html: string) => {
+  if (!html) return '';
+
+  return html
+    .replace(/<\s*br\s*\/?>/gi, '\n')
+    .replace(/<\s*\/p\s*>/gi, '\n\n')
+    .replace(/<\s*p[^>]*>/gi, '')
+    .replace(/<[^>]+>/g, '')
+    .replace(/&nbsp;/gi, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/&lt;/gi, '<')
+    .replace(/&gt;/gi, '>')
+    .replace(/\n{3,}/g, '\n\n')
+    .trim();
+};
+
+const plainTextToHtml = (text: string) => {
+  if (!text.trim()) return '';
+
+  return text
+    .split(/\n\s*\n/)
+    .map((paragraph) => paragraph.trim())
+    .filter(Boolean)
+    .map((paragraph) => `<p>${paragraph.replace(/\n/g, '<br>')}</p>`)
+    .join('');
+};
+
 export default function AdminActualites() {
   const [actualites, setActualites] = useState<Actualite[]>([]);
   const [loading, setLoading] = useState(true);
@@ -18,7 +45,10 @@ export default function AdminActualites() {
     titre_en: '',
     contenu_fr: '',
     contenu_en: '',
+    slug_fr: '',
+    slug_en: '',
     type: 'article' as 'article' | 'annonce' | 'offre',
+    location: '',
     date_publication: new Date().toISOString().split('T')[0],
     is_published: true,
     image: null as File | null,
@@ -48,9 +78,12 @@ export default function AdminActualites() {
       setFormData({
         titre_fr: item.titre_fr,
         titre_en: item.titre_en,
-        contenu_fr: item.contenu_fr,
-        contenu_en: item.contenu_en,
+        contenu_fr: htmlToPlainText(item.contenu_fr),
+        contenu_en: htmlToPlainText(item.contenu_en),
+        slug_fr: (item as any).slug_fr || '',
+        slug_en: (item as any).slug_en || '',
         type: item.type as 'article' | 'annonce' | 'offre',
+        location: (item as any).location || '',
         date_publication: item.date_publication.split('T')[0],
         is_published: (item as any).is_published ?? true,
         image: null,
@@ -67,7 +100,10 @@ export default function AdminActualites() {
         titre_en: '',
         contenu_fr: '',
         contenu_en: '',
+        slug_fr: '',
+        slug_en: '',
         type: 'article',
+        location: '',
         date_publication: new Date().toISOString().split('T')[0],
         is_published: true,
         image: null,
@@ -116,14 +152,20 @@ export default function AdminActualites() {
     setSubmitting(true);
 
     try {
+      const contenuFr = plainTextToHtml(formData.contenu_fr);
+      const contenuEn = plainTextToHtml(formData.contenu_en);
+
       if (formData.image) {
         // Use FormData when an image file is selected
         const submitData = new FormData();
         submitData.append('titre_fr', formData.titre_fr);
         submitData.append('titre_en', formData.titre_en);
-        submitData.append('contenu_fr', formData.contenu_fr);
-        submitData.append('contenu_en', formData.contenu_en);
+        submitData.append('contenu_fr', contenuFr);
+        submitData.append('contenu_en', contenuEn);
+        if (formData.slug_fr) submitData.append('slug_fr', formData.slug_fr);
+        if (formData.slug_en) submitData.append('slug_en', formData.slug_en);
         submitData.append('type', formData.type);
+        if (formData.location) submitData.append('location', formData.location);
         submitData.append('date_publication', formData.date_publication);
         submitData.append('is_published', formData.is_published ? '1' : '0');
         submitData.append('image', formData.image);
@@ -139,15 +181,16 @@ export default function AdminActualites() {
         const submitData: Record<string, any> = {
           titre_fr: formData.titre_fr,
           titre_en: formData.titre_en,
-          contenu_fr: formData.contenu_fr,
-          contenu_en: formData.contenu_en,
+          contenu_fr: contenuFr,
+          contenu_en: contenuEn,
           type: formData.type,
           date_publication: formData.date_publication,
           is_published: formData.is_published,
         };
-        if (editingItem?.image) {
-          submitData.image = editingItem.image;
-        }
+        if (formData.slug_fr) submitData.slug_fr = formData.slug_fr;
+        if (formData.slug_en) submitData.slug_en = formData.slug_en;
+        if (formData.location) submitData.location = formData.location;
+        // Don't send image field when updating without a new image file
 
         if (editingItem) {
           await adminApiService.updateActualite(editingItem.id, submitData);
@@ -160,9 +203,27 @@ export default function AdminActualites() {
       handleCloseModal();
     } catch (err: any) {
       console.error('Error submitting actualite:', err);
-      const errorMessage = err?.response?.data?.message || err?.response?.data?.errors || 'Erreur lors de l\'enregistrement';
+      console.error('Error response:', err?.response);
+      console.error('Error response data:', err?.response?.data);
+      console.error('Validation errors:', err?.response?.data?.errors);
+      
+      let errorMessage = 'Erreur lors de l\'enregistrement';
+      
+      if (err?.response?.data?.errors) {
+        // Format validation errors nicely
+        const errors = err.response.data.errors;
+        const errorList = Object.entries(errors)
+          .map(([field, messages]: [string, any]) => `${field}: ${Array.isArray(messages) ? messages.join(', ') : messages}`)
+          .join('\n');
+        errorMessage = `Erreur de validation:\n\n${errorList}`;
+      } else if (err?.response?.data?.message) {
+        errorMessage = err.response.data.message;
+      } else if (err?.message) {
+        errorMessage = err.message;
+      }
+      
       console.error('Detailed error:', errorMessage);
-      alert(typeof errorMessage === 'object' ? JSON.stringify(errorMessage, null, 2) : errorMessage);
+      alert(errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -398,6 +459,26 @@ export default function AdminActualites() {
               />
             </div>
           </div>
+
+          {/* Location field - only for job offers */}
+          {formData.type === 'offre' && (
+            <div>
+              <label className="block text-sm font-medium text-slate-700 mb-2">
+                Lieu
+              </label>
+              <select
+                value={formData.location}
+                onChange={(e) =>
+                  setFormData({ ...formData, location: e.target.value })
+                }
+                className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value="">Sélectionner un lieu</option>
+                <option value="Douala, Cameroun">Douala, Cameroun</option>
+                <option value="Kribi, Cameroun">Kribi, Cameroun</option>
+              </select>
+            </div>
+          )}
 
           <div className="flex items-center pt-2">
             <label className="flex items-center gap-2 cursor-pointer">

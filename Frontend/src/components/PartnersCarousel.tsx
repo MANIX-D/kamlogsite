@@ -104,11 +104,11 @@ export default function PartnersCarousel() {
                 key={partner.id}
                 className="flex-shrink-0 w-1/5 min-w-max"
               >
-                <div className="bg-gray-50 rounded-lg p-8 h-40 flex items-center justify-center border border-gray-200 hover:border-blue-300 hover:shadow-md transition-all duration-300 group">
+                <div className="p-4 h-40 flex items-center justify-center transition-all duration-300 group">
                   <img
                     src={partner.logo_url || 'https://via.placeholder.com/200x80?text=Logo'}
                     alt={i18n.language === 'fr' ? partner.name_fr : partner.name_en}
-                    className="max-h-20 max-w-full object-contain group-hover:scale-110 transition-transform duration-300"
+                    className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
                     title={i18n.language === 'fr' ? partner.name_fr : partner.name_en}
                   />
                 </div>

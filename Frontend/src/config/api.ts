@@ -13,6 +13,7 @@ export const API_ENDPOINTS = {
   uploadCV: '/upload/cv',
 
   admin: {
+    base: '/admin',
     login: '/admin/auth/login',
     logout: '/admin/auth/logout',
     logoutAll: '/admin/auth/logout-all',
@@ -25,6 +26,7 @@ export const API_ENDPOINTS = {
     infrastructures: '/admin/infrastructures',
     jobs: '/admin/jobs',
     jobOffers: '/admin/jobs',
+    jobApplications: '/admin/job-applications',
     announcements: '/admin/announcements',
     contactMessages: '/admin/contact-messages',
     messages: '/admin/contact-messages',
@@ -37,6 +39,7 @@ export const API_ENDPOINTS = {
     storage: '/admin/storage',
     users: '/admin/users',
     invitations: '/admin/invitations',
+    actionLogs: '/admin/action-logs',
     profile: '/admin/profile',
     profilePassword: '/admin/profile/password',
   },

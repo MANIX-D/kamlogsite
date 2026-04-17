@@ -198,10 +198,11 @@ function mapNewsItem(raw: any): NewsItem {
 }
 
 function mapJobOffer(raw: any): JobOffer {
+  // Job offers come from News table, so use titre/contenu fields
   return {
     id: raw.id,
-    title: localized(raw, 'title'),
-    content: localized(raw, 'description'),
+    title: raw.titre_fr ? localized(raw, 'titre') : localized(raw, 'title'),
+    content: raw.contenu_fr ? localized(raw, 'contenu') : localized(raw, 'description'),
     requirements: localized(raw, 'requirements') || undefined,
     benefits: localized(raw, 'benefits') || undefined,
     location: raw.location || '',
@@ -210,11 +211,11 @@ function mapJobOffer(raw: any): JobOffer {
     salary_range: raw.salary_range,
     department: raw.department,
     application_deadline: raw.application_deadline,
-    is_active: raw.is_active,
-    is_urgent: raw.is_urgent,
+    is_active: raw.is_active !== undefined ? raw.is_active : raw.is_published,
+    is_urgent: raw.is_urgent !== undefined ? raw.is_urgent : raw.is_featured,
     applications_count: raw.job_applications_count || raw.applications_count,
     image_url: raw.image_url || raw.image || undefined,
-    published_at: raw.created_at,
+    published_at: raw.date_publication || raw.created_at,
     skills: [],
     created_at: raw.created_at,
     updated_at: raw.updated_at,

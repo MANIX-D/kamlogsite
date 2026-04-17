@@ -11,6 +11,7 @@ import {
   Building2,
   Users,
   Settings,
+  Briefcase,
 } from 'lucide-react';
 import { authService } from '../../services/auth';
 
@@ -28,6 +29,7 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
     { to: '/admin/partners', icon: Handshake, label: 'Partenaires' },
     { to: '/admin/infrastructures', icon: Building2, label: 'Infrastructures' },
     { to: '/admin/actualites', icon: Newspaper, label: 'Actualités' },
+    { to: '/admin/candidatures', icon: Briefcase, label: 'Candidatures' },
     { to: '/admin/quotes', icon: FileText, label: 'Demandes de devis' },
     { to: '/admin/messages', icon: Mail, label: 'Messages' },
     { to: '/admin/newsletter', icon: MailOpen, label: 'Newsletter' },

@@ -30,7 +30,7 @@ export default function HelpButton() {
   const tips = [
     {
       title: '💡 Gagnez du temps',
-      content: 'Utilisez les filtres dans Actualités pour afficher rapidement un type spécifique de contenu.',
+      content: 'Utilisez les filtres dans Actualités, Candidatures et Demandes de visite pour retrouver rapidement les éléments à traiter.',
     },
     {
       title: '🎯 Visibilité intelligente',
@@ -38,15 +38,15 @@ export default function HelpButton() {
     },
     {
       title: '📊 Suivez vos statistiques',
-      content: 'Le format "X / Y" sur le dashboard vous aide à voir rapidement combien de contenus sont publiés vs en brouillon.',
+      content: 'Le dashboard centralise les volumes clés : contenus publiés, messages non lus, utilisateurs actifs et activité générale de la plateforme.',
     },
     {
-      title: '🔄 Carrousel automatique',
-      content: 'Tous les partenaires actifs apparaissent automatiquement dans le carrousel. Pas besoin de configuration supplémentaire !',
+      title: '� Vérifiez les CV avant analyse',
+      content: 'Dans Candidatures, utilisez la prévisualisation du CV avant de prendre une décision sur un dossier.',
     },
     {
-      title: '✅ Validation avant suppression',
-      content: 'Toutes les suppressions demandent confirmation. Vous ne perdrez jamais de données par accident.',
+      title: '🔐 Contrôle des accès',
+      content: 'Certaines fonctions sensibles, comme l’historique des actions admin, sont réservées au super administrateur.',
     },
   ];
 
@@ -62,6 +62,7 @@ export default function HelpButton() {
             'Articles, Annonces, Offres : Format "X / Y" où X = publiés (visibles), Y = total',
             'Messages : Nombre de messages non lus',
             'Utilisateurs : Nombre d\'utilisateurs actifs',
+            'Le bloc central permet de repérer rapidement les contenus et demandes récents',
           ],
         },
       ],
@@ -77,6 +78,7 @@ export default function HelpButton() {
             'Cliquez sur "Ajouter" pour créer un nouveau contenu',
             'Cliquez sur une ligne pour modifier',
             'Utilisez le filtre pour afficher un type spécifique',
+            'Le champ contenu accepte du texte simple dans le formulaire et le convertit automatiquement pour l’affichage public',
           ],
         },
         {
@@ -86,6 +88,22 @@ export default function HelpButton() {
             '👁️ Actif (vert) : Visible sur le site public',
             '👁️‍🗨️ Inactif (gris) : Caché du public (brouillon)',
             'Cliquez sur le bouton pour basculer entre actif/inactif',
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Candidatures',
+      icon: FileText,
+      content: [
+        {
+          subtitle: 'Suivi des candidatures',
+          description: 'Consultez les réponses aux offres d’emploi depuis un seul écran :',
+          items: [
+            'Filtrez les candidatures par statut',
+            'Ouvrez le détail d’une candidature pour voir le profil complet',
+            'Prévisualisez le CV directement dans le dashboard avant analyse',
+            'Mettez à jour le statut pour suivre le traitement du dossier',
           ],
         },
       ],
@@ -125,6 +143,31 @@ export default function HelpButton() {
             'Les nouveaux messages apparaissent en gras',
             'Cliquez sur un message pour le marquer comme lu',
             'Supprimez les messages traités',
+            'Traitez en priorité les messages non lus indiqués dans les statistiques',
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Demandes & devis',
+      icon: MessageSquare,
+      content: [
+        {
+          subtitle: 'Demandes de visite',
+          description: 'Suivez les demandes de visite envoyées depuis le site :',
+          items: [
+            'Consultez la date, le type de visite et l’infrastructure concernée',
+            'Confirmez ou annulez une demande selon la disponibilité',
+            'Gardez un suivi clair du statut de chaque demande',
+          ],
+        },
+        {
+          subtitle: 'Demandes de devis',
+          description: 'Centralisez les demandes commerciales dans le dashboard :',
+          items: [
+            'Mettez à jour le statut d’avancement de chaque devis',
+            'Ajoutez des notes administratives pour le suivi interne',
+            'Conservez une vue claire des priorités et des demandes à relancer',
           ],
         },
       ],
@@ -140,6 +183,21 @@ export default function HelpButton() {
             'Créez de nouveaux comptes admin',
             'Activez/désactivez les comptes',
             'Modifiez les informations utilisateur',
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Paramètres & sécurité',
+      icon: HelpCircle,
+      content: [
+        {
+          subtitle: 'Compte administrateur',
+          description: 'Gérez la sécurité et le suivi du compte depuis Paramètres :',
+          items: [
+            'Mettez à jour vos informations personnelles',
+            'Changez votre mot de passe sans perdre votre session',
+            'Le super administrateur peut consulter l’historique des actions effectuées sur le dashboard',
           ],
         },
       ],

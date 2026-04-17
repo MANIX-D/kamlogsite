@@ -1,10 +1,11 @@
 import { useState, useEffect, FormEvent } from 'react';
-import { User, Lock, Save, Eye, EyeOff, CheckCircle, AlertCircle, Shield } from 'lucide-react';
+import { User, Lock, Save, Eye, EyeOff, CheckCircle, AlertCircle, Shield, History } from 'lucide-react';
 import { authService } from '../../services/auth';
 import { put } from '../../services/apiClient';
 import { API_ENDPOINTS } from '../../config/api';
+import { adminApiService, AdminActionLog, AdminUser } from '../../services/adminApi';
 
-type Tab = 'profile' | 'password';
+type Tab = 'profile' | 'password' | 'history';
 
 interface ProfileForm {
   name: string;
@@ -65,8 +66,23 @@ function PasswordStrength({ password }: { password: string }) {
 
 export default function AdminSettings() {
   const user = authService.getUser();
+  const isSuperAdmin = user?.role === 'super_admin';
   const [activeTab, setActiveTab] = useState<Tab>('profile');
   const [toast, setToast] = useState<Toast | null>(null);
+  const [actionLogs, setActionLogs] = useState<AdminActionLog[]>([]);
+  const [historyLoading, setHistoryLoading] = useState(false);
+  const [historySearch, setHistorySearch] = useState('');
+  const [selectedHistoryUser, setSelectedHistoryUser] = useState<string>('');
+  const [historyUsers, setHistoryUsers] = useState<AdminUser[]>([]);
+  const [historyPage, setHistoryPage] = useState(1);
+  const [historyPagination, setHistoryPagination] = useState({
+    total: 0,
+    per_page: 10,
+    current_page: 1,
+    last_page: 1,
+    from: 0,
+    to: 0,
+  });
 
   const [profileForm, setProfileForm] = useState<ProfileForm>({
     name: user?.name ?? '',
@@ -88,6 +104,139 @@ export default function AdminSettings() {
   const showToast = (type: 'success' | 'error', message: string) => {
     setToast({ type, message });
     setTimeout(() => setToast(null), 4000);
+  };
+
+  useEffect(() => {
+    if (activeTab === 'history' && isSuperAdmin) {
+      fetchActionLogs();
+      fetchHistoryUsers();
+    }
+  }, [activeTab, isSuperAdmin, historyPage]);
+
+  const fetchActionLogs = async () => {
+    try {
+      setHistoryLoading(true);
+      const res = await adminApiService.getActionLogs({
+        per_page: 10,
+        page: historyPage,
+        search: historySearch || undefined,
+        user_id: selectedHistoryUser ? Number(selectedHistoryUser) : undefined,
+      });
+      setActionLogs(res.data);
+      setHistoryPagination({
+        total: res.pagination.total,
+        per_page: res.pagination.per_page,
+        current_page: res.pagination.current_page,
+        last_page: res.pagination.last_page,
+        from: res.pagination.from || 0,
+        to: res.pagination.to || 0,
+      });
+    } catch (err: any) {
+      showToast('error', err?.response?.data?.message || 'Erreur lors du chargement de l’historique.');
+    } finally {
+      setHistoryLoading(false);
+    }
+  };
+
+  const fetchHistoryUsers = async () => {
+    try {
+      const users = await adminApiService.getUsers();
+      setHistoryUsers(users);
+    } catch {
+      setHistoryUsers([]);
+    }
+  };
+
+  const handleHistorySearch = () => {
+    setHistoryPage(1);
+    fetchActionLogs();
+  };
+
+  const handleExportCsv = () => {
+    if (!actionLogs.length) {
+      showToast('error', 'Aucune donnée à exporter.');
+      return;
+    }
+
+    const rows = [
+      ['Action', 'Utilisateur', 'Email', 'Méthode', 'Route', 'Heure'],
+      ...actionLogs.map((log) => [
+        log.action,
+        log.user?.name || 'Utilisateur inconnu',
+        log.user?.email || '',
+        log.method,
+        log.route,
+        new Date(log.created_at).toLocaleString('fr-FR'),
+      ]),
+    ];
+
+    const csv = rows
+      .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(';'))
+      .join('\n');
+
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `historique-actions-${new Date().toISOString().slice(0, 10)}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  };
+
+  const handleExportPdf = () => {
+    if (!actionLogs.length) {
+      showToast('error', 'Aucune donnée à exporter.');
+      return;
+    }
+
+    const printWindow = window.open('', '_blank', 'width=1000,height=700');
+    if (!printWindow) {
+      showToast('error', 'Impossible d’ouvrir la fenêtre d’export PDF.');
+      return;
+    }
+
+    const rowsHtml = actionLogs.map((log) => `
+      <tr>
+        <td>${log.action}</td>
+        <td>${log.user?.name || 'Utilisateur inconnu'}</td>
+        <td>${log.user?.email || '—'}</td>
+        <td>${new Date(log.created_at).toLocaleString('fr-FR')}</td>
+      </tr>
+    `).join('');
+
+    printWindow.document.write(`
+      <html>
+        <head>
+          <title>Historique des actions</title>
+          <style>
+            body { font-family: Arial, sans-serif; padding: 24px; }
+            h1 { margin-bottom: 16px; }
+            table { width: 100%; border-collapse: collapse; }
+            th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 12px; }
+            th { background: #f3f4f6; }
+          </style>
+        </head>
+        <body>
+          <h1>Historique des actions</h1>
+          <table>
+            <thead>
+              <tr>
+                <th>Action</th>
+                <th>Utilisateur</th>
+                <th>Email</th>
+                <th>Heure</th>
+              </tr>
+            </thead>
+            <tbody>${rowsHtml}</tbody>
+          </table>
+        </body>
+      </html>
+    `);
+    printWindow.document.close();
+    printWindow.focus();
+    printWindow.print();
   };
 
   const handleProfileSubmit = async (e: FormEvent) => {
@@ -204,6 +353,7 @@ export default function AdminSettings() {
           {[
             { id: 'profile' as Tab, icon: User, label: 'Informations' },
             { id: 'password' as Tab, icon: Lock, label: 'Mot de passe' },
+            ...(isSuperAdmin ? [{ id: 'history' as Tab, icon: History, label: 'Historique' }] : []),
           ].map(tab => (
             <button
               key={tab.id}
@@ -374,6 +524,141 @@ export default function AdminSettings() {
                 </button>
               </div>
             </form>
+          </div>
+        )}
+
+        {activeTab === 'history' && isSuperAdmin && (
+          <div className="bg-white rounded-2xl border border-slate-200 p-6">
+            <div className="flex items-center justify-between mb-6 gap-4">
+              <div>
+                <h2 className="text-lg font-semibold text-slate-900">Historique des actions</h2>
+                <p className="text-sm text-slate-500 mt-1">Actions effectuées sur le dashboard par les administrateurs.</p>
+              </div>
+              <div className="flex flex-wrap items-center gap-2">
+                <button
+                  type="button"
+                  onClick={handleExportCsv}
+                  className="px-4 py-2 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
+                >
+                  Export CSV
+                </button>
+                <button
+                  type="button"
+                  onClick={handleExportPdf}
+                  className="px-4 py-2 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
+                >
+                  Export PDF
+                </button>
+                <button
+                  type="button"
+                  onClick={fetchActionLogs}
+                  className="px-4 py-2 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
+                >
+                  Actualiser
+                </button>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-6">
+              <input
+                type="text"
+                value={historySearch}
+                onChange={(e) => setHistorySearch(e.target.value)}
+                placeholder="Rechercher une action, route ou utilisateur"
+                className="px-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <select
+                value={selectedHistoryUser}
+                onChange={(e) => setSelectedHistoryUser(e.target.value)}
+                className="px-4 py-2.5 border border-slate-300 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Tous les utilisateurs</option>
+                {historyUsers.map((historyUser) => (
+                  <option key={historyUser.id} value={historyUser.id}>
+                    {historyUser.name}
+                  </option>
+                ))}
+              </select>
+              <button
+                type="button"
+                onClick={handleHistorySearch}
+                className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-medium transition-colors"
+              >
+                Filtrer
+              </button>
+            </div>
+
+            {historyLoading ? (
+              <div className="py-10 flex justify-center">
+                <div className="w-6 h-6 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin" />
+              </div>
+            ) : actionLogs.length === 0 ? (
+              <div className="py-10 text-center text-sm text-slate-500">
+                Aucun historique disponible pour le moment.
+              </div>
+            ) : (
+              <div className="overflow-x-auto">
+                <table className="min-w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-slate-200 text-left text-slate-500">
+                      <th className="py-3 pr-4 font-medium">Action</th>
+                      <th className="py-3 pr-4 font-medium">Utilisateur</th>
+                      <th className="py-3 pr-4 font-medium">Heure</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {actionLogs.map((log) => (
+                      <tr key={log.id} className="border-b border-slate-100 align-top">
+                        <td className="py-4 pr-4">
+                          <div className="font-medium text-slate-900">{log.action}</div>
+                          <div className="text-xs text-slate-500 mt-1">{log.description || log.route}</div>
+                        </td>
+                        <td className="py-4 pr-4">
+                          <div className="font-medium text-slate-900">{log.user?.name || 'Utilisateur inconnu'}</div>
+                          <div className="text-xs text-slate-500 mt-1">{log.user?.email || '—'}</div>
+                        </td>
+                        <td className="py-4 pr-4 whitespace-nowrap text-slate-700">
+                          {new Date(log.created_at).toLocaleString('fr-FR', {
+                            year: 'numeric',
+                            month: '2-digit',
+                            day: '2-digit',
+                            hour: '2-digit',
+                            minute: '2-digit',
+                          })}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+
+                <div className="flex items-center justify-between gap-4 mt-4 text-sm text-slate-600">
+                  <div>
+                    Affichage de {historyPagination.from || 0} à {historyPagination.to || actionLogs.length} sur {historyPagination.total} actions
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      disabled={historyPagination.current_page <= 1}
+                      onClick={() => setHistoryPage((page) => Math.max(1, page - 1))}
+                      className="px-3 py-1.5 rounded-lg border border-slate-300 disabled:opacity-50"
+                    >
+                      Précédent
+                    </button>
+                    <span>
+                      Page {historyPagination.current_page} / {historyPagination.last_page}
+                    </span>
+                    <button
+                      type="button"
+                      disabled={historyPagination.current_page >= historyPagination.last_page}
+                      onClick={() => setHistoryPage((page) => Math.min(historyPagination.last_page, page + 1))}
+                      className="px-3 py-1.5 rounded-lg border border-slate-300 disabled:opacity-50"
+                    >
+                      Suivant
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </div>

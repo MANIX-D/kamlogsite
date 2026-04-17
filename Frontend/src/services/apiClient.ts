@@ -88,6 +88,11 @@ export const post = async <T>(url: string, data?: any, config?: AxiosRequestConf
 };
 
 export const put = async <T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> => {
+  // Si data est FormData et contient _method=PUT, utiliser POST au lieu de PUT
+  if (data instanceof FormData && data.get('_method') === 'PUT') {
+    const response = await apiClient.post<T>(url, data, config);
+    return response.data;
+  }
   const response = await apiClient.put<T>(url, data, config);
   return response.data;
 };

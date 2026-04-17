@@ -21,6 +21,7 @@ import AdminVisitRequests from './pages/admin/AdminVisitRequests';
 import AdminQuotes from './pages/admin/AdminQuotes';
 import AdminInfrastructures from './pages/admin/AdminInfrastructures';
 import AdminPartenaires from './pages/admin/AdminPartenaires';
+import AdminCandidatures from './pages/admin/AdminCandidatures';
 import AdminUsers from './pages/admin/AdminUsers';
 import AdminSettings from './pages/admin/AdminSettings';
 import AdminRegister from './pages/admin/AdminRegister';
@@ -70,6 +71,7 @@ function App() {
           <Route path="partners" element={<AdminPartenaires />} />
           <Route path="infrastructures" element={<AdminInfrastructures />} />
           <Route path="actualites" element={<AdminActualites />} />
+          <Route path="candidatures" element={<AdminCandidatures />} />
           <Route path="quotes" element={<AdminQuotes />} />
           <Route path="messages" element={<AdminMessages />} />
           <Route path="newsletter" element={<AdminNewsletter />} />
