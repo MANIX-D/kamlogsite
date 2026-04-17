@@ -9,6 +9,7 @@ use App\Services\FileUploadServiceSecure;
 use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FileUploadController extends Controller
 {
@@ -151,11 +152,11 @@ class FileUploadController extends Controller
         try {
             $path = $request->input('path');
 
-            if (!$this->fileUploadService->exists($path, 'cvs')) {
+            if (!Storage::disk('public')->exists($path)) {
                 return $this->errorResponse('CV non trouvé', 404);
             }
 
-            return $this->fileUploadService->downloadPrivateFile($path, 'cvs');
+            return Storage::disk('public')->download($path);
         } catch (\Exception $e) {
             \Log::error('Échec téléchargement CV', [
                 'user_id' => $request->user()?->id,
@@ -185,7 +186,10 @@ class FileUploadController extends Controller
         ]);
 
         try {
-            $deleted = $this->fileUploadService->deleteCV($request->input('path'));
+            $path = $request->input('path');
+            $deleted = Storage::disk('public')->exists($path)
+                ? Storage::disk('public')->delete($path)
+                : false;
 
             if (!$deleted) {
                 return $this->errorResponse('CV non trouvé ou déjà supprimé', 404);

@@ -158,7 +158,15 @@ class NewsController extends Controller
             return $this->notFoundResponse('Actualité non trouvée');
         }
 
-        $data = $request->validated();
+        \Log::info('Update request data:', $request->all());
+        
+        try {
+            $data = $request->validated();
+            \Log::info('Validated data:', $data);
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Validation failed:', ['errors' => $e->errors()]);
+            throw $e;
+        }
 
         // Handle image upload
         if ($request->hasFile('image')) {

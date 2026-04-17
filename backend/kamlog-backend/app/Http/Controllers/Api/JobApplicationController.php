@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\JobApplication;
 use App\Models\JobOffer;
+use App\Models\News;
 use App\Traits\ApiResponses;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -15,11 +16,51 @@ class JobApplicationController extends Controller
     use ApiResponses;
 
     /**
+     * Liste des candidatures (Admin)
+     */
+    public function index(Request $request): JsonResponse
+    {
+        $query = JobApplication::with(['jobOffer']);
+
+        // Filtrer par statut
+        if ($request->has('status')) {
+            $query->ofStatus($request->input('status'));
+        }
+
+        // Filtrer par offre d'emploi
+        if ($request->has('job_offer_id')) {
+            $query->where('job_offer_id', $request->input('job_offer_id'));
+        }
+
+        // Tri
+        $query->orderBy('application_date', 'desc');
+
+        $applications = $query->paginate($request->input('per_page', 20));
+
+        return $this->paginatedResponse($applications);
+    }
+
+    /**
+     * Afficher une candidature spécifique (Admin)
+     */
+    public function show(string $id): JsonResponse
+    {
+        $application = JobApplication::with(['jobOffer'])->find($id);
+
+        if (!$application) {
+            return $this->notFoundResponse('Candidature non trouvée');
+        }
+
+        return $this->successResponse($application);
+    }
+
+    /**
      * Soumettre une candidature (Public)
      */
     public function store(Request $request, string $jobId): JsonResponse
     {
-        $jobOffer = JobOffer::find($jobId);
+        // Check if job offer exists in News table (type='offre')
+        $jobOffer = News::where('id', $jobId)->where('type', 'offre')->first();
 
         if (!$jobOffer) {
             return $this->notFoundResponse('Offre d\'emploi non trouvée');
@@ -57,5 +98,51 @@ class JobApplicationController extends Controller
         ]);
 
         return $this->createdResponse($application, 'Candidature envoyée avec succès');
+    }
+
+    /**
+     * Mettre à jour le statut d'une candidature (Admin)
+     */
+    public function updateStatus(Request $request, string $id): JsonResponse
+    {
+        $application = JobApplication::find($id);
+
+        if (!$application) {
+            return $this->notFoundResponse('Candidature non trouvée');
+        }
+
+        $validated = $request->validate([
+            'status' => ['required', 'in:en_attente,en_cours,acceptee,refusee'],
+            'notes_admin' => ['nullable', 'string'],
+        ]);
+
+        $application->update([
+            'status' => $validated['status'],
+            'notes_admin' => $validated['notes_admin'] ?? $application->notes_admin,
+            'user_id' => $request->user()->id ?? null,
+        ]);
+
+        return $this->successResponse($application, 'Statut mis à jour avec succès');
+    }
+
+    /**
+     * Supprimer une candidature (Admin)
+     */
+    public function destroy(string $id): JsonResponse
+    {
+        $application = JobApplication::find($id);
+
+        if (!$application) {
+            return $this->notFoundResponse('Candidature non trouvée');
+        }
+
+        // Delete CV file if exists
+        if ($application->cv_path && Storage::disk('public')->exists($application->cv_path)) {
+            Storage::disk('public')->delete($application->cv_path);
+        }
+
+        $application->delete();
+
+        return $this->successResponse(null, 'Candidature supprimée avec succès');
     }
 }

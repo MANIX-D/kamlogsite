@@ -86,4 +86,22 @@ class Partner extends Model
     {
         return $query->orderBy('display_order', 'asc');
     }
+
+    /**
+     * Get the full URL for the logo
+     */
+    public function getLogoUrlAttribute($value): ?string
+    {
+        if (!$value) {
+            return null;
+        }
+
+        // If logo already contains full URL, return as is
+        if (str_starts_with($value, 'http')) {
+            return $value;
+        }
+
+        // Return storage URL
+        return asset('storage/' . $value);
+    }
 }

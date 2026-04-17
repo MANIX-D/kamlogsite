@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AdminAuthController;
 use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Admin\MetricsController;
+use App\Http\Controllers\Admin\AdminActionLogController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\InvitationController;
 use App\Http\Controllers\Api\NewsController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Api\ContactMessageController;
 use App\Http\Controllers\Api\NewsletterSubscriberController;
 use App\Http\Controllers\Api\VisitRequestController;
 use App\Http\Controllers\Api\QuoteRequestController;
+use App\Http\Controllers\Api\JobApplicationController;
 use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\StorageController;
@@ -66,6 +68,11 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
         Route::get('/{id}', [NewsController::class, 'show'])->where('id', '[0-9]+');
     });
 
+    // -------------------- Offres d'emploi (Public) --------------------
+    Route::prefix('jobs')->group(function () {
+        Route::get('/{id}', [NewsController::class, 'show'])->where('id', '[0-9]+');
+    });
+
     // -------------------- Partenaires (Public) --------------------
     Route::prefix('partners')->group(function () {
         Route::get('/', [PartnerController::class, 'index']);
@@ -97,6 +104,10 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
     Route::post('/quote-requests', [QuoteRequestController::class, 'store'])
         ->middleware('throttle:public-form');
     
+    // Candidature à une offre d'emploi (Public)
+    Route::post('/jobs/{jobId}/apply', [JobApplicationController::class, 'store'])
+        ->middleware('throttle:public-form');
+    
     // Upload CV (public - pour candidatures)
     Route::post('/upload/cv', [FileUploadController::class, 'uploadCV'])
         ->middleware('throttle:uploads');
@@ -105,7 +116,7 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
     // ROUTES PROTÉGÉES PAR SANCTUM
     // ============================================
     
-    Route::middleware(['auth:sanctum'])->group(function () {
+    Route::middleware(['auth:sanctum', 'log.admin.action'])->group(function () {
         
         // -------------------- Auth Admin (Authentifié) --------------------
         Route::prefix('admin/auth')->group(function () {
@@ -159,6 +170,10 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
                 Route::get('/auth/today', [MetricsController::class, 'today']);
                 Route::get('/auth/period', [MetricsController::class, 'period']);
             });
+
+            Route::prefix('action-logs')->group(function () {
+                Route::get('/', [AdminActionLogController::class, 'index']);
+            });
         });
 
         // -------------------- Tous les Admins — Lecture --------------------
@@ -206,6 +221,12 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
             Route::prefix('quote-requests')->group(function () {
                 Route::get('/', [QuoteRequestController::class, 'index']);
                 Route::get('/{id}', [QuoteRequestController::class, 'show'])->where('id', '[0-9]+');
+            });
+
+            // Lecture — Candidatures
+            Route::prefix('job-applications')->group(function () {
+                Route::get('/', [JobApplicationController::class, 'index']);
+                Route::get('/{id}', [JobApplicationController::class, 'show'])->where('id', '[0-9]+');
             });
         });
 
@@ -261,6 +282,12 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
             Route::prefix('quote-requests')->group(function () {
                 Route::put('/{id}', [QuoteRequestController::class, 'update'])->where('id', '[0-9]+');
                 Route::delete('/{id}', [QuoteRequestController::class, 'destroy'])->where('id', '[0-9]+');
+            });
+
+            // Candidatures — Écriture
+            Route::prefix('job-applications')->group(function () {
+                Route::put('/{id}/status', [JobApplicationController::class, 'updateStatus'])->where('id', '[0-9]+');
+                Route::delete('/{id}', [JobApplicationController::class, 'destroy'])->where('id', '[0-9]+');
             });
 
             // Gestion des fichiers

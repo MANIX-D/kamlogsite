@@ -57,6 +57,7 @@ class NewsRequest extends FormRequest
             'slug_fr' => ['required', 'string', 'max:255', 'unique:news,slug_fr,' . $newsId],
             'slug_en' => ['required', 'string', 'max:255', 'unique:news,slug_en,' . $newsId],
             'type' => ['required', 'in:article,annonce,offre'],
+            'location' => ['nullable', 'string', 'max:255'],
             'image' => ['nullable', 'sometimes', 'image', 'mimes:jpeg,jpg,png,gif,webp', 'max:2048'],
             'image_alt_fr' => ['nullable', 'string', 'max:255'],
             'image_alt_en' => ['nullable', 'string', 'max:255'],

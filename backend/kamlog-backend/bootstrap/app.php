@@ -39,6 +39,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'role.editor' => \App\Http\Middleware\CheckEditor::class,
             'cache.control' => \App\Http\Middleware\CacheControl::class,
             'log.api' => \App\Http\Middleware\LogApiRequests::class,
+            'log.admin.action' => \App\Http\Middleware\LogAdminAction::class,
             'storage.quota' => \App\Http\Middleware\CheckStorageQuota::class,
             'compress' => \App\Http\Middleware\CompressResponse::class,
             'etag' => \App\Http\Middleware\ETagResponse::class,

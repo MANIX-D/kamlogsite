@@ -25,6 +25,7 @@ class News extends Model
         'slug_fr',
         'slug_en',
         'type',
+        'location',
         'image',
         'image_alt_fr',
         'image_alt_en',

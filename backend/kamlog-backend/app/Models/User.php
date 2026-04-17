@@ -104,6 +104,11 @@ class User extends Authenticatable
         return $this->hasMany(QuoteRequest::class);
     }
 
+    public function adminActionLogs(): HasMany
+    {
+        return $this->hasMany(AdminActionLog::class);
+    }
+
     /**
      * Vérifier si l'utilisateur est super admin
      */

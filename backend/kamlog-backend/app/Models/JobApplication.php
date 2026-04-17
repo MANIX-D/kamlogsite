@@ -47,6 +47,11 @@ class JobApplication extends Model
         'status' => 'en_attente',
     ];
 
+    protected $appends = [
+        'full_name',
+        'cv_url',
+    ];
+
     /**
      * Boot du modèle
      */
@@ -59,28 +64,14 @@ class JobApplication extends Model
                 $application->application_date = now();
             }
         });
-
-        static::created(function ($application) {
-            // Incrémenter le compteur de candidatures de l'offre
-            if ($application->job_offer_id) {
-                JobOffer::where('id', $application->job_offer_id)->increment('applications_count');
-            }
-        });
-
-        static::deleted(function ($application) {
-            // Décrémenter le compteur de candidatures de l'offre
-            if ($application->job_offer_id) {
-                JobOffer::where('id', $application->job_offer_id)->decrement('applications_count');
-            }
-        });
     }
 
     /**
-     * Relation: Une candidature appartient à une offre d'emploi
+     * Relation: Une candidature appartient à une offre d'emploi (News avec type='offre')
      */
     public function jobOffer()
     {
-        return $this->belongsTo(JobOffer::class);
+        return $this->belongsTo(News::class, 'job_offer_id');
     }
 
     /**
@@ -137,5 +128,23 @@ class JobApplication extends Model
     public function getFullNameAttribute()
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    /**
+     * Get the full URL for the CV
+     */
+    public function getCvUrlAttribute(): ?string
+    {
+        if (!$this->cv_path) {
+            return null;
+        }
+
+        // If CV path already contains full URL, return as is
+        if (str_starts_with($this->cv_path, 'http')) {
+            return $this->cv_path;
+        }
+
+        // Return storage URL
+        return asset('storage/' . $this->cv_path);
     }
 }
