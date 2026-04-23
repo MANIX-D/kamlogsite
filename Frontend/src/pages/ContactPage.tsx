@@ -140,7 +140,7 @@ export default function ContactPage() {
       <div
         className="relative bg-[#1f3878] text-white h-screen overflow-hidden flex items-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.9), rgba(31, 56, 120, 0.9)), url('https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
+          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.9), rgba(31, 56, 120, 0.9)), url('/images/contact-hero.webp')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}
@@ -416,7 +416,7 @@ export default function ContactPage() {
           </h2>
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3979.8669287661396!2d9.707337!3d4.050934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNMKwMDMnMDMuNCJOIDnCsDQyJzI2LjQiRQ!5e0!3m2!1sen!2scm!4v1234567890"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1990.0!2d9.6905807!3d4.0287418!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1061137a591f3fe9%3A0xbc2d798b322cde2f!2sKAMLOG!5e0!3m2!1sfr!2scm"
               width="100%"
               height="450"
               style={{ border: 0 }}

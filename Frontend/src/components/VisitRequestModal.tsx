@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Calendar, User, Mail, Phone, Building2, MessageSquare } from 'lucide-react';
-import { apiService } from '../services/api';
+import { apiService, Infrastructure } from '../services/api';
 
 interface VisitRequestModalProps {
   isOpen: boolean;
@@ -24,6 +24,15 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [infrastructures, setInfrastructures] = useState<Infrastructure[]>([]);
+
+  useEffect(() => {
+    if (isOpen) {
+      apiService.getInfrastructures()
+        .then(data => setInfrastructures(data))
+        .catch(err => console.error('Error loading infrastructures:', err));
+    }
+  }, [isOpen]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -258,10 +267,11 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1F3878] focus:outline-none transition-colors"
                     >
                       <option value="">{t('visitRequest.form.infrastructureOptions.select')}</option>
-                      <option value="warehouse">{t('visitRequest.form.infrastructureOptions.warehouse')}</option>
-                      <option value="containers">{t('visitRequest.form.infrastructureOptions.containers')}</option>
-                      <option value="silos">{t('visitRequest.form.infrastructureOptions.silos')}</option>
-                      <option value="udeac">{t('visitRequest.form.infrastructureOptions.udeac')}</option>
+                      {infrastructures.map(infra => (
+                        <option key={infra.id} value={infra.id}>
+                          {t('lang') === 'en' ? infra.nom_en : infra.nom_fr}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

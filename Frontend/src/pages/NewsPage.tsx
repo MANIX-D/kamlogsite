@@ -105,7 +105,7 @@ export default function NewsPage() {
       <div
         className="relative bg-[#1f3878] text-white h-[60vh] overflow-hidden flex items-center"
         style={{
-          backgroundImage: `linear-gradient(135deg, rgba(31, 56, 120, 0.95), rgba(15, 35, 80, 0.9)), url('https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
+          backgroundImage: `linear-gradient(135deg, rgba(31, 56, 120, 0.95), rgba(15, 35, 80, 0.9)), url('/images/news-hero.webp')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundAttachment: 'fixed',

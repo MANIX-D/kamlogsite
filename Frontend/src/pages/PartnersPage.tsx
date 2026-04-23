@@ -75,7 +75,7 @@ export default function PartnersPage() {
       <div
         className="relative bg-[#1f3878] text-white h-screen overflow-hidden flex items-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.85), rgba(31, 56, 120, 0.85)), url('https://images.pexels.com/photos/3184292/pexels-photo-3184292.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
+          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.85), rgba(31, 56, 120, 0.85)), url('/images/about-equip.webp')`,
           backgroundSize: 'cover',
           backgroundPosition: 'center',
         }}

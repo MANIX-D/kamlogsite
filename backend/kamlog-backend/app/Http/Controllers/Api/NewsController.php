@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\NewsRequest;
-use App\Jobs\SendNewsletterJob;
 use App\Models\News;
 use App\Traits\ApiResponses;
 use App\Traits\HasCache;
@@ -141,11 +140,6 @@ class NewsController extends Controller
 
         $news = News::create($data);
 
-        // Envoyer la newsletter aux abonnés si l'actualité est publiée
-        if ($news->is_published) {
-            SendNewsletterJob::dispatch($news);
-        }
-
         // Invalider le cache
         $this->flushCache();
         Cache::forget('dashboard:stats');
@@ -179,13 +173,7 @@ class NewsController extends Controller
             $data['image'] = $request->file('image')->store('news', 'public');
         }
 
-        $wasPublished = $news->is_published;
         $news->update($data);
-
-        // Envoyer la newsletter si l'actualité vient d'être publiée
-        if (!$wasPublished && $news->fresh()->is_published) {
-            SendNewsletterJob::dispatch($news->fresh());
-        }
 
         // Invalider le cache
         $this->flushCache();

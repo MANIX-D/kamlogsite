@@ -24,7 +24,7 @@ export default function ServicesPage() {
       <section
         className="relative w-full h-screen bg-cover bg-center pt-20 overflow-hidden flex items-center justify-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('https://images.pexels.com/photos/906494/pexels-photo-906494.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
+          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/services-hero.webp')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
@@ -62,15 +62,17 @@ export default function ServicesPage() {
             <div className="space-y-6">
               <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
                 <img
-                  src="/Capture_d'écran_2026-03-03_à_11.48.51_AM.png"
+                  src="/images/services-manutention1.webp"
                   alt="Manutention portuaire"
+                  loading="lazy"
                   className="w-full h-80 object-cover"
                 />
               </div>
               <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
                 <img
-                  src="/Capture_d'écran_2026-03-03_à_12.44.08_PM.png"
+                  src="/images/services-port.webp"
                   alt="Port et navire"
+                  loading="lazy"
                   className="w-full h-80 object-cover"
                 />
               </div>
@@ -128,8 +130,9 @@ export default function ServicesPage() {
 
             <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
               <img
-                src="/Capture_d'écran_2026-03-03_à_11.48.51_AM.png"
+                src="/images/services-chariot.webp"
                 alt="Entrepôt stockage"
+                loading="lazy"
                 className="w-full h-96 object-cover"
               />
             </div>
@@ -165,22 +168,25 @@ export default function ServicesPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="rounded-lg overflow-hidden shadow-xl">
                 <img
-                  src="/Capture_d'écran_2026-03-03_à_12.49.57_PM.png"
+                  src="/images/services-entrepot1.webp"
                   alt="Entrepôt vue aérienne"
+                  loading="lazy"
                   className="w-full h-64 object-cover"
                 />
               </div>
               <div className="rounded-lg overflow-hidden shadow-xl">
                 <img
-                  src="/Capture_d'écran_2026-03-03_à_11.48.51_AM.png"
+                  src="/images/services-entrepot2.webp"
                   alt="Intérieur entrepôt"
+                  loading="lazy"
                   className="w-full h-64 object-cover"
                 />
               </div>
               <div className="rounded-lg overflow-hidden shadow-xl">
                 <img
-                  src="/Capture_d'écran_2026-03-03_à_11.46.40_AM.png"
+                  src="/images/services-entrepot3.webp"
                   alt="Entrepôt stockage"
+                  loading="lazy"
                   className="w-full h-64 object-cover"
                 />
               </div>
@@ -236,8 +242,9 @@ export default function ServicesPage() {
 
             <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
               <img
-                src="/Capture_d'écran_2026-03-03_à_12.45.57_PM.png"
+                src="/images/services-import.webp"
                 alt="Transit et import"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -246,8 +253,9 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
               <img
-                src="/Capture_d'écran_2026-03-03_à_12.44.08_PM.png"
+                src="/images/services-export.webp"
                 alt="Export maritime"
+                loading="lazy"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -337,8 +345,9 @@ export default function ServicesPage() {
               <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[950px] h-[950px]">
                 <div className="absolute -right-96 w-full h-full rounded-full flex items-center justify-center overflow-hidden shadow-2xl">
                   <img
-                    src="/Capture_d'écran_2026-03-03_à_12.00.18_PM.png"
+                    src="/images/service-conteneurs.webp"
                     alt="Parc à conteneurs"
+                    loading="lazy"
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -431,15 +440,17 @@ export default function ServicesPage() {
               <div className="space-y-6">
                 <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
                   <img
-                    src="https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=800"
+                    src="/images/services-camions.webp"
                     alt="Workers in logistics"
+                    loading="lazy"
                     className="w-full h-80 object-cover"
                   />
                 </div>
                 <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
                   <img
-                    src="https://images.pexels.com/photos/1191568/pexels-photo-1191568.jpeg?auto=compress&cs=tinysrgb&w=800"
+                    src="/images/services-equipe.webp"
                     alt="Logistics worker"
+                    loading="lazy"
                     className="w-full h-80 object-cover"
                   />
                 </div>
@@ -451,7 +462,7 @@ export default function ServicesPage() {
         <div
           className="mt-24 rounded-3xl shadow-2xl overflow-hidden relative"
           style={{
-            backgroundImage: 'url(/Capture_d\'écran_2026-03-03_à_12.59.10_PM.png)',
+            backgroundImage: 'url(/images/services-methodologie.webp)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}

@@ -30,7 +30,7 @@ export default function InfrastructuresPage() {
         t('infrastructuresPage.facilities.warehouse.feature3', "Équipements de manutention modernes"),
         t('infrastructuresPage.facilities.warehouse.feature4', "Système de surveillance 24/7")
       ],
-      image: "/Capture_d'écran_2026-03-03_à_11.48.51_AM.png"
+      image: "/images/services-manutention1.webp"
     },
     {
       icon: Container,
@@ -44,7 +44,7 @@ export default function InfrastructuresPage() {
         t('infrastructuresPage.facilities.containers.feature3', "Gestion informatisée des stocks"),
         t('infrastructuresPage.facilities.containers.feature4', "Stockage et maintenance de conteneurs")
       ],
-      image: "/Capture_d'écran_2026-03-03_à_12.00.18_PM.png"
+      image: "/images/service-conteneurs.webp"
     },
     {
       icon: Boxes,
@@ -58,7 +58,7 @@ export default function InfrastructuresPage() {
         t('infrastructuresPage.facilities.silos.feature3', "Système de pesage intégré"),
         t('infrastructuresPage.facilities.silos.feature4', "Contrôle qualité en continu")
       ],
-      image: "/Capture_d'écran_2026-03-03_à_11.46.40_AM.png"
+      image: "/images/services-entrepot2.webp"
     },
     {
       icon: Building2,
@@ -72,7 +72,7 @@ export default function InfrastructuresPage() {
         t('infrastructuresPage.facilities.udeac.feature3', "Quais de chargement multiples"),
         t('infrastructuresPage.facilities.udeac.feature4', "Stockage multi-produits")
       ],
-      image: "/Capture_d'écran_2026-03-03_à_12.57.46_PM.png"
+      image: "/images/about-difference.webp"
     }
   ], [i18n.language, t]);
 
@@ -108,7 +108,7 @@ export default function InfrastructuresPage() {
       <section
         className="relative w-full h-screen bg-cover bg-center pt-20 overflow-hidden flex items-center justify-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('https://images.pexels.com/photos/4481261/pexels-photo-4481261.jpeg?auto=compress&cs=tinysrgb&w=1920')`,
+          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/infra-hero.webp')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
@@ -238,7 +238,8 @@ export default function InfrastructuresPage() {
                 <div className={`relative h-full min-h-[500px] ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
                   <img
                     src={facility.image}
-                    alt={facility.title}
+                    alt={t(facility.titleKey)}
+                    loading="lazy"
                     className="absolute inset-0 w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>

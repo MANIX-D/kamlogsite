@@ -27,7 +27,7 @@ const SERVICES: ServiceKey[] = [
     subtitleKey: 'services.transport.subtitle',
     descriptionKey: 'services.transport.description',
     detailsKey: 'services.transport.details',
-    image: '/images/service-transport.jpeg',
+    image: '/images/service-transport.webp',
   },
   {
     id: 2,
@@ -35,7 +35,7 @@ const SERVICES: ServiceKey[] = [
     subtitleKey: 'services.containers.subtitle',
     descriptionKey: 'services.containers.description',
     detailsKey: 'services.containers.details',
-    image: '/images/service-conteneurs.PNG',
+    image: '/images/service-conteneurs.webp',
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const SERVICES: ServiceKey[] = [
     subtitleKey: 'services.customs.subtitle',
     descriptionKey: 'services.customs.description',
     detailsKey: 'services.customs.details',
-    image: '/images/service-transit.jpg',
+    image: '/images/service-transit.webp',
   },
 ];
 
@@ -109,6 +109,7 @@ export default function ServicesSection() {
                   <img
                     src={service.image}
                     alt={t(service.titleKey)}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 <div className="absolute inset-0 bg-blue-900 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-500 flex items-center justify-center">

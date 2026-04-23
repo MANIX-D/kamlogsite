@@ -31,7 +31,7 @@ export default function Footer() {
       <div className="bg-gradient-to-b from-gray-50 to-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
           <img
-            src="/New_Logo_KAMLOG_sans_bg_(1).png"
+            src="/images/New_Logo_KAMLOG_sans_bg_(1).png"
             alt="KAMLOG - Logistique Intégrée"
             className="h-28 object-contain"
           />
@@ -41,7 +41,7 @@ export default function Footer() {
       <div
         className="relative bg-cover bg-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(20, 40, 90, 0.92), rgba(15, 30, 70, 0.95)), url('https://images.pexels.com/photos/1267338/pexels-photo-1267338.jpeg?auto=compress&cs=tinysrgb&w=1200')`,
+          backgroundImage: `linear-gradient(rgba(20, 40, 90, 0.92), rgba(15, 30, 70, 0.95)), url('/images/hero-kamlog-port.webp')`,
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

@@ -21,7 +21,7 @@ export default function AboutPage() {
       <section
         className="relative w-full h-screen bg-cover bg-center pt-20 overflow-hidden flex items-center justify-center"
         style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('https://images.pexels.com/photos/4246120/pexels-photo-4246120.jpeg?auto=compress&cs=tinysrgb&w=1600')`,
+          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/about-hero.webp')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
@@ -82,8 +82,9 @@ export default function AboutPage() {
             <div className="relative">
               <div className="absolute -top-6 -right-6 w-full h-full bg-red-600/10 rounded-lg"></div>
               <img
-                src="/images/about-installations.jpg"
+                src="/images/about-installations.webp"
                 alt="KAMLOG Port Facilities"
+                loading="lazy"
                 className="relative w-full h-[500px] object-cover rounded-lg shadow-2xl"
               />
             </div>
@@ -98,8 +99,9 @@ export default function AboutPage() {
             <div className="relative order-2 lg:order-1">
               <div className="absolute -bottom-6 -left-6 w-full h-full bg-[#1F3878]/10 rounded-lg"></div>
               <img
-                src="/images/about-equip.jpg"
+                src="/images/about-equip.webp"
                 alt="KAMLOG Team"
+                loading="lazy"
                 className="relative w-full h-[600px] object-cover rounded-lg shadow-2xl"
               />
             </div>
@@ -245,7 +247,7 @@ export default function AboutPage() {
       <section
         className="relative py-28 bg-cover bg-center overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.92), rgba(31, 56, 120, 0.92)), url('https://images.pexels.com/photos/6169668/pexels-photo-6169668.jpeg?auto=compress&cs=tinysrgb&w=1600')`,
+          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.92), rgba(31, 56, 120, 0.92)), url('/images/about-difference.webp')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-[#1F3878]/50 to-transparent"></div>
