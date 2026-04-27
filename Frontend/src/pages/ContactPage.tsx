@@ -112,13 +112,13 @@ export default function ContactPage() {
     {
       icon: Phone,
       title: t('contact.info.phone.title'),
-      details: ['+237 233 42 66 48', '+237 691 40 69 73'],
+      details: ['+237 694 84 17 28', '+237 686 76 52 06'],
       color: 'bg-blue-100 text-blue-600'
     },
     {
       icon: Mail,
       title: t('contact.info.email.title'),
-      details: ['contact@kamlog.cm', 'info@kamlog.cm'],
+      details: ['direction@kamlog.co'],
       color: 'bg-green-100 text-green-600'
     },
     {
@@ -402,7 +402,7 @@ export default function ContactPage() {
               </p>
               <div className="bg-white rounded-lg p-4 border border-gray-200">
                 <p className="text-sm text-gray-600 mb-2">{t('contact.info.visit.note')}</p>
-                <p className="font-semibold text-gray-900">+237 233 42 66 48</p>
+                <p className="font-semibold text-gray-900">+237 694 84 17 28</p>
               </div>
             </div>
           </div>

@@ -74,11 +74,11 @@ export default function ServicesSection() {
     <section ref={sectionRef} className="w-full py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-extrabold text-[#1F3878] mb-4 tracking-tight">
             {t('services.title')}
           </h2>
           <div className="flex justify-center">
-            <div className="h-1 w-24 bg-red-600"></div>
+            <div className="h-1 w-24 shimmer-line rounded-full"></div>
           </div>
         </div>
 
@@ -105,32 +105,32 @@ export default function ServicesSection() {
                   transitionDelay: `${delay}s`,
                 }}
               >
-                <div className="relative overflow-hidden rounded-2xl mb-6 h-64 shadow-lg transition-all duration-500 hover:shadow-2xl">
+                <div className="relative overflow-hidden rounded-2xl mb-6 h-64 shadow-lg transition-all duration-500 hover:shadow-2xl ring-1 ring-black/5">
                   <img
                     src={service.image}
                     alt={t(service.titleKey)}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                <div className="absolute inset-0 bg-blue-900 bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-500 flex items-center justify-center">
-                  <div className="text-white text-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                    <p className="text-lg font-semibold">{t('services.click')}</p>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1F3878]/80 via-[#1F3878]/20 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-end justify-center pb-8">
+                  <div className="text-white text-center translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="text-lg font-bold tracking-wide">{t('services.click')}</p>
                   </div>
                 </div>
               </div>
 
               <div className="relative">
-                <h3 className="text-2xl font-bold text-blue-900 mb-2 transition-colors duration-300 group-hover:text-red-600">
+                <h3 className="text-2xl font-bold text-[#1F3878] mb-2 transition-colors duration-300 group-hover:text-red-600">
                   {t(service.titleKey)}
                 </h3>
-                <p className="text-lg font-semibold text-blue-700 mb-4 transition-colors duration-300 group-hover:text-blue-900">
+                <p className="text-lg font-semibold text-[#1F3878]/70 mb-4 transition-colors duration-300 group-hover:text-[#1F3878]">
                   {t(service.subtitleKey)}
                 </p>
                 <p className="text-gray-600 leading-relaxed line-clamp-3">
                   {t(service.descriptionKey)}
                 </p>
 
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                <div className="absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-red-600 to-red-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left rounded-full"></div>
               </div>
               </div>
             );

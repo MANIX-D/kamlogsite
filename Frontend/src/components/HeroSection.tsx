@@ -28,71 +28,79 @@ export default function HeroSection() {
         backgroundPositionY: `${scrollY * 0.5}px`,
       }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex flex-col justify-center relative z-10">
         {/* Badge */}
         <div className="mb-8 inline-block">
-          <div className="bg-red-600 text-white px-6 py-2 rounded-full text-sm font-semibold w-fit">
+          <div className="bg-red-600/90 backdrop-blur-sm text-white px-6 py-2.5 rounded-full text-sm font-semibold w-fit animate-pulse-glow tracking-wide uppercase">
             {t('hero.badge')}
           </div>
         </div>
 
         {/* Main Title */}
-        <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl">
+        <h1 className="text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-6 leading-[1.1] max-w-4xl tracking-tight">
           {t('hero.title')}
         </h1>
 
         {/* Subtitle */}
-        <p className="text-lg sm:text-xl text-gray-100 mb-12 max-w-2xl">
+        <p className="text-lg sm:text-xl text-gray-200 mb-12 max-w-2xl leading-relaxed font-light">
           {t('hero.subtitle')}
         </p>
 
-        {/* CTA Button */}
-        <div>
+        {/* CTA Buttons */}
+        <div className="flex flex-wrap gap-4">
           <Link
             to="/about"
-            className="inline-flex items-center space-x-2 bg-white text-blue-900 px-8 py-4 rounded-full font-semibold hover:bg-gray-100 transition-colors group"
+            className="inline-flex items-center space-x-2 bg-white text-[#1F3878] px-8 py-4 rounded-full font-bold hover:bg-gray-50 hover:shadow-xl hover:shadow-white/20 transition-all duration-300 group"
           >
             <span>{t('hero.cta.primary')}</span>
-            <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+            <ArrowRight size={20} className="group-hover:translate-x-1.5 transition-transform duration-300" />
+          </Link>
+          <Link
+            to="/contact"
+            className="inline-flex items-center space-x-2 glass text-white px-8 py-4 rounded-full font-semibold hover:bg-white/20 transition-all duration-300"
+          >
+            <span>{t('nav.contact')}</span>
           </Link>
         </div>
 
         {/* Stats */}
-        <div className="mt-10 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
+        <div className="mt-10 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           <div
-            className="scroll-translate"
+            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-all duration-500"
             style={{
               transform: `translateY(${scrollY * 0.1}px)`,
             }}
           >
-            <div className="text-3xl sm:text-5xl font-bold text-white mb-2">5+</div>
+            <div className="text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">5+</div>
             <div className="text-gray-200">
               <p className="font-semibold">{t('hero.stats.years')}</p>
-              <p className="text-sm">{t('hero.stats.years_sub')}</p>
+              <p className="text-sm text-gray-300">{t('hero.stats.years_sub')}</p>
             </div>
           </div>
           <div
-            className="scroll-translate"
+            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-all duration-500"
             style={{
               transform: `translateY(${scrollY * 0.15}px)`,
             }}
           >
-            <div className="text-3xl sm:text-5xl font-bold text-white mb-2">180 000+</div>
+            <div className="text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">180 000+</div>
             <div className="text-gray-200">
               <p className="font-semibold">{t('hero.stats.tons')}</p>
-              <p className="text-sm">{t('hero.stats.tons_sub')}</p>
+              <p className="text-sm text-gray-300">{t('hero.stats.tons_sub')}</p>
             </div>
           </div>
           <div
-            className="scroll-translate"
+            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-all duration-500"
             style={{
               transform: `translateY(${scrollY * 0.2}px)`,
             }}
           >
-            <div className="text-3xl sm:text-5xl font-bold text-white mb-2">16 000 m²</div>
+            <div className="text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">16 000 m²</div>
             <div className="text-gray-200">
               <p className="font-semibold">{t('hero.stats.warehouse')}</p>
-              <p className="text-sm">{t('hero.stats.warehouse_sub')}</p>
+              <p className="text-sm text-gray-300">{t('hero.stats.warehouse_sub')}</p>
             </div>
           </div>
         </div>

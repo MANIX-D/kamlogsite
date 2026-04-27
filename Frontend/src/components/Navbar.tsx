@@ -21,24 +21,24 @@ export default function Navbar() {
   ];
 
   return (
-    <nav className="bg-white/60 backdrop-blur-md shadow-lg fixed w-full top-0 z-50">
+    <nav className="bg-white/70 backdrop-blur-xl shadow-[0_1px_20px_rgba(0,0,0,0.08)] fixed w-full top-0 z-50 border-b border-white/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link to="/" className="flex-shrink-0 flex items-center">
-            <img src={ASSETS.logo} alt="KAMLOG" className="h-12 w-auto" />
+          <Link to="/" className="flex-shrink-0 flex items-center group">
+            <img src={ASSETS.logo} alt="KAMLOG" className="h-12 w-auto group-hover:scale-105 transition-transform duration-300" />
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-0.5">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`relative px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-300 ${
                   location.pathname === item.href
-                    ? 'bg-red-600 text-white'
-                    : 'text-blue-900 hover:text-red-600'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/30'
+                    : 'text-[#1F3878] hover:text-red-600 hover:bg-red-50/50'
                 }`}
               >
                 {item.label}
@@ -53,7 +53,7 @@ export default function Navbar() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="md:hidden text-blue-900 hover:text-red-600 transition-colors"
+              className="md:hidden text-[#1F3878] hover:text-red-600 transition-all duration-300 p-2 rounded-lg hover:bg-gray-100"
             >
               {isOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
@@ -62,16 +62,16 @@ export default function Navbar() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden pb-4 space-y-2">
+          <div className="md:hidden pb-5 pt-2 space-y-1 animate-fade-in-down border-t border-gray-100/80">
             {navItems.map((item) => (
               <Link
                 key={item.label}
                 to={item.href}
                 onClick={() => setIsOpen(false)}
-                className={`block px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`block px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ${
                   location.pathname === item.href
-                    ? 'bg-red-600 text-white'
-                    : 'text-blue-900 hover:bg-gray-100'
+                    ? 'bg-red-600 text-white shadow-md shadow-red-600/20'
+                    : 'text-[#1F3878] hover:bg-gray-50 active:bg-gray-100'
                 }`}
               >
                 {item.label}

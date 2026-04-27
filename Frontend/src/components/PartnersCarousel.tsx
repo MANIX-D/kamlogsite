@@ -129,7 +129,7 @@ export default function PartnersCarousel() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-12">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1F3878] mb-2 tracking-tight">
               {t('partners.title')}
             </h2>
           </div>
@@ -150,7 +150,7 @@ export default function PartnersCarousel() {
                 className="flex-shrink-0 px-3 sm:px-4"
                 style={{ width: `${itemWidthPercent}%` }}
               >
-                <div className="p-4 h-40 flex items-center justify-center group">
+                <div className="p-4 h-40 flex items-center justify-center group bg-white rounded-2xl ring-1 ring-gray-100 hover:ring-gray-200 hover:shadow-md transition-all duration-300">
                   <img
                     src={partner.logo_url || 'https://via.placeholder.com/200x80?text=Logo'}
                     alt={i18n.language === 'fr' ? partner.name_fr : partner.name_en}
@@ -164,7 +164,7 @@ export default function PartnersCarousel() {
 
           <button
             onClick={goToPrevious}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 sm:-translate-x-20 bg-blue-900 hover:bg-blue-800 text-white p-2 rounded-full transition-colors z-10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 sm:-translate-x-20 bg-[#1F3878] hover:bg-[#152b5e] text-white p-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-10"
             aria-label="Previous partners"
           >
             <ChevronLeft size={24} />
@@ -172,7 +172,7 @@ export default function PartnersCarousel() {
 
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 sm:translate-x-20 bg-blue-900 hover:bg-blue-800 text-white p-2 rounded-full transition-colors z-10"
+            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 sm:translate-x-20 bg-[#1F3878] hover:bg-[#152b5e] text-white p-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-10"
             aria-label="Next partners"
           >
             <ChevronRight size={24} />
@@ -189,7 +189,7 @@ export default function PartnersCarousel() {
               }}
               className={`w-2 h-2 rounded-full transition-all duration-300 ${
                 index === realIndex
-                  ? 'bg-blue-900 w-8'
+                  ? 'bg-[#1F3878] w-8'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`}
               aria-label={`Go to partner ${index + 1}`}

@@ -451,7 +451,7 @@
       "hours": {
         "title": "Horaires",
         "weekdays": "Lun - Ven: 8h00 - 18h00",
-        "weekend": "Sam: 8h00 - 13h00"
+        "weekend": ""
       },
       "about": {
         "title": "Pourquoi KAMLOG ?",
@@ -469,7 +469,7 @@
       },
       "visit": {
         "title": "Visitez nos bureaux",
-        "description": "Vous souhaitez nous rencontrer en personne ? Nos bureaux sont ouverts du lundi au samedi.",
+        "description": "Vous souhaitez nous rencontrer en personne ? Nos bureaux sont ouverts du lundi au vendredi.",
         "note": "Appelez-nous pour prendre rendez-vous :"
       }
     },

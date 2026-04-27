@@ -66,11 +66,11 @@ export default function TestimonialsSection() {
     <section className="w-full py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 mb-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-2 tracking-tight">
             {t('testimonials.title')}
           </h2>
           <div className="flex justify-center">
-            <div className="h-1 w-32 bg-red-600"></div>
+            <div className="h-1 w-32 shimmer-line rounded-full"></div>
           </div>
         </div>
 

@@ -451,7 +451,7 @@
       "hours": {
         "title": "Business Hours",
         "weekdays": "Mon - Fri: 8:00 AM - 6:00 PM",
-        "weekend": "Sat: 8:00 AM - 1:00 PM"
+        "weekend": ""
       },
       "about": {
         "title": "Why KAMLOG?",
@@ -469,7 +469,7 @@
       },
       "visit": {
         "title": "Visit Our Offices",
-        "description": "Would you like to meet us in person? Our offices are open Monday through Saturday.",
+        "description": "Would you like to meet us in person? Our offices are open Monday through Friday.",
         "note": "Call us to schedule an appointment:"
       }
     },

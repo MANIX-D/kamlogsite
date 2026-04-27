@@ -28,12 +28,12 @@ export default function Footer() {
 
   return (
     <footer className="w-full">
-      <div className="bg-gradient-to-b from-gray-50 to-white py-16">
+      <div className="bg-gradient-to-b from-gray-50 via-white to-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
           <img
             src="/images/New_Logo_KAMLOG_sans_bg_(1).png"
             alt="KAMLOG - Logistique Intégrée"
-            className="h-28 object-contain"
+            className="h-28 object-contain hover:scale-105 transition-transform duration-500"
           />
         </div>
       </div>
@@ -197,13 +197,13 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="border-t border-white/20 pt-8">
-            <div className="text-center">
-              <p className="text-gray-300 text-sm">
+          <div className="border-t border-white/10 pt-8">
+            <div className="text-center space-y-2">
+              <p className="text-gray-400 text-sm font-medium tracking-wide">
                 © 2026 KAMLOG. {t('footer.rights')}
               </p>
-              <p className="text-gray-300 text-sm">
-                Powered By <a href="mailto:Toyotamnx@gmail.com" className="hover:text-white underline transition-colors">Toyotamnx@gmail.com</a>
+              <p className="text-gray-500 text-xs">
+                Powered By <a href="mailto:Toyotamnx@gmail.com" className="text-gray-400 hover:text-white underline underline-offset-2 transition-colors duration-300">Toyotamnx@gmail.com</a>
               </p>
             </div>
           </div>

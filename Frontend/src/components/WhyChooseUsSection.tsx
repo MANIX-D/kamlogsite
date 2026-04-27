@@ -44,18 +44,18 @@ export default function WhyChooseUsSection() {
         <div className="flex flex-col items-center justify-center mb-16 space-y-8">
           <Link
             to="/services"
-            className="inline-flex items-center space-x-3 bg-blue-900 hover:bg-blue-800 text-white px-8 py-4 rounded-full font-semibold transition-colors group"
+            className="inline-flex items-center space-x-3 bg-[#1F3878] hover:bg-[#152b5e] text-white px-8 py-4 rounded-full font-bold transition-all duration-300 group shadow-lg shadow-[#1F3878]/20 hover:shadow-xl hover:shadow-[#1F3878]/30"
           >
             <span>{t('nav.services')}</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Link>
 
           <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-4 tracking-tight">
               {t('why.title')}
             </h2>
             <div className="flex justify-center">
-              <div className="h-1 w-48 sm:w-80 bg-red-600"></div>
+              <div className="h-1 w-48 sm:w-80 shimmer-line rounded-full"></div>
             </div>
           </div>
         </div>
@@ -71,7 +71,7 @@ export default function WhyChooseUsSection() {
             return (
               <div
                 key={index}
-                className="animate-fade-in-up scroll-translate flex items-start space-x-4 p-4 rounded-lg hover:bg-gray-50 transition-colors"
+                className="animate-fade-in-up scroll-translate flex items-start space-x-4 p-5 rounded-xl bg-white shadow-sm hover:shadow-md ring-1 ring-gray-100 hover:ring-gray-200 transition-all duration-300"
                 style={{
                   animationDelay: isVisible ? `${index * 0.1}s` : '0s',
                   transform: `translateY(${translateValue}px)`,
