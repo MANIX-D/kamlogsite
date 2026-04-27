@@ -47,18 +47,18 @@ export default function ServicesPage() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="mt-24 bg-white rounded-3xl shadow-2xl p-12 transform hover:scale-[1.01] transition-transform duration-300">
-          <div className="text-center mb-16">
+        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-12 transform hover:scale-[1.01] transition-transform duration-300">
+          <div className="text-center mb-10 sm:mb-16">
             <div className="inline-block mb-4 px-6 py-2 bg-[#1F3878] rounded-full">
               <span className="text-white font-semibold text-sm tracking-wider">{t('servicesDetailed.handling.tag')}</span>
             </div>
-            <h2 className="text-5xl font-bold text-[#1F3878] mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878] mb-6">
               {t('servicesDetailed.handling.title')}
             </h2>
             <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-10 sm:mb-16">
             <div className="space-y-6">
               <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
                 <img
@@ -79,7 +79,7 @@ export default function ServicesPage() {
             </div>
 
             <div>
-              <h3 className="text-4xl font-bold text-[#1F3878] mb-6 leading-tight">
+              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1F3878] mb-6 leading-tight">
                 {t('servicesDetailed.handling.heading')}
               </h3>
               <div className="w-24 h-1 bg-red-600 mb-6"></div>
@@ -139,13 +139,13 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-20 rounded-2xl shadow-lg overflow-hidden" style={{ background: '#1F3878' }}>
-          <div className="p-12 text-white">
-            <div className="text-center mb-12">
-              <h2 className="text-5xl font-bold mb-4">
+        <div className="mt-12 sm:mt-20 rounded-2xl shadow-lg overflow-hidden" style={{ background: '#1F3878' }}>
+          <div className="p-6 sm:p-8 lg:p-12 text-white">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
                 {t('servicesDetailed.warehouse.title')}
               </h2>
-              <div className="w-96 h-1 bg-red-600 mx-auto"></div>
+              <div className="w-48 sm:w-72 lg:w-96 h-1 bg-red-600 mx-auto"></div>
             </div>
 
             <h3 className="text-2xl font-bold mb-6 text-center">
@@ -194,19 +194,19 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-24 bg-white rounded-3xl shadow-2xl p-12 transform hover:scale-[1.01] transition-transform duration-300">
-          <div className="text-center mb-16">
+        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-12 transform hover:scale-[1.01] transition-transform duration-300">
+          <div className="text-center mb-10 sm:mb-16">
             <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
               <span className="text-white font-semibold text-sm tracking-wider">{t('servicesDetailed.customs.tag')}</span>
             </div>
-            <h2 className="text-5xl font-bold text-[#1F3878] mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878] mb-6">
               {t('servicesDetailed.customs.title')}
             </h2>
             <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
           </div>
 
-          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-10 mb-16">
-            <h3 className="text-4xl font-bold text-[#1F3878] mb-6 text-center">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 sm:p-8 lg:p-10 mb-10 sm:mb-16">
+            <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1F3878] mb-6 text-center">
               {t('servicesDetailed.customs.heading')}
             </h3>
             <div className="w-24 h-1 bg-red-600 mx-auto mb-6"></div>
@@ -215,7 +215,7 @@ export default function ServicesPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 mb-10 sm:mb-16">
             <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 border-2 border-blue-200 hover:border-blue-400 transition-colors duration-300">
               <div className="flex items-center mb-6">
                 <div className="bg-[#1F3878] rounded-full p-3 mr-4">
@@ -223,7 +223,7 @@ export default function ServicesPage() {
                     <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
                   </svg>
                 </div>
-                <h4 className="text-3xl font-bold text-[#1F3878]">
+                <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1F3878]">
                   {t('servicesDetailed.customs.import.title')}
                 </h4>
               </div>
@@ -250,7 +250,7 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
             <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
               <img
                 src="/images/services-export.webp"
@@ -267,7 +267,7 @@ export default function ServicesPage() {
                     <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
                   </svg>
                 </div>
-                <h4 className="text-3xl font-bold text-[#1F3878]">
+                <h4 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1F3878]">
                   {t('servicesDetailed.customs.export.title')}
                 </h4>
               </div>
@@ -286,10 +286,10 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-20 relative rounded-2xl shadow-2xl overflow-hidden" style={{ background: '#1F3878' }}>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[700px]">
-            <div className="p-12 lg:p-16 text-white relative z-10">
-              <h2 className="text-5xl font-bold mb-2">
+        <div className="mt-12 sm:mt-20 relative rounded-2xl shadow-2xl overflow-hidden" style={{ background: '#1F3878' }}>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-0 lg:min-h-[700px]">
+            <div className="p-6 sm:p-10 lg:p-16 text-white relative z-10">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
                 {t('servicesDetailed.containers.title')}
               </h2>
               <div className="w-32 h-1 bg-red-600 mb-12"></div>
@@ -300,7 +300,7 @@ export default function ServicesPage() {
               <p className="text-base leading-relaxed mb-6 text-blue-50">
                 {t('servicesDetailed.containers.description')}
               </p>
-              <div className="w-80 h-px bg-red-600 mb-10"></div>
+              <div className="w-full sm:w-80 h-px bg-red-600 mb-10"></div>
 
               <div className="mb-12">
                 <h4 className="text-2xl font-bold mb-3">
@@ -341,9 +341,9 @@ export default function ServicesPage() {
               </div>
             </div>
 
-            <div className="relative overflow-visible">
-              <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[950px] h-[950px]">
-                <div className="absolute -right-96 w-full h-full rounded-full flex items-center justify-center overflow-hidden shadow-2xl">
+            <div className="relative overflow-hidden lg:overflow-visible">
+              <div className="relative lg:absolute lg:right-0 lg:top-1/2 lg:-translate-y-1/2 w-full h-64 sm:h-80 lg:w-[950px] lg:h-[950px]">
+                <div className="lg:absolute lg:-right-96 w-full h-full lg:rounded-full flex items-center justify-center overflow-hidden shadow-2xl">
                   <img
                     src="/images/service-conteneurs.webp"
                     alt="Parc à conteneurs"
@@ -356,19 +356,19 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-24 bg-white rounded-3xl shadow-2xl overflow-hidden mb-24 transform hover:scale-[1.01] transition-transform duration-300">
-          <div className="bg-gradient-to-r from-[#1F3878] to-[#1F3878] p-8 text-center">
-            <h2 className="text-5xl font-bold text-white mb-4">
+        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden mb-12 sm:mb-24 transform hover:scale-[1.01] transition-transform duration-300">
+          <div className="bg-gradient-to-r from-[#1F3878] to-[#1F3878] p-6 sm:p-8 text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
               {t('servicesDetailed.transport.title')}
             </h2>
             <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
           </div>
 
-          <div className="p-12">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="p-6 sm:p-8 lg:p-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
               <div>
                 <div className="mb-8">
-                  <h3 className="text-4xl font-bold text-[#1F3878] mb-6 leading-tight">
+                  <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-[#1F3878] mb-6 leading-tight">
                     {t('servicesDetailed.transport.heading')}
                   </h3>
                   <div className="w-24 h-1 bg-red-600 mb-6"></div>
@@ -469,18 +469,18 @@ export default function ServicesPage() {
         >
           <div className="absolute inset-0 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] opacity-85"></div>
 
-          <div className="relative z-10 p-20 text-white">
-            <div className="text-center mb-16">
+          <div className="relative z-10 p-6 sm:p-10 lg:p-20 text-white">
+            <div className="text-center mb-10 sm:mb-16">
               <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
                 <span className="text-white font-semibold text-sm tracking-wider">{t('servicesDetailed.methodology.tag')}</span>
               </div>
-              <h2 className="text-6xl font-bold mb-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4">
                 {t('servicesDetailed.methodology.title')}
               </h2>
               <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-16 gap-y-6 max-w-5xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-4 sm:gap-y-6 max-w-5xl mx-auto">
               {['step1', 'step4', 'step2', 'step5'].map((step) => (
                 <div key={step} className="flex items-center space-x-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
                   <div className="flex-shrink-0 bg-red-600 rounded-full p-3">
@@ -504,13 +504,13 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-24 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] rounded-3xl shadow-2xl p-16 text-white text-center transform hover:scale-[1.02] transition-transform duration-300">
+        <div className="mt-12 sm:mt-24 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-10 lg:p-16 text-white text-center transform hover:scale-[1.02] transition-transform duration-300">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
               {t('services.page.cta.title')}
             </h2>
             <div className="w-32 h-1.5 bg-red-600 mx-auto mb-8"></div>
-            <p className="text-2xl text-blue-100 mb-10 leading-relaxed">
+            <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-10 leading-relaxed">
               {t('services.page.cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

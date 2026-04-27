@@ -27,7 +27,7 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1
-            className={`text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-8 transition-all duration-1000 ${
+            className={`text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-8 transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -44,16 +44,16 @@ export default function AboutPage() {
       </section>
 
       {/* About Us Section */}
-      <section className="py-24 bg-white">
+      <section className="py-12 sm:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl sm:text-6xl font-bold text-[#1F3878] mb-6">
+          <div className="text-center mb-12 sm:mb-20">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#1F3878] mb-6">
               {t('about.section.title')}
             </h2>
             <div className="h-1.5 w-32 bg-red-600 mx-auto"></div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             <div className="space-y-8">
               <div className="relative">
                 <div className="absolute -left-4 top-0 text-red-600 text-9xl font-bold opacity-10">
@@ -85,7 +85,7 @@ export default function AboutPage() {
                 src="/images/about-installations.webp"
                 alt="KAMLOG Port Facilities"
                 loading="lazy"
-                className="relative w-full h-[500px] object-cover rounded-lg shadow-2xl"
+                className="relative w-full h-64 sm:h-96 lg:h-[500px] object-cover rounded-lg shadow-2xl"
               />
             </div>
           </div>
@@ -93,16 +93,16 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision Section */}
-      <section className="py-24 bg-gradient-to-br from-gray-50 to-white">
+      <section className="py-12 sm:py-24 bg-gradient-to-br from-gray-50 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-start">
             <div className="relative order-2 lg:order-1">
               <div className="absolute -bottom-6 -left-6 w-full h-full bg-[#1F3878]/10 rounded-lg"></div>
               <img
                 src="/images/about-equip.webp"
                 alt="KAMLOG Team"
                 loading="lazy"
-                className="relative w-full h-[600px] object-cover rounded-lg shadow-2xl"
+                className="relative w-full h-64 sm:h-96 lg:h-[600px] object-cover rounded-lg shadow-2xl"
               />
             </div>
 
@@ -113,7 +113,7 @@ export default function AboutPage() {
                     <TrendingUp className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-4xl sm:text-5xl font-bold text-[#1F3878]">
+                    <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878]">
                       {t('about.mission.title')}
                     </h2>
                     <div className="h-1 w-24 bg-red-600 mt-2"></div>
@@ -152,7 +152,7 @@ export default function AboutPage() {
                     <MapPin className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-4xl sm:text-5xl font-bold text-[#1F3878]">
+                    <h2 className="text-2xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878]">
                       {t('about.vision.title')}
                     </h2>
                     <div className="h-1 w-24 bg-red-600 mt-2"></div>
@@ -169,11 +169,11 @@ export default function AboutPage() {
       </section>
 
       {/* Values Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      <section className="py-12 sm:py-24 bg-white relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-red-50"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl sm:text-6xl font-bold text-[#1F3878] mb-6">
+          <div className="text-center mb-12 sm:mb-20">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-[#1F3878] mb-6">
               {t('about.values.title')}
             </h2>
             <div className="h-1.5 w-32 bg-red-600 mx-auto mb-4"></div>
@@ -245,7 +245,7 @@ export default function AboutPage() {
 
       {/* What Makes Us Different Section */}
       <section
-        className="relative py-28 bg-cover bg-center overflow-hidden"
+        className="relative py-16 sm:py-28 bg-cover bg-center overflow-hidden"
         style={{
           backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.92), rgba(31, 56, 120, 0.92)), url('/images/about-difference.webp')`,
         }}
@@ -253,8 +253,8 @@ export default function AboutPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#1F3878]/50 to-transparent"></div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl sm:text-6xl font-bold text-white mb-6">
+          <div className="text-center mb-12 sm:mb-20">
+            <h2 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6">
               {t('about.difference.title')}
             </h2>
             <div className="h-1.5 w-32 bg-red-600 mx-auto"></div>

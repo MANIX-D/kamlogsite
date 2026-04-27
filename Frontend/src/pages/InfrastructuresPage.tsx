@@ -114,7 +114,7 @@ export default function InfrastructuresPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1
-            className={`text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-8 transition-all duration-1000 ${
+            className={`text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-8 transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -130,20 +130,20 @@ export default function InfrastructuresPage() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mb-12 sm:mb-24">
           {stats.map((stat, index) => (
             <div
               key={index}
               className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
             >
               <div className="flex justify-center mb-4">
-                <div className="bg-[#1F3878] rounded-full p-4">
-                  <stat.icon className="w-8 h-8 text-white" />
+                <div className="bg-[#1F3878] rounded-full p-3 sm:p-4">
+                  <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
               </div>
-              <div className="text-4xl font-bold text-[#1F3878] mb-2">{stat.value}</div>
-              <div className="text-xl font-semibold text-gray-700 mb-2">{stat.label}</div>
+              <div className="text-2xl sm:text-4xl font-bold text-[#1F3878] mb-2">{stat.value}</div>
+              <div className="text-base sm:text-xl font-semibold text-gray-700 mb-2">{stat.label}</div>
               <div className="text-sm text-gray-600">{stat.description}</div>
             </div>
           ))}
@@ -153,7 +153,7 @@ export default function InfrastructuresPage() {
           <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
             <span className="text-white font-semibold text-sm tracking-wider">{t('infrastructuresPage.tag')}</span>
           </div>
-          <h2 className="text-5xl font-bold text-[#1F3878] mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878] mb-6">
             {t('infrastructuresPage.heading')}
           </h2>
           <div className="w-32 h-1.5 bg-red-600 mx-auto mb-8"></div>
@@ -171,13 +171,13 @@ export default function InfrastructuresPage() {
               }`}
             >
               <div className={`grid grid-cols-1 lg:grid-cols-2 gap-0 ${index % 2 === 1 ? 'lg:grid-flow-dense' : ''}`}>
-                <div className={`p-12 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                <div className={`p-6 sm:p-8 lg:p-12 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
                   <div className="flex items-center mb-6">
                     <div className="bg-[#1F3878] rounded-full p-4 mr-4">
                       <facility.icon className="w-10 h-10 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-3xl font-bold text-[#1F3878]">{t(facility.titleKey)}</h3>
+                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1F3878]">{t(facility.titleKey)}</h3>
                       <p className="text-gray-600 flex items-center mt-1">
                         <svg className="w-4 h-4 mr-2 text-red-600" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path>
@@ -235,7 +235,7 @@ export default function InfrastructuresPage() {
                   </div>
                 </div>
 
-                <div className={`relative h-full min-h-[500px] ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                <div className={`relative h-64 sm:h-80 lg:h-full lg:min-h-[500px] ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
                   <img
                     src={facility.image}
                     alt={t(facility.titleKey)}
@@ -249,13 +249,13 @@ export default function InfrastructuresPage() {
           ))}
         </div>
 
-        <div className="mt-24 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] rounded-3xl shadow-2xl p-16 text-white text-center transform hover:scale-[1.02] transition-transform duration-300">
+        <div className="mt-12 sm:mt-24 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-10 lg:p-16 text-white text-center transform hover:scale-[1.02] transition-transform duration-300">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-5xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
               {t('infrastructuresPage.cta.title')}
             </h2>
             <div className="w-32 h-1.5 bg-red-600 mx-auto mb-8"></div>
-            <p className="text-2xl text-blue-100 mb-10 leading-relaxed">
+            <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-10 leading-relaxed">
               {t('infrastructuresPage.cta.description')}
             </p>
             <button

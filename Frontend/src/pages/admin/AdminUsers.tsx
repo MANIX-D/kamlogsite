@@ -50,6 +50,10 @@ export default function AdminUsers() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Delete confirmation modal
+  const [userToDelete, setUserToDelete] = useState<AdminUser | null>(null);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+
   // Invite modal (super_admin uniquement)
   const [showInviteModal, setShowInviteModal] = useState(false);
   const [inviteEmail, setInviteEmail] = useState('');
@@ -114,13 +118,17 @@ export default function AdminUsers() {
 
   // ─── Delete User ─────────────────────────────────────────
 
-  const handleDeleteUser = async (userId: number) => {
-    if (!confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) return;
+  const handleDeleteUser = async () => {
+    if (!userToDelete) return;
+    setDeleteLoading(true);
     try {
-      await adminApiService.deleteUser(userId);
+      await adminApiService.deleteUser(userToDelete.id);
+      setUserToDelete(null);
       fetchData();
     } catch (err: any) {
       alert(err?.response?.data?.message || 'Erreur');
+    } finally {
+      setDeleteLoading(false);
     }
   };
 
@@ -289,7 +297,7 @@ export default function AdminUsers() {
                                 <Power size={18} />
                               </button>
                               <button
-                                onClick={() => handleDeleteUser(user.id)}
+                                onClick={() => setUserToDelete(user)}
                                 className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
                                 title="Supprimer"
                               >
@@ -314,6 +322,56 @@ export default function AdminUsers() {
           </div>
         )}
       </div>
+
+      {/* ─── Delete Confirmation Modal ─────────────────────── */}
+      {userToDelete && (
+        <div className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md">
+            <div className="p-6 text-center">
+              <div className="mx-auto w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mb-4">
+                <Trash2 className="text-red-600" size={28} />
+              </div>
+              <h2 className="text-xl font-bold text-slate-900 mb-2">Confirmer la suppression</h2>
+              <p className="text-slate-600 mb-1">
+                Voulez-vous vraiment supprimer le compte de
+              </p>
+              <p className="font-semibold text-slate-900 mb-1">{userToDelete.name}</p>
+              <p className="text-sm text-slate-500 mb-6">({userToDelete.email})</p>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-6">
+                <p className="text-sm text-red-800 flex items-center gap-2">
+                  <AlertCircle size={16} className="flex-shrink-0" />
+                  Cette action est irréversible. Tous les tokens actifs seront révoqués.
+                </p>
+              </div>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={() => setUserToDelete(null)}
+                  disabled={deleteLoading}
+                  className="flex-1 px-4 py-2.5 border border-slate-300 text-slate-700 font-medium rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-50"
+                >
+                  Annuler
+                </button>
+                <button
+                  type="button"
+                  onClick={handleDeleteUser}
+                  disabled={deleteLoading}
+                  className="flex-1 px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {deleteLoading ? (
+                    <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
+                  ) : (
+                    <>
+                      <Trash2 size={18} />
+                      Supprimer
+                    </>
+                  )}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ─── Invite Modal ─────────────────────────────────── */}
       {showInviteModal && (

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -97,7 +98,7 @@ class UserController extends Controller
         $user->update($validated);
 
         // Invalider le cache du dashboard
-        \Illuminate\Support\Facades\Cache::forget('dashboard:stats');
+        Cache::forget('dashboard:stats');
 
         return response()->json([
             'success' => true,
@@ -171,7 +172,7 @@ class UserController extends Controller
         $user->delete();
 
         // Invalider le cache du dashboard
-        \Illuminate\Support\Facades\Cache::forget('dashboard:stats');
+        Cache::forget('dashboard:stats');
 
         return response()->json([
             'success' => true,

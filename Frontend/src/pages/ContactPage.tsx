@@ -147,14 +147,14 @@ export default function ContactPage() {
       >
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1
-            className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 transition-all duration-1000 ${
+            className={`text-3xl sm:text-5xl lg:text-7xl font-bold mb-6 transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
             {t('contact.hero.title')}
           </h1>
           <p
-            className={`text-xl md:text-2xl lg:text-3xl text-gray-100 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
+            className={`text-lg sm:text-xl lg:text-3xl text-gray-100 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
             }`}
           >

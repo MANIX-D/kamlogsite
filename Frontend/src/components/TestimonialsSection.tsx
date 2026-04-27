@@ -66,7 +66,7 @@ export default function TestimonialsSection() {
     <section className="w-full py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mb-2">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 mb-2">
             {t('testimonials.title')}
           </h2>
           <div className="flex justify-center">
@@ -83,13 +83,13 @@ export default function TestimonialsSection() {
             }}
           >
             <div
-              className="relative h-[500px] sm:h-[450px] bg-cover bg-center"
+              className="relative h-[400px] sm:h-[450px] bg-cover bg-center"
               style={{
                 backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.85), rgba(31, 56, 120, 0.85)), url('${currentTestimonial.image}')`,
               }}
             >
               <div className="absolute inset-0 flex flex-col items-center justify-center px-6 sm:px-12 lg:px-20 text-center">
-                <h3 className="text-3xl sm:text-4xl font-bold text-white mb-8">
+                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6 sm:mb-8">
                   {t(currentTestimonial.companyKey)}
                 </h3>
 
@@ -117,19 +117,19 @@ export default function TestimonialsSection() {
           <button
             onClick={prevTestimonial}
             disabled={isTransitioning}
-            className="absolute left-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 sm:p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
             aria-label="Témoignage précédent"
           >
-            <ChevronLeft size={32} className="text-blue-900" />
+            <ChevronLeft size={24} className="text-blue-900 sm:w-8 sm:h-8" />
           </button>
 
           <button
             onClick={nextTestimonial}
             disabled={isTransitioning}
-            className="absolute right-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 sm:p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
             aria-label="Témoignage suivant"
           >
-            <ChevronRight size={32} className="text-blue-900" />
+            <ChevronRight size={24} className="text-blue-900 sm:w-8 sm:h-8" />
           </button>
 
           <div className="flex justify-center gap-3 mt-8">

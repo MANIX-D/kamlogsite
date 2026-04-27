@@ -37,7 +37,7 @@ export default function HeroSection() {
         </div>
 
         {/* Main Title */}
-        <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl">
+        <h1 className="text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight max-w-4xl">
           {t('hero.title')}
         </h1>
 
@@ -58,14 +58,14 @@ export default function HeroSection() {
         </div>
 
         {/* Stats */}
-        <div className="mt-20 grid grid-cols-1 sm:grid-cols-3 gap-8">
+        <div className="mt-10 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-8">
           <div
             className="scroll-translate"
             style={{
               transform: `translateY(${scrollY * 0.1}px)`,
             }}
           >
-            <div className="text-4xl sm:text-5xl font-bold text-white mb-2">5+</div>
+            <div className="text-3xl sm:text-5xl font-bold text-white mb-2">5+</div>
             <div className="text-gray-200">
               <p className="font-semibold">{t('hero.stats.years')}</p>
               <p className="text-sm">{t('hero.stats.years_sub')}</p>
@@ -77,7 +77,7 @@ export default function HeroSection() {
               transform: `translateY(${scrollY * 0.15}px)`,
             }}
           >
-            <div className="text-4xl sm:text-5xl font-bold text-white mb-2">180 000+</div>
+            <div className="text-3xl sm:text-5xl font-bold text-white mb-2">180 000+</div>
             <div className="text-gray-200">
               <p className="font-semibold">{t('hero.stats.tons')}</p>
               <p className="text-sm">{t('hero.stats.tons_sub')}</p>
@@ -89,7 +89,7 @@ export default function HeroSection() {
               transform: `translateY(${scrollY * 0.2}px)`,
             }}
           >
-            <div className="text-4xl sm:text-5xl font-bold text-white mb-2">16 000 m²</div>
+            <div className="text-3xl sm:text-5xl font-bold text-white mb-2">16 000 m²</div>
             <div className="text-gray-200">
               <p className="font-semibold">{t('hero.stats.warehouse')}</p>
               <p className="text-sm">{t('hero.stats.warehouse_sub')}</p>

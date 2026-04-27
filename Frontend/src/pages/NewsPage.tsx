@@ -113,7 +113,7 @@ export default function NewsPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-50 opacity-20"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1
-            className={`text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 transition-all duration-1000 ${
+            className={`text-3xl sm:text-4xl lg:text-6xl font-extrabold mb-4 transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -312,8 +312,8 @@ export default function NewsPage() {
           <div className="bg-white/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
             <Briefcase className="w-10 h-10" />
           </div>
-          <h2 className="text-4xl font-extrabold mb-4">{t('news.jobsCta.title')}</h2>
-          <p className="text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-4">{t('news.jobsCta.title')}</h2>
+          <p className="text-base sm:text-lg lg:text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed">
             {t('news.jobsCta.subtitle')}
           </p>
           <button

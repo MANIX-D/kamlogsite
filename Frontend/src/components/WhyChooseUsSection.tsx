@@ -51,11 +51,11 @@ export default function WhyChooseUsSection() {
           </Link>
 
           <div className="text-center">
-            <h2 className="text-4xl sm:text-5xl font-bold text-blue-900 mb-4">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-blue-900 mb-4">
               {t('why.title')}
             </h2>
             <div className="flex justify-center">
-              <div className="h-1 w-80 bg-red-600"></div>
+              <div className="h-1 w-48 sm:w-80 bg-red-600"></div>
             </div>
           </div>
         </div>
