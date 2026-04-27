@@ -23,39 +23,31 @@ class NewsController extends Controller
         $perPage = min(max($perPage, 1), 100);
 
         $isAdmin = $request->user() && ($request->user()->tokenCan('admin:*') || $request->user()->tokenCan('admin:read'));
-        $type = $request->input('type');
-        $isFeatured = $request->input('is_featured');
-        $isPublished = $request->input('is_published');
 
-        // Générer une clé de cache unique
-        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $type . ':' . $isFeatured . ':' . $isPublished;
+        $query = News::query();
 
-        $news = $this->remember($cacheKey, function () use ($request, $perPage, $isAdmin) {
-            $query = News::query();
+        // Filtrer par statut publié pour le public
+        if (!$isAdmin) {
+            $query->published();
+        }
 
-            // Filtrer par statut publié pour le public
-            if (!$isAdmin) {
-                $query->published();
-            }
+        // Filtres optionnels
+        if ($request->has('type')) {
+            $query->ofType($request->input('type'));
+        }
 
-            // Filtres optionnels
-            if ($request->has('type')) {
-                $query->ofType($request->input('type'));
-            }
+        if ($request->has('is_featured')) {
+            $query->featured();
+        }
 
-            if ($request->has('is_featured')) {
-                $query->featured();
-            }
+        if ($request->has('is_published')) {
+            $query->where('is_published', $request->boolean('is_published'));
+        }
 
-            if ($request->has('is_published')) {
-                $query->where('is_published', $request->boolean('is_published'));
-            }
+        // Tri
+        $query->latestPublished();
 
-            // Tri
-            $query->latestPublished();
-
-            return $query->paginate($perPage);
-        }, 900); // Cache 15 minutes
+        $news = $query->paginate($perPage);
 
         return $this->paginatedResponse($news);
     }
@@ -67,7 +59,7 @@ class NewsController extends Controller
     {
         $news = $this->remember('show:' . $id, function () use ($id) {
             return News::find($id);
-        }, 1800); // Cache 30 minutes
+        }, 300); // Cache 5 minutes
 
         if (!$news) {
             return $this->notFoundResponse('Actualité non trouvée');
@@ -110,7 +102,7 @@ class NewsController extends Controller
             }
             
             return $query->first();
-        }, 1800); // Cache 30 minutes
+        }, 300); // Cache 5 minutes
 
         if (!$news) {
             return $this->notFoundResponse('Actualité non trouvée');

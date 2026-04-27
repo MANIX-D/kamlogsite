@@ -20,8 +20,20 @@ export default function AdminLogin() {
     try {
       await authService.login(formData);
       navigate('/admin/dashboard');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Échec de connexion');
+    } catch (err: any) {
+      if (err?.code === 'ERR_NETWORK' || err?.message === 'Network Error') {
+        setError('Impossible de contacter le serveur. Vérifiez votre connexion ou réessayez plus tard.');
+      } else if (err?.response?.status === 422) {
+        const validationErrors = err.response?.data?.errors;
+        const firstError = validationErrors
+          ? Object.values(validationErrors).flat()[0]
+          : 'Identifiants incorrects.';
+        setError(String(firstError));
+      } else if (err?.response?.status === 429) {
+        setError('Trop de tentatives. Veuillez patienter quelques minutes.');
+      } else {
+        setError(err instanceof Error ? err.message : 'Échec de connexion. Veuillez réessayer.');
+      }
     } finally {
       setLoading(false);
     }

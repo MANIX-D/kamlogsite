@@ -30,7 +30,7 @@ export default function InfrastructuresPage() {
         t('infrastructuresPage.facilities.warehouse.feature3', "Équipements de manutention modernes"),
         t('infrastructuresPage.facilities.warehouse.feature4', "Système de surveillance 24/7")
       ],
-      image: "/images/services-manutention1.webp"
+      image: "/images/services-entrepot1.webp"
     },
     {
       icon: Container,
@@ -58,7 +58,7 @@ export default function InfrastructuresPage() {
         t('infrastructuresPage.facilities.silos.feature3', "Système de pesage intégré"),
         t('infrastructuresPage.facilities.silos.feature4', "Contrôle qualité en continu")
       ],
-      image: "/images/services-entrepot2.webp"
+      image: "/images/infra-silos.webp"
     },
     {
       icon: Building2,

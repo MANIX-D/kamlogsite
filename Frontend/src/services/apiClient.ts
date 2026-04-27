@@ -20,7 +20,7 @@ apiClient.interceptors.request.use(
     // Injecter le token Bearer uniquement sur les routes admin
     const isAdminRoute = config.url?.includes('/admin/') || config.url?.startsWith('admin/');
     if (isAdminRoute) {
-      const token = sessionStorage.getItem('auth_token');
+      const token = localStorage.getItem('auth_token');
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
@@ -45,13 +45,13 @@ apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response?.status === 401) {
-      // Nettoyer la session
+      // Nettoyer la session (localStorage + ancien sessionStorage)
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('auth_token_expiry');
       sessionStorage.removeItem('auth_token');
       sessionStorage.removeItem('user');
       sessionStorage.removeItem('auth_token_expiry');
-      sessionStorage.removeItem('user_permissions');
-      localStorage.removeItem('auth_token');
-      localStorage.removeItem('user');
 
       // Rediriger vers le login si on est sur une page admin
       if (

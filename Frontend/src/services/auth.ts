@@ -139,12 +139,12 @@ export const authService = {
 
   setToken(token: string): void {
     inMemoryToken = token;
-    sessionStorage.setItem(TOKEN_KEY, token);
+    localStorage.setItem(TOKEN_KEY, token);
   },
 
   getToken(): string | null {
     if (inMemoryToken) return inMemoryToken;
-    const stored = sessionStorage.getItem(TOKEN_KEY);
+    const stored = localStorage.getItem(TOKEN_KEY);
     if (stored) {
       inMemoryToken = stored;
     }
@@ -153,11 +153,11 @@ export const authService = {
 
   setTokenExpiry(): void {
     const expiry = Date.now() + 24 * 60 * 60 * 1000;
-    sessionStorage.setItem(TOKEN_EXPIRY_KEY, expiry.toString());
+    localStorage.setItem(TOKEN_EXPIRY_KEY, expiry.toString());
   },
 
   getTokenExpiry(): number | null {
-    const expiry = sessionStorage.getItem(TOKEN_EXPIRY_KEY);
+    const expiry = localStorage.getItem(TOKEN_EXPIRY_KEY);
     return expiry ? parseInt(expiry, 10) : null;
   },
 
@@ -170,11 +170,11 @@ export const authService = {
   // ── Utilisateur ─────────────────────────────────────────
 
   setUser(user: AdminUser): void {
-    sessionStorage.setItem(USER_KEY, JSON.stringify(user));
+    localStorage.setItem(USER_KEY, JSON.stringify(user));
   },
 
   getUser(): AdminUser | null {
-    const user = sessionStorage.getItem(USER_KEY);
+    const user = localStorage.getItem(USER_KEY);
     return user ? JSON.parse(user) : null;
   },
 
@@ -201,19 +201,37 @@ export const authService = {
       clearTimeout(refreshTimer);
       refreshTimer = null;
     }
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(USER_KEY);
+    localStorage.removeItem(TOKEN_EXPIRY_KEY);
+    // Migration : nettoyer l'ancien sessionStorage
     sessionStorage.removeItem(TOKEN_KEY);
     sessionStorage.removeItem(USER_KEY);
     sessionStorage.removeItem(TOKEN_EXPIRY_KEY);
-    // Migration : nettoyer l'ancien localStorage
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
   },
 
   /**
    * Initialiser l'auth au chargement de l'app
    */
   initializeAuth(): void {
-    const token = sessionStorage.getItem(TOKEN_KEY);
+    // Migration : déplacer depuis sessionStorage si existant
+    const sessionToken = sessionStorage.getItem(TOKEN_KEY);
+    if (sessionToken) {
+      localStorage.setItem(TOKEN_KEY, sessionToken);
+      sessionStorage.removeItem(TOKEN_KEY);
+      const sessionExpiry = sessionStorage.getItem(TOKEN_EXPIRY_KEY);
+      if (sessionExpiry) {
+        localStorage.setItem(TOKEN_EXPIRY_KEY, sessionExpiry);
+        sessionStorage.removeItem(TOKEN_EXPIRY_KEY);
+      }
+      const sessionUser = sessionStorage.getItem(USER_KEY);
+      if (sessionUser) {
+        localStorage.setItem(USER_KEY, sessionUser);
+        sessionStorage.removeItem(USER_KEY);
+      }
+    }
+
+    const token = localStorage.getItem(TOKEN_KEY);
     if (token && !this.isTokenExpired()) {
       inMemoryToken = token;
       this.scheduleTokenRefresh();

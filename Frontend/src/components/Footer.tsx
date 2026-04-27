@@ -109,7 +109,7 @@ export default function Footer() {
               </h3>
               <div className="space-y-4 mt-6">
                 <a
-                  href="https://www.facebook.com/kamlog.cm"
+                  href="https://www.facebook.com/share/1DeEaTNJQn/?mibextid=wwXIfr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-gray-200 hover:text-white transition-all duration-300 group"
@@ -121,7 +121,7 @@ export default function Footer() {
                   <span className="text-base font-medium">Facebook</span>
                 </a>
                 <a
-                  href="https://www.linkedin.com/company/kamlog"
+                  href="http://linkedin.com/company/kamlog-sarl"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-4 text-gray-200 hover:text-white transition-all duration-300 group"
@@ -201,6 +201,9 @@ export default function Footer() {
             <div className="text-center">
               <p className="text-gray-300 text-sm">
                 © 2026 KAMLOG. {t('footer.rights')}
+              </p>
+              <p className="text-gray-300 text-sm">
+                Powered By <a href="mailto:Toyotamnx@gmail.com" className="hover:text-white underline transition-colors">Toyotamnx@gmail.com</a>
               </p>
             </div>
           </div>

@@ -6,7 +6,7 @@ import { apiService, NewsItem } from '../services/api';
 
 export default function NewsDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [item, setItem] = useState<NewsItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +16,7 @@ export default function NewsDetailPage() {
     if (id) {
       fetchDetail(parseInt(id));
     }
-  }, [id]);
+  }, [id, i18n.language]);
 
   const fetchDetail = async (newsId: number) => {
     setLoading(true);

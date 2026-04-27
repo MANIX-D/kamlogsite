@@ -42,8 +42,8 @@ class VisitRequestController extends Controller
             $query->where('date', '<=', $request->input('date_to'));
         }
 
-        // Tri par date
-        $query->latest('date');
+        // Tri par date de réception (les plus récentes en premier)
+        $query->latest('created_at');
 
         $visitRequests = $query->paginate($perPage);
 

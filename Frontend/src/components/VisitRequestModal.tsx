@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Calendar, User, Mail, Phone, Building2, MessageSquare } from 'lucide-react';
-import { apiService, Infrastructure } from '../services/api';
+import { apiService } from '../services/api';
 
 interface VisitRequestModalProps {
   isOpen: boolean;
@@ -24,15 +24,8 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
-  const [infrastructures, setInfrastructures] = useState<Infrastructure[]>([]);
 
-  useEffect(() => {
-    if (isOpen) {
-      apiService.getInfrastructures()
-        .then(data => setInfrastructures(data))
-        .catch(err => console.error('Error loading infrastructures:', err));
-    }
-  }, [isOpen]);
+  const infrastructureKeys = ['warehouse', 'containers', 'silos', 'udeac'] as const;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -54,7 +47,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
         heure: formData.preferredTime,
         type_visite: formData.type_visite,
         message: formData.message || undefined,
-        infrastructure_id: formData.infrastructure_id ? Number(formData.infrastructure_id) : undefined,
+        infrastructure_id: formData.infrastructure_id || undefined,
       });
 
       setSubmitSuccess(true);
@@ -267,9 +260,9 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                       className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1F3878] focus:outline-none transition-colors"
                     >
                       <option value="">{t('visitRequest.form.infrastructureOptions.select')}</option>
-                      {infrastructures.map(infra => (
-                        <option key={infra.id} value={infra.id}>
-                          {t('lang') === 'en' ? infra.nom_en : infra.nom_fr}
+                      {infrastructureKeys.map(key => (
+                        <option key={key} value={key}>
+                          {t(`visitRequest.form.infrastructureOptions.${key}`)}
                         </option>
                       ))}
                     </select>

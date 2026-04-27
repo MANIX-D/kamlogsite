@@ -155,7 +155,7 @@ export interface VisitRequest {
   heure: string;
   type_visite: 'guidee' | 'autonome' | 'virtuelle' | 'rencontre';
   message?: string;
-  infrastructure_id?: number;
+  infrastructure_id?: string;
 }
 
 export interface ApiResponse<T> {
@@ -269,7 +269,8 @@ class ApiService {
     const endpoint = this.buildUrl(API_ENDPOINTS.actualites, { 
       type: backendType === 'all' ? undefined : backendType, 
       page, 
-      per_page: perPage 
+      per_page: perPage,
+      _t: Date.now(),
     });
     const res = await get<ApiSuccessResponse<any[]>>(endpoint);
     return this.wrapPaginated(res, mapNewsItem);

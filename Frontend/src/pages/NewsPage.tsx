@@ -7,7 +7,7 @@ import { apiService, NewsItem } from '../services/api';
 type NewsType = 'all' | 'article' | 'announcement' | 'job';
 
 export default function NewsPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,14 +27,14 @@ export default function NewsPage() {
 
   useEffect(() => {
     fetchNews();
-  }, [activeFilter, currentPage]);
+  }, [activeFilter, currentPage, i18n.language]);
 
   // Refetch when user switches back to this tab (e.g. after admin changes)
   useEffect(() => {
     const handleFocus = () => fetchNews();
     window.addEventListener('focus', handleFocus);
     return () => window.removeEventListener('focus', handleFocus);
-  }, [activeFilter, currentPage]);
+  }, [activeFilter, currentPage, i18n.language]);
 
   const fetchNews = async () => {
     setLoading(true);
@@ -50,7 +50,6 @@ export default function NewsPage() {
       setTotalPages(response.last_page);
     } catch (err) {
       setError(t('news.error.fetch'));
-      console.error('Error fetching news:', err);
     } finally {
       setLoading(false);
     }

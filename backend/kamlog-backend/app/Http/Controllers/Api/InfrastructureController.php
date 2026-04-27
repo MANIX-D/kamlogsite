@@ -24,31 +24,27 @@ class InfrastructureController extends Controller
         $isAvailable = $request->has('is_available');
         $isActive = $request->input('is_active');
 
-        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $type . ':' . ($isAvailable ? '1' : '0') . ':' . $isActive;
+        $query = Infrastructure::query();
 
-        $infrastructures = $this->remember($cacheKey, function () use ($perPage, $isAdmin, $type, $isAvailable, $isActive) {
-            $query = Infrastructure::query();
+        if (!$isAdmin) {
+            $query->active();
+        }
 
-            if (!$isAdmin) {
-                $query->active();
-            }
+        if ($type) {
+            $query->ofType($type);
+        }
 
-            if ($type) {
-                $query->ofType($type);
-            }
+        if ($isAvailable) {
+            $query->available();
+        }
 
-            if ($isAvailable) {
-                $query->available();
-            }
+        if ($isActive !== null) {
+            $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
+        }
 
-            if ($isActive !== null) {
-                $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
-            }
+        $query->ordered();
 
-            $query->ordered();
-
-            return $query->paginate($perPage);
-        }, 3600);
+        $infrastructures = $query->paginate($perPage);
 
         return $this->paginatedResponse($infrastructures);
     }
@@ -60,7 +56,7 @@ class InfrastructureController extends Controller
     {
         $infrastructure = $this->remember('show:' . $id, function () use ($id) {
             return Infrastructure::find($id);
-        }, 3600);
+        }, 300); // Cache 5 minutes
 
         if (!$infrastructure) {
             return $this->notFoundResponse('Infrastructure non trouvée');

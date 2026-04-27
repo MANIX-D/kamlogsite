@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { apiService } from '../services/api';
@@ -15,15 +15,22 @@ export default function PartnersCarousel() {
   const [isAutoPlay, setIsAutoPlay] = useState(true);
   const [partners, setPartners] = useState<Partner[]>([]);
   const [loading, setLoading] = useState(true);
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  const trackRef = useRef<HTMLDivElement>(null);
   const { t, i18n } = useTranslation();
 
-  const itemsPerView = 5;
+  const itemWidthPercent = 20; // 5 items per view = 100/5
   const totalItems = partners.length;
+
+  // On duplique les partenaires pour créer un effet de boucle infinie
+  const extendedPartners = totalItems > 0
+    ? [...partners, ...partners, ...partners]
+    : [];
+  const startOffset = totalItems; // commence au milieu (2e copie)
 
   useEffect(() => {
     fetchPartners();
-  }, []);
+  }, [i18n.language]);
 
   const fetchPartners = async () => {
     try {
@@ -37,35 +44,69 @@ export default function PartnersCarousel() {
     }
   };
 
+  // Initialiser la position au milieu sans transition
   useEffect(() => {
-    if (!isAutoPlay) return;
+    if (totalItems > 0) {
+      setIsTransitioning(false);
+      setCurrentIndex(startOffset);
+    }
+  }, [totalItems, startOffset]);
+
+  // Rétablir la transition après le repositionnement sans animation
+  useEffect(() => {
+    if (!isTransitioning) {
+      const raf = requestAnimationFrame(() => {
+        setIsTransitioning(true);
+      });
+      return () => cancelAnimationFrame(raf);
+    }
+  }, [isTransitioning]);
+
+  // Boucle infinie : quand on dépasse les bornes, on repositionne sans animation
+  useEffect(() => {
+    if (!isTransitioning) return;
+    const handleTransitionEnd = () => {
+      if (currentIndex >= startOffset + totalItems) {
+        setIsTransitioning(false);
+        setCurrentIndex(startOffset + (currentIndex % totalItems));
+      } else if (currentIndex < startOffset) {
+        setIsTransitioning(false);
+        setCurrentIndex(startOffset + (((currentIndex - startOffset) % totalItems) + totalItems) % totalItems);
+      }
+    };
+    const track = trackRef.current;
+    if (track) {
+      track.addEventListener('transitionend', handleTransitionEnd);
+      return () => track.removeEventListener('transitionend', handleTransitionEnd);
+    }
+  }, [currentIndex, isTransitioning, startOffset, totalItems]);
+
+  const goToPrevious = useCallback(() => {
+    setIsAutoPlay(false);
+    setCurrentIndex((prev) => prev - 1);
+  }, []);
+
+  const goToNext = useCallback(() => {
+    setIsAutoPlay(false);
+    setCurrentIndex((prev) => prev + 1);
+  }, []);
+
+  // Autoplay
+  useEffect(() => {
+    if (!isAutoPlay || totalItems === 0) return;
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % totalItems);
-    }, 5000);
+      setCurrentIndex((prev) => prev + 1);
+    }, 1500);
 
     return () => clearInterval(interval);
   }, [isAutoPlay, totalItems]);
 
-  const goToPrevious = () => {
-    setIsAutoPlay(false);
-    setCurrentIndex((prev) => (prev - 1 + totalItems) % totalItems);
-  };
-
-  const goToNext = () => {
-    setIsAutoPlay(false);
-    setCurrentIndex((prev) => (prev + 1) % totalItems);
-  };
-
-  const getVisibleItems = () => {
-    if (totalItems === 0) return [];
-    const items = [];
-    for (let i = 0; i < itemsPerView; i++) {
-      const index = (currentIndex + i) % totalItems;
-      items.push(partners[index]);
-    }
-    return items;
-  };
+  const translateX = -(currentIndex * itemWidthPercent);
+  // Index réel pour les dots
+  const realIndex = totalItems > 0
+    ? ((currentIndex - startOffset) % totalItems + totalItems) % totalItems
+    : 0;
 
   if (loading) {
     return (
@@ -94,17 +135,22 @@ export default function PartnersCarousel() {
           </div>
         </div>
 
-        <div className="relative">
+        <div className="relative overflow-hidden">
           <div
-            ref={carouselRef}
-            className="flex gap-6 sm:gap-8 overflow-hidden"
+            ref={trackRef}
+            className="flex"
+            style={{
+              transform: `translateX(${translateX}%)`,
+              transition: isTransitioning ? 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
+            }}
           >
-            {getVisibleItems().map((partner) => (
+            {extendedPartners.map((partner, idx) => (
               <div
-                key={partner.id}
-                className="flex-shrink-0 w-1/5 min-w-max"
+                key={`${partner.id}-${idx}`}
+                className="flex-shrink-0 px-3 sm:px-4"
+                style={{ width: `${itemWidthPercent}%` }}
               >
-                <div className="p-4 h-40 flex items-center justify-center transition-all duration-300 group">
+                <div className="p-4 h-40 flex items-center justify-center group">
                   <img
                     src={partner.logo_url || 'https://via.placeholder.com/200x80?text=Logo'}
                     alt={i18n.language === 'fr' ? partner.name_fr : partner.name_en}
@@ -138,11 +184,11 @@ export default function PartnersCarousel() {
             <button
               key={index}
               onClick={() => {
-                setCurrentIndex(index);
+                setCurrentIndex(startOffset + index);
                 setIsAutoPlay(false);
               }}
-              className={`w-2 h-2 rounded-full transition-all ${
-                index === currentIndex
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                index === realIndex
                   ? 'bg-blue-900 w-8'
                   : 'bg-gray-300 hover:bg-gray-400'
               }`}

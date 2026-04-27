@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { apiService, Partner } from '../services/api';
 
 export default function PartnersPage() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isVisible, setIsVisible] = useState(false);
   const [partners, setPartners] = useState<Partner[]>([]);
 
@@ -26,7 +26,7 @@ export default function PartnersPage() {
       });
     
     return () => clearTimeout(timer);
-  }, []);
+  }, [i18n.language]);
 
   // Group partners by category - map old categories to new ones
   const categoryMapping: Record<string, { id: string; icon: any; titleKey: string; descKey: string }> = {

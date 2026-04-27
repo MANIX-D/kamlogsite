@@ -13,10 +13,10 @@ class CacheControl
      * Compiled once, matched in order.
      */
     private const CACHE_RULES = [
-        '#^api/v1/(services|partners|infrastructures)$#' => [3600, 600],
-        '#^api/v1/(services|partners|infrastructures)/\d+$#' => [3600, 300],
-        '#^api/v1/news#' => [900, 300],
-        '#^api/v1/(jobs|announcements)#' => [1800, 600],
+        '#^api/v1/(services|partners|infrastructures)$#' => [300, 120],
+        '#^api/v1/(services|partners|infrastructures)/\d+$#' => [300, 120],
+        '#^api/v1/news#' => [0, 0],
+        '#^api/v1/(jobs|announcements)#' => [0, 0],
     ];
 
     /**

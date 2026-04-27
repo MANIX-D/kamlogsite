@@ -24,7 +24,7 @@ class VisitRequestRequest extends FormRequest
             'heure' => ['required', 'string', 'regex:/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/'],
             'type_visite' => ['required', 'in:guidee,autonome,virtuelle,rencontre'],
             'message' => ['nullable', 'string'],
-            'infrastructure_id' => ['nullable', 'exists:infrastructures,id'],
+            'infrastructure_id' => ['nullable', 'string', 'in:warehouse,containers,silos,udeac'],
         ];
     }
 

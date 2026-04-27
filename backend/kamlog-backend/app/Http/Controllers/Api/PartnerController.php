@@ -25,35 +25,31 @@ class PartnerController extends Controller
         $isFeatured = $request->has('is_featured');
         $isActive = $request->input('is_active');
 
-        $cacheKey = 'index:' . $perPage . ':' . ($isAdmin ? 'admin' : 'public') . ':' . $category . ':' . $level . ':' . ($isFeatured ? '1' : '0') . ':' . $isActive;
+        $query = Partner::query();
 
-        $partners = $this->remember($cacheKey, function () use ($perPage, $isAdmin, $category, $level, $isFeatured, $isActive) {
-            $query = Partner::query();
+        if (!$isAdmin) {
+            $query->active();
+        }
 
-            if (!$isAdmin) {
-                $query->active();
-            }
+        if ($category) {
+            $query->ofCategory($category);
+        }
 
-            if ($category) {
-                $query->ofCategory($category);
-            }
+        if ($level) {
+            $query->ofLevel($level);
+        }
 
-            if ($level) {
-                $query->ofLevel($level);
-            }
+        if ($isFeatured) {
+            $query->featured();
+        }
 
-            if ($isFeatured) {
-                $query->featured();
-            }
+        if ($isActive !== null) {
+            $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
+        }
 
-            if ($isActive !== null) {
-                $query->where('is_active', filter_var($isActive, FILTER_VALIDATE_BOOLEAN));
-            }
+        $query->ordered();
 
-            $query->ordered();
-
-            return $query->paginate($perPage);
-        }, 3600);
+        $partners = $query->paginate($perPage);
 
         return $this->paginatedResponse($partners);
     }
@@ -65,7 +61,7 @@ class PartnerController extends Controller
     {
         $partner = $this->remember('show:' . $id, function () use ($id) {
             return Partner::find($id);
-        }, 3600);
+        }, 300); // Cache 5 minutes
 
         if (!$partner) {
             return $this->notFoundResponse('Partenaire non trouvé');

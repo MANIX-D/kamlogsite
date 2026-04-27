@@ -80,7 +80,7 @@ export default function AdminCandidatures() {
 
     try {
       setPreviewLoading(true);
-      const token = sessionStorage.getItem('auth_token');
+      const token = localStorage.getItem('auth_token');
       const previewRequestUrl = `${API_BASE_URL}${API_ENDPOINTS.admin.files}/cvs/download?path=${encodeURIComponent(cvPath)}`;
       const response = await fetch(previewRequestUrl, {
         headers: token ? { Authorization: `Bearer ${token}` } : {},
