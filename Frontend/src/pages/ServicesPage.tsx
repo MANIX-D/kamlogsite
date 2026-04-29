@@ -27,10 +27,10 @@ export default function ServicesPage() {
           backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/services-hero.webp')`,
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1
-            className={`text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-8 transition-all duration-1000 ${
+            className={`text-5xl sm:text-6xl lg:text-7xl font-extrabold text-white mb-8 tracking-tight leading-[1.1] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -47,20 +47,20 @@ export default function ServicesPage() {
       </section>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
-        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-12 transform hover:scale-[1.01] transition-transform duration-300">
+        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-xl ring-1 ring-black/5 p-6 sm:p-8 lg:p-12 transform hover:scale-[1.01] transition-all duration-500">
           <div className="text-center mb-10 sm:mb-16">
-            <div className="inline-block mb-4 px-6 py-2 bg-[#1F3878] rounded-full">
+            <div className="inline-block mb-4 px-6 py-2 bg-[#1F3878] rounded-full shadow-lg shadow-[#1F3878]/20">
               <span className="text-white font-semibold text-sm tracking-wider">{t('servicesDetailed.handling.tag')}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878] mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-6 tracking-tight">
               {t('servicesDetailed.handling.title')}
             </h2>
-            <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
+            <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto"></div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center mb-10 sm:mb-16">
             <div className="space-y-6">
-              <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+              <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 transform hover:scale-105 transition-all duration-500">
                 <img
                   src="/images/services-manutention1.webp"
                   alt="Manutention portuaire"
@@ -68,7 +68,7 @@ export default function ServicesPage() {
                   className="w-full h-80 object-cover"
                 />
               </div>
-              <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
+              <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 transform hover:scale-105 transition-all duration-500">
                 <img
                   src="/images/services-port.webp"
                   alt="Port et navire"
@@ -139,13 +139,13 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-20 rounded-2xl shadow-lg overflow-hidden" style={{ background: '#1F3878' }}>
+        <div className="mt-12 sm:mt-20 rounded-2xl sm:rounded-3xl shadow-2xl ring-1 ring-white/10 overflow-hidden" style={{ background: 'linear-gradient(135deg, #1F3878, #152555)' }}>
           <div className="p-6 sm:p-8 lg:p-12 text-white">
             <div className="text-center mb-8 sm:mb-12">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-4 tracking-tight">
                 {t('servicesDetailed.warehouse.title')}
               </h2>
-              <div className="w-48 sm:w-72 lg:w-96 h-1 bg-red-600 mx-auto"></div>
+              <div className="w-48 sm:w-72 lg:w-96 h-1 shimmer-line rounded-full mx-auto"></div>
             </div>
 
             <h3 className="text-2xl font-bold mb-6 text-center">
@@ -166,7 +166,7 @@ export default function ServicesPage() {
             </ul>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <div className="rounded-lg overflow-hidden shadow-xl">
+              <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10">
                 <img
                   src="/images/services-entrepot1.webp"
                   alt="Entrepôt vue aérienne"
@@ -174,7 +174,7 @@ export default function ServicesPage() {
                   className="w-full h-64 object-cover"
                 />
               </div>
-              <div className="rounded-lg overflow-hidden shadow-xl">
+              <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10">
                 <img
                   src="/images/services-entrepot2.webp"
                   alt="Intérieur entrepôt"
@@ -182,7 +182,7 @@ export default function ServicesPage() {
                   className="w-full h-64 object-cover"
                 />
               </div>
-              <div className="rounded-lg overflow-hidden shadow-xl">
+              <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10">
                 <img
                   src="/images/services-entrepot3.webp"
                   alt="Entrepôt stockage"
@@ -194,15 +194,15 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-8 lg:p-12 transform hover:scale-[1.01] transition-transform duration-300">
+        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-xl ring-1 ring-black/5 p-6 sm:p-8 lg:p-12 transform hover:scale-[1.01] transition-all duration-500">
           <div className="text-center mb-10 sm:mb-16">
-            <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
+            <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full shadow-lg shadow-red-600/20">
               <span className="text-white font-semibold text-sm tracking-wider">{t('servicesDetailed.customs.tag')}</span>
             </div>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878] mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-6 tracking-tight">
               {t('servicesDetailed.customs.title')}
             </h2>
-            <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
+            <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto"></div>
           </div>
 
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 sm:p-8 lg:p-10 mb-10 sm:mb-16">
@@ -286,13 +286,13 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-20 relative rounded-2xl shadow-2xl overflow-hidden" style={{ background: '#1F3878' }}>
+        <div className="mt-12 sm:mt-20 relative rounded-2xl sm:rounded-3xl shadow-2xl ring-1 ring-white/10 overflow-hidden" style={{ background: 'linear-gradient(135deg, #1F3878, #152555)' }}>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-0 lg:min-h-[700px]">
             <div className="p-6 sm:p-10 lg:p-16 text-white relative z-10">
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-2">
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-2 tracking-tight">
                 {t('servicesDetailed.containers.title')}
               </h2>
-              <div className="w-32 h-1 bg-red-600 mb-12"></div>
+              <div className="w-32 h-1 shimmer-line rounded-full mb-12"></div>
 
               <h3 className="text-2xl font-bold mb-4">
                 {t('servicesDetailed.containers.heading')}
@@ -356,12 +356,12 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden mb-12 sm:mb-24 transform hover:scale-[1.01] transition-transform duration-300">
-          <div className="bg-gradient-to-r from-[#1F3878] to-[#1F3878] p-6 sm:p-8 text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
+        <div className="mt-12 sm:mt-24 bg-white rounded-2xl sm:rounded-3xl shadow-xl ring-1 ring-black/5 overflow-hidden mb-12 sm:mb-24 transform hover:scale-[1.01] transition-all duration-500">
+          <div className="bg-gradient-to-r from-[#1F3878] to-[#152555] p-6 sm:p-8 text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-4 tracking-tight">
               {t('servicesDetailed.transport.title')}
             </h2>
-            <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
+            <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto"></div>
           </div>
 
           <div className="p-6 sm:p-8 lg:p-12">
@@ -467,22 +467,22 @@ export default function ServicesPage() {
             backgroundPosition: 'center',
           }}
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] opacity-85"></div>
+          <div className="absolute inset-0 bg-gradient-to-br from-[#1F3878] via-[#1a2f6a] to-[#152555] opacity-90"></div>
 
           <div className="relative z-10 p-6 sm:p-10 lg:p-20 text-white">
             <div className="text-center mb-10 sm:mb-16">
-              <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
+              <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full shadow-lg shadow-red-600/20">
                 <span className="text-white font-semibold text-sm tracking-wider">{t('servicesDetailed.methodology.tag')}</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl lg:text-6xl font-bold mb-4">
+              <h2 className="text-3xl sm:text-4xl lg:text-6xl font-extrabold mb-4 tracking-tight">
                 {t('servicesDetailed.methodology.title')}
               </h2>
-              <div className="w-32 h-1.5 bg-red-600 mx-auto"></div>
+              <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto"></div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 lg:gap-x-16 gap-y-4 sm:gap-y-6 max-w-5xl mx-auto">
               {['step1', 'step4', 'step2', 'step5'].map((step) => (
-                <div key={step} className="flex items-center space-x-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105">
+                <div key={step} className="flex items-center space-x-4 glass rounded-xl p-4 hover:bg-white/15 transition-all duration-300 transform hover:scale-105">
                   <div className="flex-shrink-0 bg-red-600 rounded-full p-3">
                     <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -492,7 +492,7 @@ export default function ServicesPage() {
                 </div>
               ))}
 
-              <div className="flex items-center space-x-4 bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 hover:bg-opacity-20 transition-all duration-300 transform hover:scale-105 md:col-span-2 md:max-w-md md:mx-auto">
+              <div className="flex items-center space-x-4 glass rounded-xl p-4 hover:bg-white/15 transition-all duration-300 transform hover:scale-105 md:col-span-2 md:max-w-md md:mx-auto">
                 <div className="flex-shrink-0 bg-red-600 rounded-full p-3">
                   <svg className="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -504,25 +504,25 @@ export default function ServicesPage() {
           </div>
         </div>
 
-        <div className="mt-12 sm:mt-24 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-10 lg:p-16 text-white text-center transform hover:scale-[1.02] transition-transform duration-300">
+        <div className="mt-12 sm:mt-24 bg-gradient-to-br from-[#1F3878] via-[#1a2f6a] to-[#152555] rounded-2xl sm:rounded-3xl shadow-2xl ring-1 ring-white/10 p-6 sm:p-10 lg:p-16 text-white text-center transform hover:scale-[1.01] transition-all duration-500">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight">
               {t('services.page.cta.title')}
             </h2>
-            <div className="w-32 h-1.5 bg-red-600 mx-auto mb-8"></div>
+            <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto mb-8"></div>
             <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-10 leading-relaxed">
               {t('services.page.cta.subtitle')}
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <button
                 onClick={() => setIsQuoteModalOpen(true)}
-                className="inline-block bg-red-600 text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-red-700 hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                className="inline-block bg-red-600 text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-red-700 hover:shadow-2xl hover:shadow-red-600/30 transition-all duration-300 transform hover:scale-105"
               >
                 {t('services.page.cta.quoteButton')}
               </button>
               <Link
                 to="/contact"
-                className="inline-block bg-white text-[#1F3878] px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+                className="inline-block bg-white text-[#1F3878] px-10 py-5 rounded-xl font-bold text-lg hover:bg-gray-50 hover:shadow-2xl hover:shadow-white/10 transition-all duration-300 transform hover:scale-105"
               >
                 {t('services.page.cta.button')}
               </Link>

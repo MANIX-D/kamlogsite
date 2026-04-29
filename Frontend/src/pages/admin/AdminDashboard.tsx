@@ -1,36 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Users, Clock, FileText, Megaphone, Briefcase } from 'lucide-react';
-import { adminApiService, Message, Actualite, DashboardStats } from '../../services/adminApi';
+import { Mail, Users, Clock, FileText, Megaphone, Briefcase, Eye, TrendingUp, Globe, BarChart3 } from 'lucide-react';
+import { adminApiService, Message, Actualite, DashboardStats, PageVisitStats } from '../../services/adminApi';
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [visitStats, setVisitStats] = useState<PageVisitStats | null>(null);
   const [recentMessages, setRecentMessages] = useState<Message[]>([]);
   const [recentNews, setRecentNews] = useState<Actualite[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchDashboardData();
-  }, []);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
-  const fetchDashboardData = async () => {
+  const fetchDashboardData = useCallback(async (silent = false) => {
     try {
-      setLoading(true);
-      const [statsData, messagesData, newsData] = await Promise.all([
+      if (!silent) setLoading(true);
+      const [statsData, visitStatsData, messagesData, newsData] = await Promise.all([
         adminApiService.getDashboardStats(),
+        adminApiService.getPageVisitStats().catch(() => null),
         adminApiService.getMessages().catch(() => []),
         adminApiService.getActualites().then(r => r.data).catch(() => []),
       ]);
       setStats(statsData);
+      setVisitStats(visitStatsData);
       setRecentMessages((messagesData || []).slice(0, 5));
       setRecentNews((newsData || []).slice(0, 5));
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erreur de chargement');
+      if (!silent) setError(err instanceof Error ? err.message : 'Erreur de chargement');
     } finally {
-      setLoading(false);
+      if (!silent) setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchDashboardData();
+    intervalRef.current = setInterval(() => fetchDashboardData(true), 30000);
+    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+  }, [fetchDashboardData]);
 
   const statCards = stats
     ? [
@@ -138,6 +145,125 @@ export default function AdminDashboard() {
           );
         })}
       </div>
+
+      {/* ── Visit Stats Section ── */}
+      {visitStats && (
+        <div className="mt-8">
+          <h2 className="text-xl font-bold text-slate-900 mb-4 flex items-center gap-2">
+            <BarChart3 size={22} className="text-indigo-600" />
+            Statistiques des visites
+          </h2>
+
+          {/* Visit counters */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="bg-indigo-50 p-2 rounded-lg">
+                  <Eye className="text-indigo-600" size={20} />
+                </div>
+                <span className="text-sm text-slate-500 font-medium">Aujourd'hui</span>
+              </div>
+              <p className="text-2xl font-bold text-slate-900">{visitStats.today}</p>
+              <p className="text-xs text-slate-400 mt-1">{visitStats.today_unique} visiteurs uniques</p>
+            </div>
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="bg-blue-50 p-2 rounded-lg">
+                  <TrendingUp className="text-blue-600" size={20} />
+                </div>
+                <span className="text-sm text-slate-500 font-medium">Cette semaine</span>
+              </div>
+              <p className="text-2xl font-bold text-slate-900">{visitStats.this_week}</p>
+              <p className="text-xs text-slate-400 mt-1">{visitStats.week_unique} visiteurs uniques</p>
+            </div>
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="bg-emerald-50 p-2 rounded-lg">
+                  <Globe className="text-emerald-600" size={20} />
+                </div>
+                <span className="text-sm text-slate-500 font-medium">Ce mois</span>
+              </div>
+              <p className="text-2xl font-bold text-slate-900">{visitStats.this_month}</p>
+              <p className="text-xs text-slate-400 mt-1">{visitStats.month_unique} visiteurs uniques</p>
+            </div>
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
+              <div className="flex items-center gap-3 mb-2">
+                <div className="bg-purple-50 p-2 rounded-lg">
+                  <BarChart3 className="text-purple-600" size={20} />
+                </div>
+                <span className="text-sm text-slate-500 font-medium">Total</span>
+              </div>
+              <p className="text-2xl font-bold text-slate-900">{visitStats.total.toLocaleString('fr-FR')}</p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            {/* Bar chart - 30 derniers jours */}
+            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+              <h3 className="text-sm font-semibold text-slate-700 mb-4">Visites des 30 derniers jours</h3>
+              {visitStats.daily_chart.length === 0 ? (
+                <p className="text-slate-400 text-sm py-8 text-center">Aucune donnée disponible</p>
+              ) : (
+                <div className="flex items-end gap-[3px] h-40">
+                  {(() => {
+                    const maxVisits = Math.max(...visitStats.daily_chart.map(d => d.visits), 1);
+                    return visitStats.daily_chart.map((day, i) => {
+                      const height = Math.max((day.visits / maxVisits) * 100, 2);
+                      const date = new Date(day.date);
+                      const label = date.toLocaleDateString('fr-FR', { day: '2-digit', month: '2-digit' });
+                      return (
+                        <div
+                          key={i}
+                          className="flex-1 group relative"
+                          title={`${label}: ${day.visits} visites, ${day.unique_visitors} uniques`}
+                        >
+                          <div
+                            className="w-full bg-indigo-500 hover:bg-indigo-600 rounded-t transition-colors cursor-pointer"
+                            style={{ height: `${height}%` }}
+                          />
+                          <div className="hidden group-hover:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10">
+                            {label} — {day.visits} visites
+                          </div>
+                        </div>
+                      );
+                    });
+                  })()}
+                </div>
+              )}
+            </div>
+
+            {/* Top pages */}
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+              <h3 className="text-sm font-semibold text-slate-700 mb-4">Pages les plus visitées</h3>
+              {visitStats.top_pages.length === 0 ? (
+                <p className="text-slate-400 text-sm py-4 text-center">Aucune donnée</p>
+              ) : (
+                <div className="space-y-3">
+                  {visitStats.top_pages.map((page, i) => {
+                    const maxPageVisits = visitStats.top_pages[0]?.visits || 1;
+                    const width = Math.max((page.visits / maxPageVisits) * 100, 8);
+                    const pageName = page.page === '/' ? 'Accueil' : page.page.replace(/^\//, '').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                    return (
+                      <div key={i}>
+                        <div className="flex justify-between text-xs mb-1">
+                          <span className="text-slate-700 font-medium truncate mr-2">{pageName}</span>
+                          <span className="text-slate-500 flex-shrink-0">{page.visits}</span>
+                        </div>
+                        <div className="w-full bg-slate-100 rounded-full h-2">
+                          <div
+                            className="bg-indigo-500 h-2 rounded-full transition-all"
+                            style={{ width: `${width}%` }}
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
         {/* Recent Messages */}

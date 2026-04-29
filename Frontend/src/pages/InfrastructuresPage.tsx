@@ -111,10 +111,10 @@ export default function InfrastructuresPage() {
           backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/infra-hero.webp')`,
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-white/20"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <h1
-            className={`text-3xl sm:text-5xl lg:text-7xl font-bold text-white mb-8 transition-all duration-1000 ${
+            className={`text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-8 tracking-tight leading-[1.1] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -135,14 +135,14 @@ export default function InfrastructuresPage() {
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 text-center transform hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-2xl"
+              className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 text-center transform hover:scale-105 transition-all duration-500 shadow-lg hover:shadow-2xl ring-1 ring-gray-100 hover:ring-[#1F3878]/20"
             >
               <div className="flex justify-center mb-4">
                 <div className="bg-[#1F3878] rounded-full p-3 sm:p-4">
                   <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
               </div>
-              <div className="text-2xl sm:text-4xl font-bold text-[#1F3878] mb-2">{stat.value}</div>
+              <div className="text-2xl sm:text-4xl font-extrabold text-[#1F3878] mb-2 tracking-tight">{stat.value}</div>
               <div className="text-base sm:text-xl font-semibold text-gray-700 mb-2">{stat.label}</div>
               <div className="text-sm text-gray-600">{stat.description}</div>
             </div>
@@ -153,10 +153,10 @@ export default function InfrastructuresPage() {
           <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
             <span className="text-white font-semibold text-sm tracking-wider">{t('infrastructuresPage.tag')}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-[#1F3878] mb-6">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-6 tracking-tight">
             {t('infrastructuresPage.heading')}
           </h2>
-          <div className="w-32 h-1.5 bg-red-600 mx-auto mb-8"></div>
+          <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto mb-8"></div>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
             {t('infrastructuresPage.intro')}
           </p>
@@ -166,7 +166,7 @@ export default function InfrastructuresPage() {
           {facilities.map((facility, index) => (
             <div
               key={index}
-              className={`bg-white rounded-3xl shadow-2xl overflow-hidden transform hover:scale-[1.01] transition-transform duration-300 ${
+              className={`bg-white rounded-3xl shadow-xl ring-1 ring-black/5 overflow-hidden transform hover:scale-[1.01] hover:shadow-2xl transition-all duration-500 ${
                 index % 2 === 0 ? '' : ''
               }`}
             >
@@ -249,18 +249,18 @@ export default function InfrastructuresPage() {
           ))}
         </div>
 
-        <div className="mt-12 sm:mt-24 bg-gradient-to-br from-[#1F3878] via-[#1F3878] to-[#1F3878] rounded-2xl sm:rounded-3xl shadow-2xl p-6 sm:p-10 lg:p-16 text-white text-center transform hover:scale-[1.02] transition-transform duration-300">
+        <div className="mt-12 sm:mt-24 bg-gradient-to-br from-[#1F3878] via-[#1a2f6a] to-[#152555] rounded-2xl sm:rounded-3xl shadow-2xl ring-1 ring-white/10 p-6 sm:p-10 lg:p-16 text-white text-center transform hover:scale-[1.01] transition-all duration-500">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight">
               {t('infrastructuresPage.cta.title')}
             </h2>
-            <div className="w-32 h-1.5 bg-red-600 mx-auto mb-8"></div>
+            <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto mb-8"></div>
             <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-10 leading-relaxed">
               {t('infrastructuresPage.cta.description')}
             </p>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="inline-block bg-red-600 text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-red-700 hover:shadow-2xl transition-all duration-300 transform hover:scale-105"
+              className="inline-block bg-red-600 text-white px-10 py-5 rounded-xl font-bold text-lg hover:bg-red-700 hover:shadow-2xl hover:shadow-red-600/30 transition-all duration-300 transform hover:scale-105"
             >
               {t('infrastructuresPage.cta.button')}
             </button>

@@ -20,6 +20,7 @@ use App\Http\Controllers\Api\JobApplicationController;
 use App\Http\Controllers\Api\FileUploadController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\StorageController;
+use App\Http\Controllers\Api\PageVisitController;
 
 /*
 |--------------------------------------------------------------------------
@@ -112,6 +113,10 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
     Route::post('/upload/cv', [FileUploadController::class, 'uploadCV'])
         ->middleware('throttle:uploads');
 
+    // Tracking des visites de pages (Public)
+    Route::post('/page-visits', [PageVisitController::class, 'store'])
+        ->middleware('throttle:public-form');
+
     // ============================================
     // ROUTES PROTÉGÉES PAR SANCTUM
     // ============================================
@@ -181,6 +186,9 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
 
             // Tableau de bord
             Route::get('/dashboard/stats', [DashboardController::class, 'stats']);
+
+            // Statistiques des visites
+            Route::get('/page-visits/stats', [PageVisitController::class, 'stats']);
 
             // Lecture — Actualités
             Route::prefix('news')->group(function () {

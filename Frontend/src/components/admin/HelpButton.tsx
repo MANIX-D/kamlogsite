@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { HelpCircle, X, FileText, Users, MessageSquare, Building2, Search, Keyboard, BookOpen, Zap } from 'lucide-react';
+import { HelpCircle, X, FileText, Users, MessageSquare, Building2, Search, Keyboard, BookOpen, Zap, BarChart3, Mail, Globe, Shield } from 'lucide-react';
 
 export default function HelpButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,8 +22,8 @@ export default function HelpButton() {
   }, [isOpen]);
 
   const shortcuts = [
-    { key: 'Ctrl/Cmd + ?', description: 'Ouvrir l\'aide' },
-    { key: 'Esc', description: 'Fermer l\'aide' },
+    { key: 'Ctrl/Cmd + ?', description: 'Ouvrir le centre d\'aide' },
+    { key: 'Esc', description: 'Fermer la fenêtre active' },
     { key: 'Ctrl/Cmd + K', description: 'Recherche rapide (à venir)' },
   ];
 
@@ -37,32 +37,48 @@ export default function HelpButton() {
       content: 'Créez vos contenus en mode "Inactif" pour les préparer à l\'avance, puis activez-les quand vous êtes prêt.',
     },
     {
-      title: '📊 Suivez vos statistiques',
-      content: 'Le dashboard centralise les volumes clés : contenus publiés, messages non lus, utilisateurs actifs et activité générale de la plateforme.',
+      title: '📊 Suivez vos visites en temps réel',
+      content: 'Le dashboard affiche les statistiques de visites du site (aujourd\'hui, semaine, mois) avec un graphique des 30 derniers jours et le classement des pages les plus consultées. Les données se rafraîchissent automatiquement toutes les 30 secondes.',
     },
     {
-      title: '� Vérifiez les CV avant analyse',
+      title: '📋 Vérifiez les CV avant analyse',
       content: 'Dans Candidatures, utilisez la prévisualisation du CV avant de prendre une décision sur un dossier.',
     },
     {
       title: '🔐 Contrôle des accès',
-      content: 'Certaines fonctions sensibles, comme l’historique des actions admin, sont réservées au super administrateur.',
+      content: 'Certaines fonctions sensibles, comme l\'historique des actions admin et la gestion des utilisateurs, sont réservées au super administrateur.',
+    },
+    {
+      title: '🔄 Rafraîchissement automatique',
+      content: 'Le dashboard se met à jour automatiquement toutes les 30 secondes. Pas besoin de recharger la page pour voir les nouvelles données.',
     },
   ];
 
   const helpSections = [
     {
       title: 'Dashboard',
-      icon: FileText,
+      icon: BarChart3,
       content: [
         {
-          subtitle: 'Statistiques',
+          subtitle: 'Statistiques générales',
           description: 'Le dashboard affiche un aperçu des statistiques importantes :',
           items: [
             'Articles, Annonces, Offres : Format "X / Y" où X = publiés (visibles), Y = total',
-            'Messages : Nombre de messages non lus',
-            'Utilisateurs : Nombre d\'utilisateurs actifs',
-            'Le bloc central permet de repérer rapidement les contenus et demandes récents',
+            'Messages : Nombre total et messages non lus',
+            'Utilisateurs : Nombre d\'utilisateurs actifs sur le total',
+            'Les messages récents et dernières actualités sont affichés en bas de page',
+          ],
+        },
+        {
+          subtitle: 'Statistiques des visites',
+          description: 'Suivez la fréquentation du site en temps réel :',
+          items: [
+            'Aujourd\'hui : Nombre de visites et visiteurs uniques du jour',
+            'Cette semaine / Ce mois : Cumul des visites sur la période',
+            'Total : Nombre total de visites depuis l\'activation du suivi',
+            'Graphique des 30 derniers jours : Visualisez l\'évolution quotidienne (survolez une barre pour les détails)',
+            'Pages les plus visitées : Classement des 10 pages les plus consultées ce mois',
+            'Les données se rafraîchissent automatiquement toutes les 30 secondes',
           ],
         },
       ],
@@ -134,16 +150,32 @@ export default function HelpButton() {
     },
     {
       title: 'Messages',
-      icon: MessageSquare,
+      icon: Mail,
       content: [
         {
           subtitle: 'Gestion des messages',
           description: 'Consultez et gérez les messages de contact :',
           items: [
-            'Les nouveaux messages apparaissent en gras',
+            'Les nouveaux messages apparaissent en gras avec un badge "NEW"',
             'Cliquez sur un message pour le marquer comme lu',
             'Supprimez les messages traités',
+            'Les 5 derniers messages apparaissent aussi sur le dashboard',
             'Traitez en priorité les messages non lus indiqués dans les statistiques',
+          ],
+        },
+      ],
+    },
+    {
+      title: 'Newsletter',
+      icon: Globe,
+      content: [
+        {
+          subtitle: 'Gestion des abonnés',
+          description: 'Suivez les inscriptions à la newsletter :',
+          items: [
+            'Consultez la liste des abonnés inscrits depuis le site',
+            'Supprimez les abonnés qui se sont désinscrits ou invalides',
+            'Chaque abonné dispose d\'un lien de désinscription automatique',
           ],
         },
       ],
@@ -178,26 +210,28 @@ export default function HelpButton() {
       content: [
         {
           subtitle: 'Gestion des utilisateurs',
-          description: 'Gérez les comptes administrateurs :',
+          description: 'Gérez les comptes administrateurs (Super Admin uniquement) :',
           items: [
-            'Créez de nouveaux comptes admin',
-            'Activez/désactivez les comptes',
-            'Modifiez les informations utilisateur',
+            'Invitez de nouveaux administrateurs par email (lien d\'inscription sécurisé)',
+            'Activez/désactivez les comptes selon les besoins',
+            'Modifiez les informations et rôles des utilisateurs',
+            'Deux rôles disponibles : Super Admin (accès complet) et Admin (accès standard)',
           ],
         },
       ],
     },
     {
       title: 'Paramètres & sécurité',
-      icon: HelpCircle,
+      icon: Shield,
       content: [
         {
           subtitle: 'Compte administrateur',
           description: 'Gérez la sécurité et le suivi du compte depuis Paramètres :',
           items: [
-            'Mettez à jour vos informations personnelles',
-            'Changez votre mot de passe sans perdre votre session',
-            'Le super administrateur peut consulter l’historique des actions effectuées sur le dashboard',
+            'Mettez à jour vos informations personnelles (nom, email)',
+            'Changez votre mot de passe sans perdre votre session active',
+            'Le super administrateur peut consulter l\'historique complet des actions effectuées sur le dashboard',
+            'Déconnexion de toutes les sessions actives en un clic',
           ],
         },
       ],

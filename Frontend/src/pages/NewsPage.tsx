@@ -110,10 +110,10 @@ export default function NewsPage() {
           backgroundAttachment: 'fixed',
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-50 opacity-20"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           <h1
-            className={`text-3xl sm:text-4xl lg:text-6xl font-extrabold mb-4 transition-all duration-1000 ${
+            className={`text-3xl sm:text-4xl lg:text-6xl font-extrabold mb-4 tracking-tight leading-[1.1] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -130,7 +130,7 @@ export default function NewsPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
-        <div className="mb-12 flex flex-wrap gap-3 justify-center bg-white p-4 rounded-2xl shadow-md">
+        <div className="mb-12 flex flex-wrap gap-3 justify-center bg-white p-4 rounded-2xl shadow-lg ring-1 ring-black/5">
           {filters.map((filter) => {
             const Icon = filter.icon;
             return (
@@ -142,8 +142,8 @@ export default function NewsPage() {
                 }}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-semibold transition-all duration-300 ${
                   activeFilter === filter.value
-                    ? 'bg-[#1f3878] text-white shadow-lg scale-105'
-                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 hover:scale-102'
+                    ? 'bg-[#1f3878] text-white shadow-lg shadow-[#1f3878]/20 scale-105'
+                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100'
                 }`}
               >
                 <Icon size={18} />
@@ -249,7 +249,7 @@ export default function NewsPage() {
                   </>
                 );
 
-                const cardClass = `bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group opacity-0 animate-fadeInUp`;
+                const cardClass = `bg-white rounded-2xl shadow-md ring-1 ring-black/5 overflow-hidden hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group opacity-0 animate-fadeInUp`;
 
                 return (
                   <Link
@@ -309,10 +309,10 @@ export default function NewsPage() {
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white/10 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6 backdrop-blur-sm">
+          <div className="glass w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
             <Briefcase className="w-10 h-10" />
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-4">{t('news.jobsCta.title')}</h2>
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-4 tracking-tight">{t('news.jobsCta.title')}</h2>
           <p className="text-base sm:text-lg lg:text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed">
             {t('news.jobsCta.subtitle')}
           </p>
@@ -321,7 +321,7 @@ export default function NewsPage() {
               setActiveFilter('job');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="inline-block bg-white text-[#1f3878] px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105"
+            className="inline-block bg-white text-[#1f3878] px-10 py-4 rounded-xl font-bold text-lg hover:bg-gray-50 transition-all duration-300 shadow-xl shadow-white/10 hover:shadow-2xl hover:scale-105"
           >
             {t('news.jobsCta.button')}
           </button>

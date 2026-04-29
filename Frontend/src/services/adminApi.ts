@@ -2,6 +2,18 @@ import { get, post, put, del } from './apiClient';
 import { API_ENDPOINTS } from '../config/api';
 import { Announcement, JobOffer } from '../types';
 
+export interface PageVisitStats {
+  today: number;
+  this_week: number;
+  this_month: number;
+  total: number;
+  today_unique: number;
+  week_unique: number;
+  month_unique: number;
+  daily_chart: { date: string; visits: number; unique_visitors: number }[];
+  top_pages: { page: string; visits: number }[];
+}
+
 export interface DashboardStats {
   total_news: number;
   total_messages: number;
@@ -216,6 +228,11 @@ interface ApiResponse<T> {
 class AdminApiService {
   async getDashboardStats(): Promise<DashboardStats> {
     const res = await get<ApiResponse<DashboardStats>>(`${API_ENDPOINTS.admin.dashboard}/stats`);
+    return res.data;
+  }
+
+  async getPageVisitStats(): Promise<PageVisitStats> {
+    const res = await get<ApiResponse<PageVisitStats>>(`${API_ENDPOINTS.admin.pageVisits}/stats`);
     return res.data;
   }
 

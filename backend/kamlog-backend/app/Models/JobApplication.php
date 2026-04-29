@@ -64,6 +64,14 @@ class JobApplication extends Model
                 $application->application_date = now();
             }
         });
+
+        static::created(function ($application) {
+            News::where('id', $application->job_offer_id)->increment('applications_count');
+        });
+
+        static::deleted(function ($application) {
+            News::where('id', $application->job_offer_id)->decrement('applications_count');
+        });
     }
 
     /**

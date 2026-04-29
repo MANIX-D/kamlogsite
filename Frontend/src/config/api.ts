@@ -10,6 +10,7 @@ export const API_ENDPOINTS = {
   newsletter: '/newsletter/subscribe',
   visitRequest: '/visit-requests',
   quoteRequest: '/quote-requests',
+  pageVisits: '/page-visits',
   uploadCV: '/upload/cv',
 
   admin: {
@@ -37,6 +38,7 @@ export const API_ENDPOINTS = {
     dashboard: '/admin/dashboard',
     files: '/admin/files',
     storage: '/admin/storage',
+    pageVisits: '/admin/page-visits',
     users: '/admin/users',
     invitations: '/admin/invitations',
     actionLogs: '/admin/action-logs',

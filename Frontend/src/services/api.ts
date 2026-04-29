@@ -333,6 +333,18 @@ class ApiService {
     };
   }
 
+  /**
+   * Enregistrer une visite de page (fire-and-forget)
+   */
+  trackPageVisit(page: string): void {
+    post(API_ENDPOINTS.pageVisits, {
+      page,
+      referrer: document.referrer || '',
+    }).catch(() => {
+      // Silently ignore tracking errors
+    });
+  }
+
   private buildUrl(base: string, params?: Record<string, any>): string {
     const searchParams = new URLSearchParams();
     if (params) {

@@ -1,31 +1,49 @@
 import { ArrowRight } from 'lucide-react';
 import { ASSETS } from '../constants/assets';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 export default function HeroSection() {
-  const [scrollY, setScrollY] = useState(0);
   const { t } = useTranslation();
+  const sectionRef = useRef<HTMLElement>(null);
+  const stat1Ref = useRef<HTMLDivElement>(null);
+  const stat2Ref = useRef<HTMLDivElement>(null);
+  const stat3Ref = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
+
+  const updateParallax = useCallback(() => {
+    const y = window.scrollY;
+    if (sectionRef.current) {
+      sectionRef.current.style.backgroundPositionY = `${y * 0.5}px`;
+    }
+    if (stat1Ref.current) stat1Ref.current.style.transform = `translateY(${y * 0.1}px)`;
+    if (stat2Ref.current) stat2Ref.current.style.transform = `translateY(${y * 0.15}px)`;
+    if (stat3Ref.current) stat3Ref.current.style.transform = `translateY(${y * 0.2}px)`;
+  }, []);
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setScrollY(0);
 
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(updateParallax);
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [updateParallax]);
 
   return (
     <section
+      ref={sectionRef}
       className="relative w-full h-screen bg-cover bg-center pt-20 overflow-hidden"
       style={{
         backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.7), rgba(31, 56, 120, 0.7)), url('${ASSETS.heroBg}')`,
-        backgroundPositionY: `${scrollY * 0.5}px`,
+        willChange: 'background-position',
       }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
@@ -68,10 +86,8 @@ export default function HeroSection() {
         {/* Stats */}
         <div className="mt-10 sm:mt-20 grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6">
           <div
-            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-all duration-500"
-            style={{
-              transform: `translateY(${scrollY * 0.1}px)`,
-            }}
+            ref={stat1Ref}
+            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-colors duration-500"
           >
             <div className="text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">5+</div>
             <div className="text-gray-200">
@@ -80,22 +96,18 @@ export default function HeroSection() {
             </div>
           </div>
           <div
-            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-all duration-500"
-            style={{
-              transform: `translateY(${scrollY * 0.15}px)`,
-            }}
+            ref={stat2Ref}
+            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-colors duration-500"
           >
-            <div className="text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">180 000+</div>
+            <div className="text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">90 000+</div>
             <div className="text-gray-200">
               <p className="font-semibold">{t('hero.stats.tons')}</p>
               <p className="text-sm text-gray-300">{t('hero.stats.tons_sub')}</p>
             </div>
           </div>
           <div
-            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-all duration-500"
-            style={{
-              transform: `translateY(${scrollY * 0.2}px)`,
-            }}
+            ref={stat3Ref}
+            className="scroll-translate glass rounded-2xl p-5 sm:p-6 hover:bg-white/15 transition-colors duration-500"
           >
             <div className="text-3xl sm:text-5xl font-extrabold text-white mb-2 tracking-tight">16 000 m²</div>
             <div className="text-gray-200">

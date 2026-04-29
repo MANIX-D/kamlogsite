@@ -30,6 +30,7 @@ import AdminVerifyCode from './pages/admin/AdminVerifyCode';
 import AdminResetPassword from './pages/admin/AdminResetPassword';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 import LoadingPage from './components/LoadingPage';
+import { usePageTracker } from './hooks/usePageTracker';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +53,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <PageTracker />
       <Routes>
         <Route path="/admin/login" element={<AdminLogin />} />
         <Route path="/admin/register/:token" element={<AdminRegister />} />
@@ -103,6 +105,11 @@ function App() {
       </Routes>
     </BrowserRouter>
   );
+}
+
+function PageTracker() {
+  usePageTracker();
+  return null;
 }
 
 export default App;

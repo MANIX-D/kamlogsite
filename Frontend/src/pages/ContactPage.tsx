@@ -145,9 +145,10 @@ export default function ContactPage() {
           backgroundPosition: 'center',
         }}
       >
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
           <h1
-            className={`text-3xl sm:text-5xl lg:text-7xl font-bold mb-6 transition-all duration-1000 ${
+            className={`text-3xl sm:text-5xl lg:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -170,9 +171,9 @@ export default function ContactPage() {
             return (
               <div
                 key={index}
-                className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-500 hover:-translate-y-1.5 ring-1 ring-gray-100 hover:ring-gray-200"
               >
-                <div className={`w-14 h-14 ${info.color} rounded-xl flex items-center justify-center mb-4`}>
+                <div className={`w-14 h-14 ${info.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}>
                   <Icon size={28} />
                 </div>
                 <h3 className="text-lg font-bold text-gray-900 mb-3">{info.title}</h3>
@@ -191,7 +192,7 @@ export default function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div>
             <div className="mb-8">
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              <h2 className="text-3xl font-extrabold text-[#1F3878] mb-4 tracking-tight">
                 {t('contact.form.title')}
               </h2>
               <p className="text-gray-600 text-lg">
@@ -234,7 +235,7 @@ export default function ContactPage() {
                     value={formData.nom}
                     onChange={handleChange}
                     disabled={submitting}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1f3878] focus:outline-none focus:ring-4 focus:ring-[#1f3878]/10 transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder={t('contact.form.placeholders.name')}
                   />
                 </div>
@@ -250,7 +251,7 @@ export default function ContactPage() {
                     value={formData.email}
                     onChange={handleChange}
                     disabled={submitting}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1f3878] focus:outline-none focus:ring-4 focus:ring-[#1f3878]/10 transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder={t('contact.form.placeholders.email')}
                   />
                 </div>
@@ -268,7 +269,7 @@ export default function ContactPage() {
                     value={formData.telephone}
                     onChange={handleChange}
                     disabled={submitting}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1f3878] focus:outline-none focus:ring-4 focus:ring-[#1f3878]/10 transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder={t('contact.form.placeholders.phone')}
                   />
                 </div>
@@ -283,7 +284,7 @@ export default function ContactPage() {
                     value={formData.entreprise}
                     onChange={handleChange}
                     disabled={submitting}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-[#1f3878] focus:outline-none transition-colors disabled:bg-gray-100 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#1f3878] focus:outline-none focus:ring-4 focus:ring-[#1f3878]/10 transition-all duration-300 disabled:bg-gray-100 disabled:cursor-not-allowed"
                     placeholder={t('contact.form.placeholders.company')}
                   />
                 </div>
@@ -330,7 +331,7 @@ export default function ContactPage() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full flex items-center justify-center gap-2 bg-[#1f3878] text-white px-8 py-4 rounded-xl font-semibold text-lg hover:bg-[#152b5e] transition-colors shadow-lg hover:shadow-xl disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 bg-[#1f3878] text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-[#152b5e] transition-all duration-300 shadow-lg shadow-[#1f3878]/20 hover:shadow-xl hover:shadow-[#1f3878]/30 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 <Send size={20} />
                 {submitting ? t('contact.form.buttons.sending') : t('contact.form.buttons.send')}
@@ -409,12 +410,12 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="bg-gray-100 py-16">
+      <div className="bg-gradient-to-b from-gray-50 to-gray-100 py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+          <h2 className="text-3xl font-extrabold text-[#1F3878] mb-8 text-center tracking-tight">
             {t('contact.map.title')}
           </h2>
-          <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-xl ring-1 ring-black/5 overflow-hidden">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1990.0!2d9.6905807!3d4.0287418!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1061137a591f3fe9%3A0xbc2d798b322cde2f!2sKAMLOG!5e0!3m2!1sfr!2scm"
               width="100%"
