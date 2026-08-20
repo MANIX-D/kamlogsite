@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { apiService } from '../services/api';
+import { useOverlay } from '../hooks/useOverlay';
 
 interface QuoteRequestModalProps {
   isOpen: boolean;
@@ -22,6 +23,8 @@ export default function QuoteRequestModal({ isOpen, onClose }: QuoteRequestModal
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  useOverlay(isOpen, onClose);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,20 +61,29 @@ export default function QuoteRequestModal({ isOpen, onClose }: QuoteRequestModal
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black bg-opacity-50">
-      <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="sticky top-0 bg-gradient-to-r from-[#1F3878] to-[#1F3878] p-6 flex items-center justify-between">
-          <h2 className="text-3xl font-bold text-white">{t('quote.title')}</h2>
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4 bg-black bg-opacity-50"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('quote.title')}
+    >
+      <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-w-2xl w-full max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto scroll-contain">
+        <div className="sticky top-0 z-10 bg-brand p-4 sm:p-6 flex items-center justify-between gap-3">
+          <h2 className="text-fluid-2xl font-bold text-white min-w-0">{t('quote.title')}</h2>
           <button
+            type="button"
             onClick={onClose}
-            className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-colors"
+            className="flex-shrink-0 text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition-colors"
+            aria-label={t('quote.form.cancel')}
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="p-4 sm:p-6 space-y-5 sm:space-y-6">
+          {/* 2 colonnes seulement à partir de 640px : sur un téléphone
+              deux champs côte à côte sont inconfortables à remplir */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label htmlFor="contact_person" className="block text-sm font-semibold text-gray-700 mb-2">
                 {t('quote.form.name')} *
@@ -142,7 +154,7 @@ export default function QuoteRequestModal({ isOpen, onClose }: QuoteRequestModal
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label htmlFor="service_type" className="block text-sm font-semibold text-gray-700 mb-2">
                 {t('quote.form.serviceType')} *
@@ -204,18 +216,20 @@ export default function QuoteRequestModal({ isOpen, onClose }: QuoteRequestModal
             </div>
           )}
 
-          <div className="flex gap-4">
+          {/* Empilés sur mobile (action principale en bas, sous le pouce),
+              côte à côte dès 640px */}
+          <div className="flex flex-col-reverse sm:flex-row gap-3 sm:gap-4">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+              className="w-full sm:flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
             >
               {t('quote.form.cancel')}
             </button>
             <button
               type="submit"
               disabled={isSubmitting}
-              className="flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full sm:flex-1 px-6 py-3 bg-red-600 text-white rounded-lg font-semibold hover:bg-red-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? t('quote.form.submitting') : t('quote.form.submit')}
             </button>

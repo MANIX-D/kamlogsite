@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import {
   MapPin,
   Calendar,
@@ -16,7 +16,6 @@ import { apiService, JobOffer } from '../services/api';
 
 export default function JobDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const { t } = useTranslation();
   const [job, setJob] = useState<JobOffer | null>(null);
   const [loading, setLoading] = useState(true);
@@ -57,7 +56,7 @@ export default function JobDetailPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
+      <div className="min-h-screen pt-16 sm:pt-20 flex items-center justify-center">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#1f3878]"></div>
       </div>
     );
@@ -65,7 +64,7 @@ export default function JobDetailPage() {
 
   if (error || !job) {
     return (
-      <div className="min-h-screen pt-20 flex items-center justify-center">
+      <div className="min-h-screen pt-16 sm:pt-20 flex items-center justify-center px-4">
         <div className="text-center">
           <p className="text-red-600 text-xl mb-4">{error || t('jobs.error.notFound')}</p>
           <Link
@@ -81,8 +80,8 @@ export default function JobDetailPage() {
   }
 
   return (
-    <div className="min-h-screen pt-20 bg-gray-50">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div className="min-h-screen pt-16 sm:pt-20 bg-gray-50">
+      <div className="w-full max-w-5xl mx-auto px-gutter py-8 sm:py-12">
         <Link
           to="/news"
           className="inline-flex items-center gap-2 text-[#1f3878] font-semibold hover:underline mb-8"
@@ -102,18 +101,18 @@ export default function JobDetailPage() {
             </div>
           )}
 
-          <div className="p-8 md:p-12">
+          <div className="p-5 sm:p-8 lg:p-12">
             <div className="mb-6">
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-green-100 text-green-800 rounded-full text-sm font-semibold mb-4">
                 <Briefcase size={16} />
                 {t('jobs.badge')}
               </span>
-              <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+              <h1 className="text-fluid-4xl font-bold text-gray-900 mb-4">
                 {job.title}
               </h1>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8 pb-8 border-b border-gray-200">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8 pb-8 border-b border-gray-200">
               <div className="flex items-center gap-3 text-gray-700">
                 <MapPin className="text-[#1f3878]" size={20} />
                 <span className="font-medium">{job.location}</span>
@@ -147,7 +146,7 @@ export default function JobDetailPage() {
             </div>
 
             <div className="mb-8">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              <h2 className="text-fluid-2xl font-bold text-gray-900 mb-4">
                 {t('jobs.description.title')}
               </h2>
               <div
@@ -158,7 +157,7 @@ export default function JobDetailPage() {
 
             {job.requirements && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                <h2 className="text-fluid-2xl font-bold text-gray-900 mb-4">
                   {t('jobs.requirements.title')}
                 </h2>
                 <div
@@ -170,7 +169,7 @@ export default function JobDetailPage() {
 
             {job.skills && job.skills.length > 0 && (
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                <h2 className="text-fluid-2xl font-bold text-gray-900 mb-4">
                   {t('jobs.skills.title')}
                 </h2>
                 <div className="flex flex-wrap gap-3">
@@ -187,8 +186,8 @@ export default function JobDetailPage() {
               </div>
             )}
 
-            <div className="bg-gray-50 rounded-xl p-8 border-2 border-dashed border-gray-300">
-              <h3 className="text-xl font-bold text-gray-900 mb-4">
+            <div className="bg-gray-50 rounded-xl p-5 sm:p-8 border-2 border-dashed border-gray-300">
+              <h3 className="text-fluid-xl font-bold text-gray-900 mb-4">
                 {t('jobs.apply.title')}
               </h3>
               <p className="text-gray-700 mb-6">
@@ -254,12 +253,12 @@ function ApplicationModal({
 
   if (success) {
     return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl p-8 max-w-md w-full text-center">
+      <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4" role="dialog" aria-modal="true">
+        <div className="bg-white rounded-2xl p-6 sm:p-8 max-w-md w-full text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="text-green-600" size={32} />
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+          <h3 className="text-fluid-2xl font-bold text-gray-900 mb-2">
             {t('jobs.apply.success.title')}
           </h3>
           <p className="text-gray-600">{t('jobs.apply.success.message')}</p>
@@ -269,15 +268,22 @@ function ApplicationModal({
   }
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-2xl p-8 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-2xl font-bold text-gray-900">
+    <div
+      className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('jobs.apply.modal.title')}
+    >
+      <div className="bg-white rounded-t-2xl sm:rounded-2xl p-5 sm:p-8 max-w-2xl w-full max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto scroll-contain">
+        <div className="flex items-center justify-between gap-3 mb-6">
+          <h3 className="text-fluid-2xl font-bold text-gray-900 min-w-0">
             {t('jobs.apply.modal.title')}
           </h3>
           <button
+            type="button"
             onClick={onClose}
-            className="text-gray-400 hover:text-gray-600 transition-colors"
+            className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors p-1"
+            aria-label="Fermer"
           >
             <span className="text-2xl">×</span>
           </button>
@@ -293,8 +299,8 @@ function ApplicationModal({
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleSubmit} className="space-y-5 sm:space-y-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
             <div>
               <label className="block text-sm font-semibold text-gray-700 mb-2">
                 {t('jobs.apply.form.firstName')} *

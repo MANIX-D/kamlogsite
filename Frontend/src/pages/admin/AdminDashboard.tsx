@@ -117,30 +117,30 @@ export default function AdminDashboard() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-slate-900">Dashboard</h1>
-        <p className="text-slate-600 mt-2">
+      <div className="mb-6 sm:mb-8">
+        <h1 className="text-fluid-3xl font-bold text-slate-900">Dashboard</h1>
+        <p className="text-slate-600 mt-2 text-fluid-base">
           Vue d'ensemble de votre administration
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {statCards.map((card) => {
           const Icon = card.icon;
           return (
             <div
               key={card.title}
-              className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 hover:shadow-md transition-shadow"
+              className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 hover:shadow-md transition-shadow"
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className={`${card.bgColor} p-3 rounded-lg`}>
+              <div className="flex items-start justify-between mb-3 sm:mb-4">
+                <div className={`${card.bgColor} p-2.5 sm:p-3 rounded-lg`}>
                   <Icon className={`${card.color.replace('bg-', 'text-')}`} size={24} />
                 </div>
               </div>
               <h3 className="text-slate-600 text-sm font-medium mb-1">
                 {card.title}
               </h3>
-              <p className="text-3xl font-bold text-slate-900">{card.value}</p>
+              <p className="text-fluid-3xl font-bold text-slate-900">{card.value}</p>
             </div>
           );
         })}
@@ -154,57 +154,58 @@ export default function AdminDashboard() {
             Statistiques des visites
           </h2>
 
-          {/* Visit counters */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="bg-indigo-50 p-2 rounded-lg">
+          {/* Visit counters — les libellés passent sous l'icône sur mobile
+              pour éviter la troncature dans une colonne de ~140px */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-5">
+              <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3 mb-2">
+                <div className="bg-indigo-50 p-2 rounded-lg w-fit">
                   <Eye className="text-indigo-600" size={20} />
                 </div>
-                <span className="text-sm text-slate-500 font-medium">Aujourd'hui</span>
+                <span className="text-xs sm:text-sm text-slate-500 font-medium">Aujourd'hui</span>
               </div>
-              <p className="text-2xl font-bold text-slate-900">{visitStats.today}</p>
+              <p className="text-fluid-2xl font-bold text-slate-900">{visitStats.today}</p>
               <p className="text-xs text-slate-400 mt-1">{visitStats.today_unique} visiteurs uniques</p>
             </div>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="bg-blue-50 p-2 rounded-lg">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-5">
+              <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3 mb-2">
+                <div className="bg-blue-50 p-2 rounded-lg w-fit">
                   <TrendingUp className="text-blue-600" size={20} />
                 </div>
-                <span className="text-sm text-slate-500 font-medium">Cette semaine</span>
+                <span className="text-xs sm:text-sm text-slate-500 font-medium">Cette semaine</span>
               </div>
-              <p className="text-2xl font-bold text-slate-900">{visitStats.this_week}</p>
+              <p className="text-fluid-2xl font-bold text-slate-900">{visitStats.this_week}</p>
               <p className="text-xs text-slate-400 mt-1">{visitStats.week_unique} visiteurs uniques</p>
             </div>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="bg-emerald-50 p-2 rounded-lg">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-5">
+              <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3 mb-2">
+                <div className="bg-emerald-50 p-2 rounded-lg w-fit">
                   <Globe className="text-emerald-600" size={20} />
                 </div>
-                <span className="text-sm text-slate-500 font-medium">Ce mois</span>
+                <span className="text-xs sm:text-sm text-slate-500 font-medium">Ce mois</span>
               </div>
-              <p className="text-2xl font-bold text-slate-900">{visitStats.this_month}</p>
+              <p className="text-fluid-2xl font-bold text-slate-900">{visitStats.this_month}</p>
               <p className="text-xs text-slate-400 mt-1">{visitStats.month_unique} visiteurs uniques</p>
             </div>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-              <div className="flex items-center gap-3 mb-2">
-                <div className="bg-purple-50 p-2 rounded-lg">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-5">
+              <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-3 mb-2">
+                <div className="bg-purple-50 p-2 rounded-lg w-fit">
                   <BarChart3 className="text-purple-600" size={20} />
                 </div>
-                <span className="text-sm text-slate-500 font-medium">Total</span>
+                <span className="text-xs sm:text-sm text-slate-500 font-medium">Total</span>
               </div>
-              <p className="text-2xl font-bold text-slate-900">{visitStats.total.toLocaleString('fr-FR')}</p>
+              <p className="text-fluid-2xl font-bold text-slate-900">{visitStats.total.toLocaleString('fr-FR')}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             {/* Bar chart - 30 derniers jours */}
-            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 min-w-0">
               <h3 className="text-sm font-semibold text-slate-700 mb-4">Visites des 30 derniers jours</h3>
               {visitStats.daily_chart.length === 0 ? (
                 <p className="text-slate-400 text-sm py-8 text-center">Aucune donnée disponible</p>
               ) : (
-                <div className="flex items-end gap-[3px] h-40">
+                <div className="flex items-end gap-px sm:gap-[3px] h-32 sm:h-40">
                   {(() => {
                     const maxVisits = Math.max(...visitStats.daily_chart.map(d => d.visits), 1);
                     return visitStats.daily_chart.map((day, i) => {
@@ -221,7 +222,9 @@ export default function AdminDashboard() {
                             className="w-full bg-indigo-500 hover:bg-indigo-600 rounded-t transition-colors cursor-pointer"
                             style={{ height: `${height}%` }}
                           />
-                          <div className="hidden group-hover:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10">
+                          {/* Infobulle au survol : inutile sur écran tactile,
+                              où l'attribut title porte déjà l'information */}
+                          <div className="hidden md:group-hover:block absolute bottom-full left-1/2 -translate-x-1/2 mb-2 bg-slate-800 text-white text-[10px] px-2 py-1 rounded whitespace-nowrap z-10">
                             {label} — {day.visits} visites
                           </div>
                         </div>
@@ -233,7 +236,7 @@ export default function AdminDashboard() {
             </div>
 
             {/* Top pages */}
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 min-w-0">
               <h3 className="text-sm font-semibold text-slate-700 mb-4">Pages les plus visitées</h3>
               {visitStats.top_pages.length === 0 ? (
                 <p className="text-slate-400 text-sm py-4 text-center">Aucune donnée</p>
@@ -265,14 +268,14 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mt-8">
         {/* Recent Messages */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-slate-900">
+        <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 min-w-0">
+          <div className="flex items-center justify-between gap-3 mb-4">
+            <h2 className="text-fluid-xl font-bold text-slate-900 min-w-0">
               Messages récents
             </h2>
-            <Link to="/admin/messages" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+            <Link to="/admin/messages" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex-shrink-0">
               Voir tout →
             </Link>
           </div>
@@ -308,13 +311,13 @@ export default function AdminDashboard() {
         </div>
 
         {/* Recent News + Quick Actions */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-slate-900">
+        <div className="space-y-4 sm:space-y-6 min-w-0">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6 min-w-0">
+            <div className="flex items-center justify-between gap-3 mb-4">
+              <h2 className="text-fluid-xl font-bold text-slate-900 min-w-0">
                 Dernières actualités
               </h2>
-              <Link to="/admin/actualites" className="text-sm text-blue-600 hover:text-blue-700 font-medium">
+              <Link to="/admin/actualites" className="text-sm text-blue-600 hover:text-blue-700 font-medium flex-shrink-0">
                 Voir tout →
               </Link>
             </div>
@@ -329,7 +332,7 @@ export default function AdminDashboard() {
                       <p className="text-sm font-medium text-slate-900 truncate">{item.titre_fr}</p>
                       <p className="text-xs text-slate-400">{formatDate(item.date_publication || item.created_at)}</p>
                     </div>
-                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium flex-shrink-0 ${
                       item.type === 'article' ? 'bg-blue-100 text-blue-700'
                       : item.type === 'annonce' ? 'bg-orange-100 text-orange-700'
                       : 'bg-green-100 text-green-700'
@@ -342,8 +345,8 @@ export default function AdminDashboard() {
             )}
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-6">
+            <h2 className="text-fluid-xl font-bold text-slate-900 mb-4">
               Actions rapides
             </h2>
             <div className="space-y-3">

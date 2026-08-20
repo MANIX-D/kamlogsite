@@ -28,12 +28,12 @@ export default function Footer() {
 
   return (
     <footer className="w-full">
-      <div className="bg-gradient-to-b from-gray-50 via-white to-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-center">
+      <div className="bg-gradient-to-b from-gray-50 via-white to-gray-50 py-10 sm:py-16">
+        <div className="container-page flex justify-center">
           <img
             src="/images/New_Logo_KAMLOG_sans_bg_(1).png"
             alt="KAMLOG - Logistique Intégrée"
-            className="h-28 object-contain hover:scale-105 transition-transform duration-500"
+            className="h-16 xs:h-20 sm:h-28 w-auto object-contain hover:scale-105 transition-transform duration-500"
           />
         </div>
       </div>
@@ -44,10 +44,10 @@ export default function Footer() {
           backgroundImage: `linear-gradient(rgba(20, 40, 90, 0.92), rgba(15, 30, 70, 0.95)), url('/images/hero-kamlog-port.webp')`,
         }}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 mb-16">
+        <div className="container-page py-10 sm:py-16">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12 mb-10 sm:mb-16">
             <div>
-              <h3 className="text-xl font-bold text-white mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
+              <h3 className="text-fluid-lg font-bold text-white mb-4 sm:mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
                 {t('footer.quick.links')}
               </h3>
               <nav className="space-y-3 mt-6">
@@ -104,7 +104,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-white mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
+              <h3 className="text-fluid-lg font-bold text-white mb-4 sm:mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
                 {t('footer.follow')}
               </h3>
               <div className="space-y-4 mt-6">
@@ -136,7 +136,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-white mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
+              <h3 className="text-fluid-lg font-bold text-white mb-4 sm:mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
                 Contact
               </h3>
               <div className="space-y-4 mt-6">
@@ -162,7 +162,7 @@ export default function Footer() {
             </div>
 
             <div>
-              <h3 className="text-xl font-bold text-white mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
+              <h3 className="text-fluid-lg font-bold text-white mb-4 sm:mb-6 uppercase tracking-wider border-b-2 border-red-500 pb-2 inline-block">
                 {t('footer.newsletter.title')}
               </h3>
               <p className="text-gray-200 mb-5 text-sm leading-relaxed mt-6">
@@ -197,7 +197,7 @@ export default function Footer() {
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-8">
+          <div className="border-t border-white/10 pt-6 sm:pt-8">
             <div className="text-center space-y-2">
               <p className="text-gray-400 text-sm font-medium tracking-wide">
                 © 2026 KAMLOG. {t('footer.rights')}

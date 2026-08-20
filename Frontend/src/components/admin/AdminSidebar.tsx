@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
   LayoutDashboard,
@@ -14,6 +15,7 @@ import {
   Briefcase,
 } from 'lucide-react';
 import { authService } from '../../services/auth';
+import { useOverlay } from '../../hooks/useOverlay';
 
 interface AdminSidebarProps {
   isOpen: boolean;
@@ -23,6 +25,28 @@ interface AdminSidebarProps {
 export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
   const user = authService.getUser();
   const isSuperAdmin = user?.role === 'super_admin';
+
+  // Verrou du scroll + Échap uniquement quand la sidebar est en mode tiroir.
+  // Au-delà de 1024px elle est permanente et ne doit rien verrouiller.
+  // Suivi réactif : sans écouteur, une rotation ou un redimensionnement
+  // laisserait le scroll verrouillé alors que la sidebar devient permanente.
+  const [isDrawer, setIsDrawer] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia('(max-width: 1023px)');
+    const sync = () => setIsDrawer(query.matches);
+
+    sync();
+    query.addEventListener('change', sync);
+    return () => query.removeEventListener('change', sync);
+  }, []);
+
+  useOverlay(isOpen && isDrawer, onClose);
+
+  // Referme le tiroir quand on repasse en affichage permanent
+  useEffect(() => {
+    if (!isDrawer && isOpen) onClose();
+  }, [isDrawer, isOpen, onClose]);
 
   const navItems = [
     { to: '/admin/dashboard', icon: LayoutDashboard, label: 'Dashboard' },
@@ -51,19 +75,24 @@ export default function AdminSidebar({ isOpen, onClose }: AdminSidebarProps) {
           isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}
         onClick={onClose}
+        aria-hidden="true"
       />
 
+      {/* h-dvh plutôt que h-full : sur iOS, l'ouverture du clavier virtuel
+          fausse la hauteur d'un élément fixe en 100% */}
       <aside
-        className={`fixed top-0 left-0 h-full w-64 bg-slate-900 text-white z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
+        className={`fixed top-0 left-0 h-dvh w-64 max-w-[85vw] bg-slate-900 text-white z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0`}
+        aria-label="Navigation administration"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-slate-800 flex-shrink-0">
-          <h2 className="text-xl font-bold">Admin Panel</h2>
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-slate-800 flex-shrink-0">
+          <h2 className="text-lg sm:text-xl font-bold">Admin Panel</h2>
           <button
             onClick={onClose}
-            className="lg:hidden text-slate-400 hover:text-white"
+            className="lg:hidden text-slate-400 hover:text-white p-1"
+            aria-label="Fermer le menu"
           >
             <X size={24} />
           </button>

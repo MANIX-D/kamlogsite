@@ -199,22 +199,23 @@ export default function AdminCandidatures() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
+      <div className="mb-6">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900">Candidatures</h1>
-          <p className="text-slate-600 mt-2">
+          <h1 className="text-fluid-3xl font-bold text-slate-900">Candidatures</h1>
+          <p className="text-slate-600 mt-2 text-fluid-base">
             Gérer les candidatures aux offres d'emploi
           </p>
         </div>
       </div>
 
-      <div className="mb-6 flex items-center gap-4">
-        <div className="flex items-center gap-2">
-          <Filter size={20} className="text-gray-500" />
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+        <div className="flex items-center gap-2 min-w-0">
+          <Filter size={20} className="text-gray-500 flex-shrink-0" />
           <select
             value={filterStatus}
             onChange={(e) => setFilterStatus(e.target.value)}
-            className="px-4 py-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            className="w-full sm:w-auto px-4 py-2.5 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            aria-label="Filtrer par statut"
           >
             <option value="">Tous les statuts</option>
             <option value="en_attente">En attente</option>
@@ -236,24 +237,30 @@ export default function AdminCandidatures() {
       />
 
       {showDetailsModal && selectedApplication && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Détails de la candidature"
+        >
+          <div className="bg-white rounded-t-2xl sm:rounded-2xl shadow-2xl max-w-3xl w-full max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto scroll-contain">
+            <div className="sticky top-0 z-10 bg-white p-4 sm:p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between gap-3">
+                <h2 className="text-fluid-2xl font-bold text-gray-900 min-w-0">
                   Détails de la candidature
                 </h2>
                 <button
                   onClick={() => setShowDetailsModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="flex-shrink-0 text-gray-400 hover:text-gray-600 p-1"
+                  aria-label="Fermer"
                 >
                   ✕
                 </button>
               </div>
             </div>
 
-            <div className="p-6 space-y-6">
-              <div className="grid grid-cols-2 gap-6">
+            <div className="p-4 sm:p-6 space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Prénom
@@ -266,11 +273,11 @@ export default function AdminCandidatures() {
                   </label>
                   <p className="text-gray-900">{selectedApplication.last_name}</p>
                 </div>
-                <div>
+                <div className="min-w-0">
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Email
                   </label>
-                  <p className="text-gray-900">{selectedApplication.email}</p>
+                  <p className="text-gray-900 break-all">{selectedApplication.email}</p>
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -294,7 +301,7 @@ export default function AdminCandidatures() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Lettre de motivation
                   </label>
-                  <p className="text-gray-900 whitespace-pre-wrap break-words overflow-x-auto bg-gray-50 p-4 rounded-lg leading-7 max-h-72 overflow-y-auto">
+                  <p className="text-gray-900 whitespace-pre-wrap break-words bg-gray-50 p-3 sm:p-4 rounded-lg leading-7 max-h-72 overflow-y-auto scroll-contain">
                     {selectedApplication.cover_letter}
                   </p>
                 </div>
@@ -383,20 +390,28 @@ export default function AdminCandidatures() {
       )}
 
       {showPreviewModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-5xl h-[90vh] flex flex-col overflow-hidden">
-            <div className="p-5 border-b border-gray-200 flex items-center justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-bold text-gray-900">Prévisualisation du CV</h2>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-0 sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Prévisualisation du CV"
+        >
+          {/* Presque plein écran sur mobile : un CV a besoin de place, et
+              90vh est faussé par la barre d'URL sur iOS */}
+          <div className="bg-white sm:rounded-2xl shadow-2xl w-full max-w-5xl h-dvh sm:h-[90dvh] flex flex-col overflow-hidden">
+            <div className="p-4 sm:p-5 border-b border-gray-200 flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <h2 className="text-fluid-xl font-bold text-gray-900">Prévisualisation du CV</h2>
                 <p className="text-sm text-gray-500 mt-1">
                   Consultez le CV directement dans le tableau de bord.
                 </p>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-3 flex-shrink-0">
                 <button
                   type="button"
                   onClick={closePreviewModal}
-                  className="text-gray-400 hover:text-gray-600 text-xl"
+                  className="text-gray-400 hover:text-gray-600 text-xl p-1"
+                  aria-label="Fermer"
                 >
                   ✕
                 </button>

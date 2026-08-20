@@ -194,30 +194,35 @@ export default function AdminUsers() {
 
       {/* Invitations en attente — super_admin uniquement */}
       {isSuperAdmin && pendingInvitations.length > 0 && (
-        <div className="mb-8 bg-amber-50 border border-amber-200 rounded-xl p-6">
+        <div className="mb-8 bg-amber-50 border border-amber-200 rounded-xl p-4 sm:p-6">
           <h2 className="text-lg font-bold text-amber-900 flex items-center gap-2 mb-4">
-            <Mail className="text-amber-600" size={20} />
+            <Mail className="text-amber-600 flex-shrink-0" size={20} />
             Invitations en attente ({pendingInvitations.length})
           </h2>
           <div className="space-y-3">
             {pendingInvitations.map(inv => (
-              <div key={inv.id} className="flex items-center justify-between bg-white rounded-lg px-4 py-3 border border-amber-100">
-                <div className="flex items-center gap-4">
-                  <Mail className="text-amber-500" size={18} />
-                  <div>
-                    <p className="font-medium text-slate-900">{inv.email}</p>
-                    <p className="text-xs text-slate-500 flex items-center gap-1">
-                      <Clock size={12} />
-                      Expire le {new Date(inv.expires_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
-                      {inv.invited_by && <span> • Par {inv.invited_by.name}</span>}
+              <div key={inv.id} className="flex items-start justify-between gap-3 bg-white rounded-lg px-3 sm:px-4 py-3 border border-amber-100">
+                <div className="flex items-start gap-3 sm:gap-4 min-w-0">
+                  <Mail className="text-amber-500 flex-shrink-0 mt-0.5" size={18} />
+                  <div className="min-w-0 space-y-1">
+                    <p className="font-medium text-slate-900 break-all">{inv.email}</p>
+                    <p className="text-xs text-slate-500 flex items-start gap-1">
+                      <Clock size={12} className="flex-shrink-0 mt-0.5" />
+                      <span>
+                        Expire le {new Date(inv.expires_at).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                        {inv.invited_by && <span> • Par {inv.invited_by.name}</span>}
+                      </span>
                     </p>
+                    <div className="pt-1">
+                      <RoleBadge role={inv.role} />
+                    </div>
                   </div>
-                  <RoleBadge role={inv.role} />
                 </div>
                 <button
                   onClick={() => handleRevokeInvitation(inv.id)}
-                  className="text-red-600 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors"
+                  className="flex-shrink-0 text-red-600 hover:text-red-700 hover:bg-red-50 p-2 rounded-lg transition-colors"
                   title="Révoquer l'invitation"
+                  aria-label={`Révoquer l'invitation de ${inv.email}`}
                 >
                   <X size={18} />
                 </button>
@@ -229,7 +234,73 @@ export default function AdminUsers() {
 
       {/* Users Table */}
       <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
-        <div className="overflow-x-auto">
+        {/* Vue cartes sur mobile */}
+        <ul className="divide-y divide-slate-100 md:hidden">
+          {users.map(user => {
+            const isSelf = user.id === currentUser?.id;
+
+            return (
+              <li key={user.id} className="p-4 space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center text-white font-bold text-sm flex-shrink-0">
+                    {user.name.charAt(0).toUpperCase()}
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <p className="font-medium text-slate-900 flex items-center gap-2 flex-wrap">
+                      <span className="break-words">{user.name}</span>
+                      {isSelf && (
+                        <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-1.5 py-0.5 rounded">VOUS</span>
+                      )}
+                    </p>
+                    <p className="text-xs text-slate-500 break-all">{user.email}</p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-2">
+                  <RoleBadge role={user.role} />
+                  <StatusBadge active={user.is_active} />
+                </div>
+
+                <p className="text-xs text-slate-500">
+                  Dernière connexion :{' '}
+                  {user.last_login_at
+                    ? new Date(user.last_login_at).toLocaleDateString('fr-FR', {
+                        day: 'numeric', month: 'short', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit',
+                      })
+                    : 'Jamais'}
+                </p>
+
+                {isSuperAdmin && !isSelf && (
+                  <div className="flex items-center justify-end gap-1 pt-2 border-t border-slate-100">
+                    <button
+                      onClick={() => handleToggleActive(user.id)}
+                      className={`p-2 rounded-lg transition-colors ${
+                        user.is_active
+                          ? 'text-amber-600 hover:bg-amber-50'
+                          : 'text-green-600 hover:bg-green-50'
+                      }`}
+                      title={user.is_active ? 'Désactiver' : 'Activer'}
+                      aria-label={user.is_active ? 'Désactiver' : 'Activer'}
+                    >
+                      <Power size={18} />
+                    </button>
+                    <button
+                      onClick={() => setUserToDelete(user)}
+                      className="p-2 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors"
+                      title="Supprimer"
+                      aria-label="Supprimer"
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+
+        <div className="hidden md:block overflow-x-auto">
           <table className="w-full">
             <thead className="bg-slate-50 border-b border-slate-200">
               <tr>

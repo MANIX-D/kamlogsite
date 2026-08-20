@@ -106,22 +106,22 @@ export default function InfrastructuresPage() {
   return (
     <div className="min-h-screen bg-white">
       <section
-        className="relative w-full h-screen bg-cover bg-center pt-20 overflow-hidden flex items-center justify-center"
+        className="relative w-full min-h-dvh bg-cover bg-center pt-16 sm:pt-20 pb-12 overflow-hidden flex items-center justify-center"
         style={{
           backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/infra-hero.webp')`,
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+        <div className="container-page text-center relative z-10">
           <h1
-            className={`text-3xl sm:text-5xl lg:text-7xl font-extrabold text-white mb-8 tracking-tight leading-[1.1] transition-all duration-1000 ${
+            className={`text-fluid-5xl font-extrabold text-white mb-6 sm:mb-8 tracking-tight leading-[1.1] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
             {t('infrastructuresPage.title')}
           </h1>
           <p
-            className={`text-xl sm:text-2xl lg:text-3xl text-gray-100 font-light max-w-4xl mx-auto transition-all duration-1000 delay-300 ${
+            className={`text-fluid-xl text-gray-100 font-light max-w-4xl mx-auto transition-all duration-1000 delay-300 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
             }`}
           >
@@ -130,20 +130,20 @@ export default function InfrastructuresPage() {
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-24">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 mb-12 sm:mb-24">
+      <div className="container-page py-12 sm:py-24">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-8 mb-12 sm:mb-24">
           {stats.map((stat, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 text-center transform hover:scale-105 transition-all duration-500 shadow-lg hover:shadow-2xl ring-1 ring-gray-100 hover:ring-[#1F3878]/20"
+              className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-4 sm:p-8 text-center transform hover:scale-105 transition-all duration-500 shadow-lg hover:shadow-2xl ring-1 ring-gray-100 hover:ring-brand/20"
             >
               <div className="flex justify-center mb-4">
                 <div className="bg-[#1F3878] rounded-full p-3 sm:p-4">
                   <stat.icon className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
                 </div>
               </div>
-              <div className="text-2xl sm:text-4xl font-extrabold text-[#1F3878] mb-2 tracking-tight">{stat.value}</div>
-              <div className="text-base sm:text-xl font-semibold text-gray-700 mb-2">{stat.label}</div>
+              <div className="text-fluid-3xl font-extrabold text-brand mb-2 tracking-tight">{stat.value}</div>
+              <div className="text-fluid-lg font-semibold text-gray-700 mb-2">{stat.label}</div>
               <div className="text-sm text-gray-600">{stat.description}</div>
             </div>
           ))}
@@ -153,7 +153,7 @@ export default function InfrastructuresPage() {
           <div className="inline-block mb-4 px-6 py-2 bg-red-600 rounded-full">
             <span className="text-white font-semibold text-sm tracking-wider">{t('infrastructuresPage.tag')}</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-6 tracking-tight">
+          <h2 className="text-fluid-4xl font-extrabold text-brand mb-6 tracking-tight">
             {t('infrastructuresPage.heading')}
           </h2>
           <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto mb-8"></div>
@@ -177,7 +177,7 @@ export default function InfrastructuresPage() {
                       <facility.icon className="w-10 h-10 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-[#1F3878]">{t(facility.titleKey)}</h3>
+                      <h3 className="text-fluid-2xl font-bold text-brand">{t(facility.titleKey)}</h3>
                       <p className="text-gray-600 flex items-center mt-1">
                         <svg className="w-4 h-4 mr-2 text-red-600" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd"></path>
@@ -187,29 +187,29 @@ export default function InfrastructuresPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-4 mb-8">
+                  <div className="grid grid-cols-1 xs:grid-cols-2 gap-3 sm:gap-4 mb-8">
                     {facility.surface && (
                       <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-4 border-l-4 border-[#1F3878]">
                         <div className="text-sm text-gray-600 mb-1">{t('infrastructuresPage.labels.surface')}</div>
-                        <div className="text-2xl font-bold text-[#1F3878]">{facility.surface}</div>
+                        <div className="text-fluid-2xl font-bold text-brand">{facility.surface}</div>
                       </div>
                     )}
                     {facility.capacity && (
                       <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 border-l-4 border-red-600">
                         <div className="text-sm text-gray-600 mb-1">{t('infrastructuresPage.labels.capacity')}</div>
-                        <div className="text-2xl font-bold text-[#1F3878]">{facility.capacity}</div>
+                        <div className="text-fluid-2xl font-bold text-brand">{facility.capacity}</div>
                       </div>
                     )}
                     {facility.height && (
                       <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 border-l-4 border-red-600">
                         <div className="text-sm text-gray-600 mb-1">{t('infrastructuresPage.labels.height')}</div>
-                        <div className="text-2xl font-bold text-[#1F3878]">{facility.height}</div>
+                        <div className="text-fluid-2xl font-bold text-brand">{facility.height}</div>
                       </div>
                     )}
                     {facility.type && (
                       <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 border-l-4 border-red-600">
                         <div className="text-sm text-gray-600 mb-1">{t('infrastructuresPage.labels.type')}</div>
-                        <div className="text-xl font-bold text-[#1F3878]">{facility.type}</div>
+                        <div className="text-fluid-xl font-bold text-brand">{facility.type}</div>
                       </div>
                     )}
                   </div>
@@ -235,7 +235,7 @@ export default function InfrastructuresPage() {
                   </div>
                 </div>
 
-                <div className={`relative h-64 sm:h-80 lg:h-full lg:min-h-[500px] ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
+                <div className={`relative h-56 xs:h-64 sm:h-80 lg:h-full lg:min-h-[clamp(24rem,32vw,31rem)] ${index % 2 === 1 ? 'lg:col-start-1 lg:row-start-1' : ''}`}>
                   <img
                     src={facility.image}
                     alt={t(facility.titleKey)}
@@ -251,11 +251,11 @@ export default function InfrastructuresPage() {
 
         <div className="mt-12 sm:mt-24 bg-gradient-to-br from-[#1F3878] via-[#1a2f6a] to-[#152555] rounded-2xl sm:rounded-3xl shadow-2xl ring-1 ring-white/10 p-6 sm:p-10 lg:p-16 text-white text-center transform hover:scale-[1.01] transition-all duration-500">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold mb-6 tracking-tight">
+            <h2 className="text-fluid-4xl font-extrabold mb-6 tracking-tight">
               {t('infrastructuresPage.cta.title')}
             </h2>
             <div className="w-32 h-1.5 shimmer-line rounded-full mx-auto mb-8"></div>
-            <p className="text-lg sm:text-xl lg:text-2xl text-blue-100 mb-10 leading-relaxed">
+            <p className="text-fluid-xl text-blue-100 mb-10 leading-relaxed">
               {t('infrastructuresPage.cta.description')}
             </p>
             <button

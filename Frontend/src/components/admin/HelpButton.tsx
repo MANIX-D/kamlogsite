@@ -269,31 +269,39 @@ export default function HelpButton() {
     <>
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all hover:scale-110 z-50 group"
+        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 bg-blue-600 hover:bg-blue-700 text-white p-3.5 sm:p-4 rounded-full shadow-lg transition-all hover:scale-110 z-50 group"
         title="Aide (Ctrl/Cmd + ?)"
+        aria-label="Ouvrir le centre d'aide"
       >
         <HelpCircle size={24} />
         <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center group-hover:scale-110 transition-transform">?</span>
       </button>
 
       {isOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
-            <div className="p-6 border-b border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <div className="flex items-center gap-3">
-                  <HelpCircle className="text-blue-600" size={28} />
-                  <h2 className="text-2xl font-bold text-gray-900">Centre d'aide</h2>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Centre d'aide"
+        >
+          <div className="bg-white rounded-t-2xl sm:rounded-lg shadow-xl max-w-4xl w-full max-h-[92dvh] sm:max-h-[90dvh] overflow-hidden flex flex-col">
+            <div className="p-4 sm:p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between gap-3 mb-4">
+                <div className="flex items-center gap-3 min-w-0">
+                  <HelpCircle className="text-blue-600 flex-shrink-0" size={28} />
+                  <h2 className="text-fluid-2xl font-bold text-gray-900">Centre d'aide</h2>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="text-gray-400 hover:text-gray-600 transition-colors"
+                  className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors p-1"
+                  aria-label="Fermer"
                 >
                   <X size={24} />
                 </button>
               </div>
 
-              <div className="flex gap-2 mb-4">
+              {/* Onglets repliables : trois onglets côte à côte débordaient sur 320px */}
+              <div className="flex flex-wrap gap-2 mb-4">
                 <button
                   onClick={() => setActiveTab('guide')}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${

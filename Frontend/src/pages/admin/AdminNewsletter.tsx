@@ -62,17 +62,17 @@ export default function AdminNewsletter() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900">Newsletter</h1>
-          <p className="text-slate-600 mt-2">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-fluid-3xl font-bold text-slate-900">Newsletter</h1>
+          <p className="text-slate-600 mt-2 text-fluid-base">
             Abonnés à la newsletter ({subscribers.length})
           </p>
         </div>
         {subscribers.length > 0 && (
           <button
             onClick={handleExport}
-            className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
+            className="w-full sm:w-auto flex-shrink-0 px-4 py-2.5 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors"
           >
             Exporter les emails
           </button>
@@ -86,51 +86,83 @@ export default function AdminNewsletter() {
             <p className="text-slate-500">Aucun abonné</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-slate-50 border-b border-slate-200">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
-                    Date d'inscription
-                  </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-200">
-                {subscribers.map((subscriber) => (
-                  <tr
-                    key={subscriber.id}
-                    className="hover:bg-slate-50 transition-colors"
-                  >
-                    <td className="px-6 py-4 text-sm text-slate-900">
+          <>
+            {/* Vue cartes sur mobile : une adresse e-mail longue peut se
+                replier au lieu d'imposer un scroll horizontal */}
+            <ul className="divide-y divide-slate-200 md:hidden">
+              {subscribers.map((subscriber) => (
+                <li key={subscriber.id} className="p-4 flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="text-sm font-medium text-slate-900 break-all">
                       {subscriber.email}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-slate-600">
+                    </p>
+                    <p className="text-xs text-slate-500 mt-1">
                       {new Date(subscriber.created_at).toLocaleDateString('fr-FR', {
                         day: '2-digit',
                         month: 'long',
                         year: 'numeric',
                       })}
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button
-                        onClick={() => handleDelete(subscriber)}
-                        className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                        title="Supprimer"
-                      >
-                        <Trash2 size={18} />
-                      </button>
-                    </td>
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => handleDelete(subscriber)}
+                    className="flex-shrink-0 p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    title="Supprimer"
+                    aria-label={`Supprimer ${subscriber.email}`}
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </li>
+              ))}
+            </ul>
+
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-slate-50 border-b border-slate-200">
+                  <tr>
+                    <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
+                      Email
+                    </th>
+                    <th className="px-4 lg:px-6 py-3 text-left text-xs font-medium text-slate-700 uppercase tracking-wider">
+                      Date d'inscription
+                    </th>
+                    <th className="px-4 lg:px-6 py-3 text-right text-xs font-medium text-slate-700 uppercase tracking-wider">
+                      Actions
+                    </th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  {subscribers.map((subscriber) => (
+                    <tr
+                      key={subscriber.id}
+                      className="hover:bg-slate-50 transition-colors"
+                    >
+                      <td className="px-4 lg:px-6 py-4 text-sm text-slate-900 break-all">
+                        {subscriber.email}
+                      </td>
+                      <td className="px-4 lg:px-6 py-4 text-sm text-slate-600">
+                        {new Date(subscriber.created_at).toLocaleDateString('fr-FR', {
+                          day: '2-digit',
+                          month: 'long',
+                          year: 'numeric',
+                        })}
+                      </td>
+                      <td className="px-4 lg:px-6 py-4 text-right">
+                        <button
+                          onClick={() => handleDelete(subscriber)}
+                          className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                          title="Supprimer"
+                          aria-label={`Supprimer ${subscriber.email}`}
+                        >
+                          <Trash2 size={18} />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
     </div>

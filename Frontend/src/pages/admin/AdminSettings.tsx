@@ -310,7 +310,7 @@ export default function AdminSettings() {
     : 'bg-blue-100 text-blue-700 border-blue-200';
 
   return (
-    <div className="min-h-screen bg-slate-50 p-6">
+    <div className="min-h-screen bg-slate-50 p-4 sm:p-6">
       <div className="max-w-2xl mx-auto">
 
         {/* Header */}
@@ -528,31 +528,31 @@ export default function AdminSettings() {
         )}
 
         {activeTab === 'history' && isSuperAdmin && (
-          <div className="bg-white rounded-2xl border border-slate-200 p-6">
-            <div className="flex items-center justify-between mb-6 gap-4">
-              <div>
+          <div className="bg-white rounded-2xl border border-slate-200 p-4 sm:p-6">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6 gap-4">
+              <div className="min-w-0">
                 <h2 className="text-lg font-semibold text-slate-900">Historique des actions</h2>
                 <p className="text-sm text-slate-500 mt-1">Actions effectuées sur le dashboard par les administrateurs.</p>
               </div>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="grid grid-cols-2 sm:flex sm:flex-wrap sm:items-center gap-2">
                 <button
                   type="button"
                   onClick={handleExportCsv}
-                  className="px-4 py-2 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
+                  className="px-4 py-2.5 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
                 >
                   Export CSV
                 </button>
                 <button
                   type="button"
                   onClick={handleExportPdf}
-                  className="px-4 py-2 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
+                  className="px-4 py-2.5 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
                 >
                   Export PDF
                 </button>
                 <button
                   type="button"
                   onClick={fetchActionLogs}
-                  className="px-4 py-2 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
+                  className="col-span-2 sm:col-auto px-4 py-2.5 text-sm font-medium rounded-xl border border-slate-300 hover:bg-slate-50 transition-colors"
                 >
                   Actualiser
                 </button>
@@ -597,45 +597,72 @@ export default function AdminSettings() {
                 Aucun historique disponible pour le moment.
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="min-w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-slate-200 text-left text-slate-500">
-                      <th className="py-3 pr-4 font-medium">Action</th>
-                      <th className="py-3 pr-4 font-medium">Utilisateur</th>
-                      <th className="py-3 pr-4 font-medium">Heure</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {actionLogs.map((log) => (
-                      <tr key={log.id} className="border-b border-slate-100 align-top">
-                        <td className="py-4 pr-4">
-                          <div className="font-medium text-slate-900">{log.action}</div>
-                          <div className="text-xs text-slate-500 mt-1">{log.description || log.route}</div>
-                        </td>
-                        <td className="py-4 pr-4">
-                          <div className="font-medium text-slate-900">{log.user?.name || 'Utilisateur inconnu'}</div>
-                          <div className="text-xs text-slate-500 mt-1">{log.user?.email || '—'}</div>
-                        </td>
-                        <td className="py-4 pr-4 whitespace-nowrap text-slate-700">
-                          {new Date(log.created_at).toLocaleString('fr-FR', {
-                            year: 'numeric',
-                            month: '2-digit',
-                            day: '2-digit',
-                            hour: '2-digit',
-                            minute: '2-digit',
-                          })}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
+              <div>
+                {/* Vue cartes sur mobile */}
+                <ul className="divide-y divide-slate-100 md:hidden">
+                  {actionLogs.map((log) => (
+                    <li key={log.id} className="py-4 space-y-1">
+                      <div className="font-medium text-slate-900 text-sm break-words">{log.action}</div>
+                      <div className="text-xs text-slate-500 break-words">{log.description || log.route}</div>
+                      <div className="text-xs text-slate-600 pt-1">
+                        {log.user?.name || 'Utilisateur inconnu'}
+                        {log.user?.email && (
+                          <span className="text-slate-400 break-all"> — {log.user.email}</span>
+                        )}
+                      </div>
+                      <div className="text-xs text-slate-500">
+                        {new Date(log.created_at).toLocaleString('fr-FR', {
+                          year: 'numeric',
+                          month: '2-digit',
+                          day: '2-digit',
+                          hour: '2-digit',
+                          minute: '2-digit',
+                        })}
+                      </div>
+                    </li>
+                  ))}
+                </ul>
 
-                <div className="flex items-center justify-between gap-4 mt-4 text-sm text-slate-600">
+                <div className="hidden md:block overflow-x-auto">
+                  <table className="min-w-full text-sm">
+                    <thead>
+                      <tr className="border-b border-slate-200 text-left text-slate-500">
+                        <th className="py-3 pr-4 font-medium">Action</th>
+                        <th className="py-3 pr-4 font-medium">Utilisateur</th>
+                        <th className="py-3 pr-4 font-medium">Heure</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {actionLogs.map((log) => (
+                        <tr key={log.id} className="border-b border-slate-100 align-top">
+                          <td className="py-4 pr-4">
+                            <div className="font-medium text-slate-900">{log.action}</div>
+                            <div className="text-xs text-slate-500 mt-1">{log.description || log.route}</div>
+                          </td>
+                          <td className="py-4 pr-4">
+                            <div className="font-medium text-slate-900">{log.user?.name || 'Utilisateur inconnu'}</div>
+                            <div className="text-xs text-slate-500 mt-1 break-all">{log.user?.email || '—'}</div>
+                          </td>
+                          <td className="py-4 pr-4 whitespace-nowrap text-slate-700">
+                            {new Date(log.created_at).toLocaleString('fr-FR', {
+                              year: 'numeric',
+                              month: '2-digit',
+                              day: '2-digit',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                            })}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mt-4 text-sm text-slate-600">
                   <div>
                     Affichage de {historyPagination.from || 0} à {historyPagination.to || actionLogs.length} sur {historyPagination.total} actions
                   </div>
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center justify-between sm:justify-start gap-2">
                     <button
                       type="button"
                       disabled={historyPagination.current_page <= 1}

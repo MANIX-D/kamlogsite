@@ -100,20 +100,17 @@ export default function NewsPage() {
   };
 
   return (
-    <div className="min-h-screen pt-20 bg-gradient-to-b from-gray-50 to-white">
+    <div className="min-h-screen pt-16 sm:pt-20 bg-gradient-to-b from-gray-50 to-white">
       <div
-        className="relative bg-[#1f3878] text-white h-[60vh] overflow-hidden flex items-center"
+        className="relative bg-brand text-white min-h-[clamp(16rem,45vh,26rem)] py-14 overflow-hidden flex items-center bg-cover bg-center lg:bg-fixed"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(31, 56, 120, 0.95), rgba(15, 35, 80, 0.9)), url('/images/news-hero.webp')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundAttachment: 'fixed',
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+        <div className="relative container-page text-center z-10">
           <h1
-            className={`text-3xl sm:text-4xl lg:text-6xl font-extrabold mb-4 tracking-tight leading-[1.1] transition-all duration-1000 ${
+            className={`text-fluid-5xl font-extrabold mb-4 tracking-tight leading-[1.1] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
@@ -129,8 +126,8 @@ export default function NewsPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 -mt-8">
-        <div className="mb-12 flex flex-wrap gap-3 justify-center bg-white p-4 rounded-2xl shadow-lg ring-1 ring-black/5">
+      <div className="container-page py-12 -mt-8">
+        <div className="mb-10 sm:mb-12 flex flex-wrap gap-2 sm:gap-3 justify-center bg-white p-3 sm:p-4 rounded-2xl shadow-lg ring-1 ring-black/5">
           {filters.map((filter) => {
             const Icon = filter.icon;
             return (
@@ -163,7 +160,7 @@ export default function NewsPage() {
         )}
 
         {error && (
-          <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-8 text-center shadow-lg max-w-md mx-auto">
+          <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6 sm:p-8 text-center shadow-lg max-w-md mx-auto">
             <div className="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
               <FileText size={32} className="text-red-600" />
             </div>
@@ -182,13 +179,13 @@ export default function NewsPage() {
             <div className="bg-gray-100 w-24 h-24 rounded-full flex items-center justify-center mx-auto mb-6">
               <FileText size={48} className="text-gray-400" />
             </div>
-            <p className="text-2xl text-gray-500 font-medium">{t('news.empty')}</p>
+            <p className="text-fluid-2xl text-gray-500 font-medium">{t('news.empty')}</p>
           </div>
         )}
 
         {!loading && !error && news.length > 0 && (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-12 sm:mb-16">
               {news.map((item, index) => {
                 const TypeIcon = getTypeIcon(item.type);
                 const isJob = item.type === 'job';
@@ -303,17 +300,17 @@ export default function NewsPage() {
         )}
       </div>
 
-      <div className="relative bg-gradient-to-r from-[#1f3878] via-[#2a4a9a] to-[#1f3878] text-white py-20 overflow-hidden">
+      <div className="relative bg-gradient-to-r from-[#1f3878] via-[#2a4a9a] to-[#1f3878] text-white py-12 sm:py-20 overflow-hidden">
         <div className="absolute inset-0 opacity-10">
           <div className="absolute top-10 left-10 w-64 h-64 bg-white rounded-full blur-3xl"></div>
           <div className="absolute bottom-10 right-10 w-96 h-96 bg-white rounded-full blur-3xl"></div>
         </div>
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="glass w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Briefcase className="w-10 h-10" />
+        <div className="relative container-page text-center">
+          <div className="glass w-16 h-16 sm:w-20 sm:h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <Briefcase className="w-8 h-8 sm:w-10 sm:h-10" />
           </div>
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold mb-4 tracking-tight">{t('news.jobsCta.title')}</h2>
-          <p className="text-base sm:text-lg lg:text-xl text-gray-100 mb-10 max-w-2xl mx-auto leading-relaxed">
+          <h2 className="text-fluid-4xl font-extrabold mb-4 tracking-tight">{t('news.jobsCta.title')}</h2>
+          <p className="text-fluid-lg text-gray-100 mb-8 sm:mb-10 max-w-2xl mx-auto leading-relaxed">
             {t('news.jobsCta.subtitle')}
           </p>
           <button

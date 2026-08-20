@@ -136,9 +136,11 @@ export default function ContactPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-16 sm:pt-20">
+      {/* min-h calculée hors navbar : h-screen provoquait un dépassement
+         puisque le parent applique déjà un décalage vers le bas */}
       <div
-        className="relative bg-[#1f3878] text-white h-screen overflow-hidden flex items-center"
+        className="relative bg-brand text-white min-h-[min(100dvh-4rem,44rem)] py-16 overflow-hidden flex items-center"
         style={{
           backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.9), rgba(31, 56, 120, 0.9)), url('/images/contact-hero.webp')`,
           backgroundSize: 'cover',
@@ -146,16 +148,16 @@ export default function ContactPage() {
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+        <div className="relative container-page text-center z-10">
           <h1
-            className={`text-3xl sm:text-5xl lg:text-7xl font-extrabold mb-6 tracking-tight leading-[1.1] transition-all duration-1000 ${
+            className={`text-fluid-5xl font-extrabold mb-6 tracking-tight leading-[1.1] transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
             {t('contact.hero.title')}
           </h1>
           <p
-            className={`text-lg sm:text-xl lg:text-3xl text-gray-100 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
+            className={`text-fluid-xl text-gray-100 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
             }`}
           >
@@ -164,8 +166,8 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+      <div className="container-page py-12 sm:py-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-12 sm:mb-16">
           {contactInfo.map((info, index) => {
             const Icon = info.icon;
             return (
@@ -189,10 +191,10 @@ export default function ContactPage() {
           })}
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          <div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="min-w-0">
             <div className="mb-8">
-              <h2 className="text-3xl font-extrabold text-[#1F3878] mb-4 tracking-tight">
+              <h2 className="text-fluid-3xl font-extrabold text-brand mb-4 tracking-tight">
                 {t('contact.form.title')}
               </h2>
               <p className="text-gray-600 text-lg">
@@ -223,7 +225,7 @@ export default function ContactPage() {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     {t('contact.form.fields.name')} *
@@ -257,7 +259,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                 <div>
                   <label className="block text-sm font-semibold text-gray-700 mb-2">
                     {t('contact.form.fields.phone')} *
@@ -340,9 +342,9 @@ export default function ContactPage() {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-[#1f3878] to-[#152b5e] rounded-2xl shadow-xl p-8 text-white">
-              <Building2 className="w-12 h-12 mb-6" />
-              <h3 className="text-2xl font-bold mb-4">
+            <div className="bg-gradient-to-br from-brand to-brand-dark rounded-2xl shadow-xl p-6 sm:p-8 text-white">
+              <Building2 className="w-10 h-10 sm:w-12 sm:h-12 mb-5 sm:mb-6" />
+              <h3 className="text-fluid-2xl font-bold mb-4">
                 {t('contact.info.about.title')}
               </h3>
               <p className="text-gray-100 leading-relaxed mb-6">
@@ -370,9 +372,9 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-8 border-2 border-gray-100">
-              <MessageSquare className="w-12 h-12 text-[#1f3878] mb-6" />
-              <h3 className="text-2xl font-bold text-gray-900 mb-4">
+            <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 border-2 border-gray-100">
+              <MessageSquare className="w-10 h-10 sm:w-12 sm:h-12 text-brand mb-5 sm:mb-6" />
+              <h3 className="text-fluid-2xl font-bold text-gray-900 mb-4">
                 {t('contact.info.help.title')}
               </h3>
               <p className="text-gray-600 leading-relaxed mb-6">
@@ -394,8 +396,8 @@ export default function ContactPage() {
               </div>
             </div>
 
-            <div className="bg-gray-50 rounded-2xl p-8 border-2 border-dashed border-gray-300">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">
+            <div className="bg-gray-50 rounded-2xl p-6 sm:p-8 border-2 border-dashed border-gray-300">
+              <h3 className="text-fluid-xl font-bold text-gray-900 mb-3">
                 {t('contact.info.visit.title')}
               </h3>
               <p className="text-gray-600 mb-4">
@@ -410,16 +412,17 @@ export default function ContactPage() {
         </div>
       </div>
 
-      <div className="bg-gradient-to-b from-gray-50 to-gray-100 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-extrabold text-[#1F3878] mb-8 text-center tracking-tight">
+      <div className="bg-gradient-to-b from-gray-50 to-gray-100 py-12 sm:py-16">
+        <div className="container-page">
+          <h2 className="text-fluid-3xl font-extrabold text-brand mb-8 text-center tracking-tight">
             {t('contact.map.title')}
           </h2>
-          <div className="bg-white rounded-2xl shadow-xl ring-1 ring-black/5 overflow-hidden">
+          {/* Hauteur fluide : 450px fixes occupaient presque tout l'écran
+              d'un petit téléphone */}
+          <div className="bg-white rounded-2xl shadow-xl ring-1 ring-black/5 overflow-hidden h-[clamp(16rem,45vw,28rem)]">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1990.0!2d9.6905807!3d4.0287418!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1061137a591f3fe9%3A0xbc2d798b322cde2f!2sKAMLOG!5e0!3m2!1sfr!2scm"
-              width="100%"
-              height="450"
+              className="w-full h-full"
               style={{ border: 0 }}
               allowFullScreen
               loading="lazy"

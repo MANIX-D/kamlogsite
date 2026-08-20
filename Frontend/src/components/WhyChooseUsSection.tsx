@@ -23,6 +23,12 @@ export default function WhyChooseUsSection() {
   }, []);
 
   useEffect(() => {
+    // Décalage au scroll réservé aux grands écrans avec pointeur fin :
+    // sur mobile il désaligne les cartes et provoque des saccades.
+    const query = window.matchMedia(
+      '(min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
+    );
+
     const handleScroll = () => {
       if (containerRef.current) {
         const rect = containerRef.current.getBoundingClientRect();
@@ -33,25 +39,39 @@ export default function WhyChooseUsSection() {
       }
     };
 
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
+    const bind = () => {
+      if (query.matches) {
+        handleScroll();
+        window.addEventListener('scroll', handleScroll, { passive: true });
+      } else {
+        window.removeEventListener('scroll', handleScroll);
+        setScrollOffset(0);
+      }
+    };
+
+    bind();
+    query.addEventListener('change', bind);
+
+    return () => {
+      query.removeEventListener('change', bind);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
-    <section className="w-full py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col items-center justify-center mb-16 space-y-8">
+    <section className="w-full py-12 sm:py-20 bg-white">
+      <div className="container-page">
+        <div className="flex flex-col items-center justify-center mb-10 sm:mb-16 space-y-6 sm:space-y-8">
           <Link
             to="/services"
-            className="inline-flex items-center space-x-3 bg-[#1F3878] hover:bg-[#152b5e] text-white px-8 py-4 rounded-full font-bold transition-all duration-300 group shadow-lg shadow-[#1F3878]/20 hover:shadow-xl hover:shadow-[#1F3878]/30"
+            className="inline-flex items-center gap-3 bg-brand hover:bg-brand-dark text-white px-6 sm:px-8 py-3.5 sm:py-4 rounded-full font-bold transition-all duration-300 group shadow-lg shadow-brand/20 hover:shadow-xl hover:shadow-brand/30"
           >
             <span>{t('nav.services')}</span>
             <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
           </Link>
 
           <div className="text-center">
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-4 tracking-tight">
+            <h2 className="text-fluid-4xl font-extrabold text-brand mb-4 tracking-tight">
               {t('why.title')}
             </h2>
             <div className="flex justify-center">
@@ -62,7 +82,7 @@ export default function WhyChooseUsSection() {
 
         <div
           ref={containerRef}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-3xl mx-auto"
         >
           {reasons.map((reason, index) => {
             const isEven = index % 2 === 0;
@@ -71,14 +91,14 @@ export default function WhyChooseUsSection() {
             return (
               <div
                 key={index}
-                className="animate-fade-in-up scroll-translate flex items-start space-x-4 p-5 rounded-xl bg-white shadow-sm hover:shadow-md ring-1 ring-gray-100 hover:ring-gray-200 transition-all duration-300"
+                className="animate-fade-in-up scroll-translate flex items-start gap-4 p-4 sm:p-5 rounded-xl bg-white shadow-sm hover:shadow-md ring-1 ring-gray-100 hover:ring-gray-200 transition-all duration-300"
                 style={{
                   animationDelay: isVisible ? `${index * 0.1}s` : '0s',
                   transform: `translateY(${translateValue}px)`,
                 }}
               >
                 <CheckCircle className="text-red-600 flex-shrink-0 mt-1" size={24} />
-                <p className="text-gray-700 font-medium">{reason}</p>
+                <p className="text-gray-700 font-medium text-fluid-base">{reason}</p>
               </div>
             );
           })}

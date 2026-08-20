@@ -118,11 +118,11 @@ export default function AdminVerifyCode() {
   if (tokenError) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
-        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-8 text-center">
+        <div className="max-w-md w-full bg-white rounded-2xl shadow-2xl p-6 sm:p-8 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-red-100 rounded-full mb-4">
             <AlertCircle className="text-red-600" size={32} />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900 mb-2">Lien expiré</h1>
+          <h1 className="text-fluid-2xl font-bold text-slate-900 mb-2">Lien expiré</h1>
           <p className="text-slate-600 mb-6">{tokenError}</p>
           <Link
             to="/admin/forgot-password"
@@ -140,12 +140,12 @@ export default function AdminVerifyCode() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
           <div className="text-center mb-8">
             <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
               <ShieldCheck className="text-blue-600" size={32} />
             </div>
-            <h1 className="text-3xl font-bold text-slate-900 mb-2">
+            <h1 className="text-fluid-3xl font-bold text-slate-900 mb-2">
               Vérification
             </h1>
             <p className="text-slate-600">
@@ -172,18 +172,22 @@ export default function AdminVerifyCode() {
 
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* 6-digit code input */}
-            <div className="flex justify-center gap-3" onPaste={handlePaste}>
+            {/* Champs flexibles : six champs de 48px avec des espaces de 12px
+                exigeaient 348px alors qu'un écran de 320px n'en laisse que ~224 */}
+            <div className="flex justify-center gap-1.5 xs:gap-2 sm:gap-3" onPaste={handlePaste}>
               {code.map((digit, index) => (
                 <input
                   key={index}
                   ref={el => { inputRefs.current[index] = el; }}
                   type="text"
                   inputMode="numeric"
+                  autoComplete="one-time-code"
                   maxLength={1}
                   value={digit}
                   onChange={e => handleDigitChange(index, e.target.value)}
                   onKeyDown={e => handleKeyDown(index, e)}
-                  className="w-12 h-14 text-center text-2xl font-bold border-2 border-slate-300 rounded-xl
+                  aria-label={`Chiffre ${index + 1} du code`}
+                  className="min-w-0 flex-1 max-w-[3rem] h-12 sm:h-14 text-center text-fluid-2xl font-bold border-2 border-slate-300 rounded-xl
                     focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all
                     text-slate-900 bg-slate-50"
                   autoFocus={index === 0}

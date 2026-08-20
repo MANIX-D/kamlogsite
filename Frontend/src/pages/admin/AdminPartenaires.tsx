@@ -220,10 +220,10 @@ export default function AdminPartenaires() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900">Partenaires</h1>
-          <p className="text-slate-600 mt-2">Gérer les partenaires affichés sur la page publique</p>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-fluid-3xl font-bold text-slate-900">Partenaires</h1>
+          <p className="text-slate-600 mt-2 text-fluid-base">Gérer les partenaires affichés sur la page publique</p>
         </div>
         <button
           onClick={() => handleOpenModal()}
@@ -250,7 +250,7 @@ export default function AdminPartenaires() {
         loading={submitting}
       >
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Nom (Français) *
@@ -333,7 +333,7 @@ export default function AdminPartenaires() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="flex items-center gap-2 text-sm font-medium text-slate-700">
                 <input

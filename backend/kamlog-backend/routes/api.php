@@ -115,7 +115,7 @@ Route::prefix('v1')->middleware(['throttle:api'])->group(function () {
 
     // Tracking des visites de pages (Public)
     Route::post('/page-visits', [PageVisitController::class, 'store'])
-        ->middleware('throttle:public-form');
+        ->middleware('throttle:tracking');
 
     // ============================================
     // ROUTES PROTÉGÉES PAR SANCTUM

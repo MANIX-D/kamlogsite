@@ -16,8 +16,8 @@ export default function LanguageSwitcher({ className = '' }: LanguageSwitcherPro
   return (
     <button
       onClick={toggleLanguage}
-      className={`flex items-center space-x-2 text-blue-900 hover:text-red-600 transition-colors group ${className}`}
-      aria-label="Toggle language"
+      className={`flex flex-shrink-0 items-center gap-2 p-2 text-blue-900 hover:text-red-600 transition-colors group ${className}`}
+      aria-label={i18n.language === 'fr' ? 'Switch to English' : 'Passer en français'}
     >
       <Globe size={20} className="group-hover:rotate-12 transition-transform" />
       <span className="hidden sm:inline text-sm font-medium uppercase">

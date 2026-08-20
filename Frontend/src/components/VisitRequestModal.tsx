@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { X, Calendar, User, Mail, Phone, Building2, MessageSquare } from 'lucide-react';
 import { apiService } from '../services/api';
+import { useOverlay } from '../hooks/useOverlay';
 
 interface VisitRequestModalProps {
   isOpen: boolean;
@@ -24,6 +25,8 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+
+  useOverlay(isOpen, onClose);
 
   const infrastructureKeys = ['warehouse', 'containers', 'silos', 'udeac'] as const;
 
@@ -76,41 +79,46 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto">
-      <div className="flex items-center justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:p-0">
-        <div
-          className="fixed inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm"
-          onClick={onClose}
-        ></div>
+    <div
+      className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-label={t('visitRequest.title')}
+    >
+      <div
+        className="absolute inset-0 transition-opacity bg-gray-900 bg-opacity-75 backdrop-blur-sm"
+        onClick={onClose}
+      ></div>
 
-        <div className="relative inline-block w-full max-w-2xl my-8 overflow-hidden text-left align-middle transition-all transform bg-white shadow-2xl rounded-3xl">
-          <div className="absolute top-0 right-0 pt-6 pr-6">
-            <button
-              type="button"
-              className="text-gray-400 hover:text-gray-600 transition-colors p-2 hover:bg-gray-100 rounded-full"
-              onClick={onClose}
-            >
-              <X className="w-6 h-6" />
-            </button>
-          </div>
-
-          <div className="bg-gradient-to-r from-[#1F3878] to-[#2a4a9f] px-8 py-8">
-            <div className="flex items-center">
-              <div className="bg-white/20 rounded-full p-3 mr-4">
-                <Calendar className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h3 className="text-3xl font-bold text-white">
-                  {t('visitRequest.title')}
-                </h3>
-                <p className="text-blue-100 mt-1">
-                  {t('visitRequest.subtitle')}
-                </p>
-              </div>
+      {/* Hauteur bornée en dvh : la modale reste entièrement atteignable,
+          y compris en paysage où la hauteur disponible est très faible */}
+      <div className="relative w-full max-w-2xl max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto scroll-contain text-left transition-all transform bg-white shadow-2xl rounded-t-3xl sm:rounded-3xl">
+        <div className="sticky top-0 z-10 bg-gradient-to-r from-brand to-brand-light px-4 sm:px-8 py-5 sm:py-8">
+          <div className="flex items-center gap-3 sm:gap-4 pr-12">
+            <div className="bg-white/20 rounded-full p-2.5 sm:p-3 flex-shrink-0">
+              <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-white" />
+            </div>
+            <div className="min-w-0">
+              <h3 className="text-fluid-2xl font-bold text-white">
+                {t('visitRequest.title')}
+              </h3>
+              <p className="text-blue-100 mt-1 text-fluid-sm">
+                {t('visitRequest.subtitle')}
+              </p>
             </div>
           </div>
 
-          <div className="px-8 py-8">
+          <button
+            type="button"
+            className="absolute top-4 right-4 text-white/80 hover:text-white transition-colors p-2 hover:bg-white/20 rounded-full"
+            onClick={onClose}
+            aria-label={t('visitRequest.form.cancel')}
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        <div className="px-4 sm:px-8 py-6 sm:py-8">
             {submitSuccess ? (
               <div className="text-center py-12">
                 <div className="inline-flex items-center justify-center w-20 h-20 bg-green-100 rounded-full mb-6">
@@ -123,7 +131,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
                       <User className="w-4 h-4 inline mr-2" />
@@ -159,7 +167,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
                       <Phone className="w-4 h-4 inline mr-2" />
@@ -194,7 +202,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="preferredDate" className="block text-sm font-semibold text-gray-700 mb-2">
                       <Calendar className="w-4 h-4 inline mr-2" />
@@ -228,7 +236,7 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label htmlFor="type_visite" className="block text-sm font-semibold text-gray-700 mb-2">
                       {t('visitRequest.form.visitType') || 'Type de visite'} {t('visitRequest.form.required')}
@@ -291,25 +299,24 @@ export default function VisitRequestModal({ isOpen, onClose }: VisitRequestModal
                   </div>
                 )}
 
-                <div className="flex items-center justify-end space-x-4 pt-4">
+                <div className="flex flex-col-reverse sm:flex-row sm:items-center sm:justify-end gap-3 sm:gap-4 pt-4">
                   <button
                     type="button"
                     onClick={onClose}
-                    className="px-6 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-xl transition-colors"
+                    className="w-full sm:w-auto px-6 py-3 text-gray-700 font-semibold hover:bg-gray-100 rounded-xl transition-colors"
                   >
                     {t('visitRequest.form.cancel')}
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all transform hover:scale-105"
+                    className="w-full sm:w-auto px-8 py-3 bg-red-600 text-white font-bold rounded-xl hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
                   >
                     {isSubmitting ? t('visitRequest.form.submitting') : t('visitRequest.form.submit')}
                   </button>
                 </div>
               </form>
             )}
-          </div>
         </div>
       </div>
     </div>

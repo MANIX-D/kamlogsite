@@ -71,25 +71,25 @@ export default function PartnersPage() {
   ];
 
   return (
-    <div className="min-h-screen pt-20">
+    <div className="min-h-screen pt-16 sm:pt-20">
+      {/* min-h calculée hors navbar : h-screen débordait, le parent
+         appliquant déjà un décalage vers le bas */}
       <div
-        className="relative bg-[#1f3878] text-white h-screen overflow-hidden flex items-center"
+        className="relative bg-brand text-white min-h-[min(100dvh-4rem,44rem)] py-16 overflow-hidden flex items-center bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.85), rgba(31, 56, 120, 0.85)), url('/images/about-equip.webp')`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
         }}
       >
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="relative container-page text-center">
           <h1
-            className={`text-5xl md:text-6xl lg:text-7xl font-bold mb-6 transition-all duration-1000 ${
+            className={`text-fluid-5xl font-bold mb-6 transition-all duration-1000 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-20'
             }`}
           >
             {t('partners.hero.title')}
           </h1>
           <p
-            className={`text-xl md:text-2xl lg:text-3xl text-gray-100 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
+            className={`text-fluid-xl text-gray-100 max-w-3xl mx-auto transition-all duration-1000 delay-300 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
             }`}
           >
@@ -98,15 +98,15 @@ export default function PartnersPage() {
         </div>
       </div>
 
-      <div className="py-12 bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="py-10 sm:py-12 bg-white border-b">
+        <div className="container-page">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-[#1f3878] mb-2">
+              <div key={index} className="text-center min-w-0">
+                <div className="text-fluid-4xl font-bold text-brand mb-2">
                   {stat.value}
                 </div>
-                <div className="text-gray-600 text-sm md:text-base">
+                <div className="text-gray-600 text-fluid-sm">
                   {stat.label}
                 </div>
               </div>
@@ -115,13 +115,13 @@ export default function PartnersPage() {
         </div>
       </div>
 
-      <div className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+      <div className="py-12 sm:py-20 bg-gray-50">
+        <div className="container-page">
+          <div className="text-center mb-10 sm:mb-16">
+            <h2 className="text-fluid-4xl font-bold text-gray-900 mb-4">
               {t('partners.intro.title')}
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+            <p className="text-fluid-lg text-gray-600 max-w-3xl mx-auto">
               {t('partners.intro.description')}
             </p>
           </div>
@@ -136,7 +136,7 @@ export default function PartnersPage() {
                       <Icon className="w-8 h-8 text-white" />
                     </div>
                     <div>
-                      <h3 className="text-3xl font-bold text-gray-900">
+                      <h3 className="text-fluid-3xl font-bold text-gray-900">
                         {category.title}
                       </h3>
                       <p className="text-gray-600 mt-1">
@@ -145,7 +145,7 @@ export default function PartnersPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                     {category.partners.map((partner) => (
                       <div
                         key={partner.id}
@@ -182,13 +182,13 @@ export default function PartnersPage() {
         </div>
       </div>
 
-      <div className="py-20 bg-[#1f3878] text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Handshake className="w-16 h-16 mx-auto mb-6" />
-          <h2 className="text-4xl font-bold mb-6">
+      <div className="py-12 sm:py-20 bg-brand text-white">
+        <div className="container-page text-center">
+          <Handshake className="w-12 h-12 sm:w-16 sm:h-16 mx-auto mb-6" />
+          <h2 className="text-fluid-4xl font-bold mb-6">
             {t('partners.cta.title')}
           </h2>
-          <p className="text-xl text-gray-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-fluid-lg text-gray-100 mb-8 max-w-2xl mx-auto">
             {t('partners.cta.description')}
           </p>
           <Link

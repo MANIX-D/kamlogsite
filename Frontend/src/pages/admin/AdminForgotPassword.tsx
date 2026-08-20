@@ -27,14 +27,14 @@ export default function AdminForgotPassword() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
-        <div className="bg-white rounded-2xl shadow-2xl p-8">
+        <div className="bg-white rounded-2xl shadow-2xl p-6 sm:p-8">
           {sent ? (
             /* ─── Success State ─── */
             <div className="text-center">
               <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
                 <CheckCircle className="text-green-600" size={32} />
               </div>
-              <h1 className="text-2xl font-bold text-slate-900 mb-3">Email envoyé !</h1>
+              <h1 className="text-fluid-2xl font-bold text-slate-900 mb-3">Email envoyé !</h1>
               <p className="text-slate-600 mb-2">
                 Si un compte existe avec l'adresse <strong className="text-blue-600">{email}</strong>,
                 vous recevrez un email avec :
@@ -69,7 +69,7 @@ export default function AdminForgotPassword() {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-100 rounded-full mb-4">
                   <Shield className="text-blue-600" size={32} />
                 </div>
-                <h1 className="text-3xl font-bold text-slate-900 mb-2">
+                <h1 className="text-fluid-3xl font-bold text-slate-900 mb-2">
                   Mot de passe oublié ?
                 </h1>
                 <p className="text-slate-600">

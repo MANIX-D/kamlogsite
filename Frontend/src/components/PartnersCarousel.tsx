@@ -19,7 +19,10 @@ export default function PartnersCarousel() {
   const trackRef = useRef<HTMLDivElement>(null);
   const { t, i18n } = useTranslation();
 
-  const itemWidthPercent = 20; // 5 items per view = 100/5
+  // Nombre de logos visibles selon la largeur : en dur à 5, chaque logo
+  // ne faisait qu'une soixantaine de pixels sur un téléphone.
+  const [itemsPerView, setItemsPerView] = useState(5);
+  const itemWidthPercent = 100 / itemsPerView;
   const totalItems = partners.length;
 
   // On duplique les partenaires pour créer un effet de boucle infinie
@@ -31,6 +34,26 @@ export default function PartnersCarousel() {
   useEffect(() => {
     fetchPartners();
   }, [i18n.language]);
+
+  useEffect(() => {
+    const breakpoints: Array<[string, number]> = [
+      ['(min-width: 1280px)', 5],
+      ['(min-width: 1024px)', 4],
+      ['(min-width: 768px)', 3],
+      ['(min-width: 480px)', 2],
+    ];
+
+    const queries = breakpoints.map(([media]) => window.matchMedia(media));
+
+    const sync = () => {
+      const match = breakpoints.find(([media]) => window.matchMedia(media).matches);
+      setItemsPerView(match ? match[1] : 2);
+    };
+
+    sync();
+    queries.forEach((query) => query.addEventListener('change', sync));
+    return () => queries.forEach((query) => query.removeEventListener('change', sync));
+  }, []);
 
   const fetchPartners = async () => {
     try {
@@ -110,8 +133,8 @@ export default function PartnersCarousel() {
 
   if (loading) {
     return (
-      <section className="w-full py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section className="w-full py-12 sm:py-20 bg-white">
+        <div className="container-page">
           <div className="text-center text-gray-500">
             {t('common.loading', 'Chargement...')}
           </div>
@@ -125,17 +148,19 @@ export default function PartnersCarousel() {
   }
 
   return (
-    <section className="w-full py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between mb-12">
+    <section className="w-full py-12 sm:py-20 bg-white">
+      <div className="container-page">
+        <div className="flex items-center justify-between mb-8 sm:mb-12">
           <div>
-            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#1F3878] mb-2 tracking-tight">
+            <h2 className="text-fluid-4xl font-extrabold text-brand mb-2 tracking-tight">
               {t('partners.title')}
             </h2>
           </div>
         </div>
 
-        <div className="relative overflow-hidden">
+        {/* px-12 sur mobile : réserve la place des flèches, qui étaient
+            auparavant rejetées hors du conteneur donc hors de l'écran */}
+        <div className="relative px-12 lg:px-0 overflow-hidden">
           <div
             ref={trackRef}
             className="flex"
@@ -150,7 +175,7 @@ export default function PartnersCarousel() {
                 className="flex-shrink-0 px-3 sm:px-4"
                 style={{ width: `${itemWidthPercent}%` }}
               >
-                <div className="p-4 h-40 flex items-center justify-center group bg-white rounded-2xl ring-1 ring-gray-100 hover:ring-gray-200 hover:shadow-md transition-all duration-300">
+                <div className="p-3 sm:p-4 h-28 sm:h-40 flex items-center justify-center group bg-white rounded-2xl ring-1 ring-gray-100 hover:ring-gray-200 hover:shadow-md transition-all duration-300">
                   <img
                     src={partner.logo_url || 'https://via.placeholder.com/200x80?text=Logo'}
                     alt={i18n.language === 'fr' ? partner.name_fr : partner.name_en}
@@ -164,7 +189,7 @@ export default function PartnersCarousel() {
 
           <button
             onClick={goToPrevious}
-            className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-16 sm:-translate-x-20 bg-[#1F3878] hover:bg-[#152b5e] text-white p-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-10"
+            className="absolute left-0 top-1/2 -translate-y-1/2 lg:-translate-x-20 bg-brand hover:bg-brand-dark text-white p-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-10"
             aria-label="Previous partners"
           >
             <ChevronLeft size={24} />
@@ -172,14 +197,14 @@ export default function PartnersCarousel() {
 
           <button
             onClick={goToNext}
-            className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-16 sm:translate-x-20 bg-[#1F3878] hover:bg-[#152b5e] text-white p-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-10"
+            className="absolute right-0 top-1/2 -translate-y-1/2 lg:translate-x-20 bg-brand hover:bg-brand-dark text-white p-2.5 rounded-full transition-all duration-300 shadow-lg hover:shadow-xl z-10"
             aria-label="Next partners"
           >
             <ChevronRight size={24} />
           </button>
         </div>
 
-        <div className="flex justify-center gap-2 mt-12">
+        <div className="flex flex-wrap justify-center gap-2 mt-8 sm:mt-12">
           {Array.from({ length: totalItems }).map((_, index) => (
             <button
               key={index}
@@ -187,10 +212,10 @@ export default function PartnersCarousel() {
                 setCurrentIndex(startOffset + index);
                 setIsAutoPlay(false);
               }}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+              className={`h-2 rounded-full transition-all duration-300 ${
                 index === realIndex
-                  ? 'bg-[#1F3878] w-8'
-                  : 'bg-gray-300 hover:bg-gray-400'
+                  ? 'bg-brand w-8'
+                  : 'bg-gray-300 hover:bg-gray-400 w-2'
               }`}
               aria-label={`Go to partner ${index + 1}`}
             />

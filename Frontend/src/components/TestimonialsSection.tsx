@@ -63,10 +63,10 @@ export default function TestimonialsSection() {
   const currentTestimonial = TESTIMONIALS[currentIndex];
 
   return (
-    <section className="w-full py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#1F3878] mb-2 tracking-tight">
+    <section className="w-full py-12 sm:py-20 bg-white">
+      <div className="container-page">
+        <div className="text-center mb-10 sm:mb-16">
+          <h2 className="text-fluid-4xl font-extrabold text-brand mb-2 tracking-tight">
             {t('testimonials.title')}
           </h2>
           <div className="flex justify-center">
@@ -82,34 +82,34 @@ export default function TestimonialsSection() {
               transform: isTransitioning ? 'scale(0.98)' : 'scale(1)',
             }}
           >
+            {/* Hauteur minimale plutôt que fixe : un témoignage long fait
+                grandir la carte au lieu d'être tronqué. Le contenu reste
+                dans le flux pour que la hauteur s'y adapte. */}
             <div
-              className="relative h-[400px] sm:h-[450px] bg-cover bg-center"
+              className="relative min-h-[360px] sm:min-h-[450px] bg-cover bg-center flex flex-col items-center justify-center px-10 sm:px-16 lg:px-20 py-12 sm:py-14 text-center"
               style={{
                 backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.85), rgba(31, 56, 120, 0.85)), url('${currentTestimonial.image}')`,
               }}
             >
-              <div className="absolute inset-0 flex flex-col items-center justify-center px-6 sm:px-12 lg:px-20 text-center">
-                <h3 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6 sm:mb-8">
-                  {t(currentTestimonial.companyKey)}
-                </h3>
+              <h3 className="text-fluid-3xl font-bold text-white mb-5 sm:mb-8">
+                {t(currentTestimonial.companyKey)}
+              </h3>
 
-                <p className="text-base sm:text-lg text-gray-100 leading-relaxed mb-8 max-w-4xl">
-                  {t(currentTestimonial.textKey)}
-                </p>
+              <p className="text-fluid-lg text-gray-100 leading-relaxed mb-8 max-w-4xl">
+                {t(currentTestimonial.textKey)}
+              </p>
 
-                <div className="flex gap-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      size={28}
-                      className={`${
-                        star <= currentTestimonial.rating
-                          ? 'fill-yellow-400 text-yellow-400'
-                          : 'fill-transparent text-yellow-400'
-                      } transition-all duration-300`}
-                    />
-                  ))}
-                </div>
+              <div className="flex gap-1.5 sm:gap-2">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <Star
+                    key={star}
+                    className={`w-5 h-5 sm:w-7 sm:h-7 ${
+                      star <= currentTestimonial.rating
+                        ? 'fill-yellow-400 text-yellow-400'
+                        : 'fill-transparent text-yellow-400'
+                    } transition-all duration-300`}
+                  />
+                ))}
               </div>
             </div>
           </div>
@@ -117,19 +117,19 @@ export default function TestimonialsSection() {
           <button
             onClick={prevTestimonial}
             disabled={isTransitioning}
-            className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 sm:p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            className="absolute left-1 sm:left-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 sm:p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
             aria-label="Témoignage précédent"
           >
-            <ChevronLeft size={24} className="text-blue-900 sm:w-8 sm:h-8" />
+            <ChevronLeft className="w-5 h-5 sm:w-8 sm:h-8 text-blue-900" />
           </button>
 
           <button
             onClick={nextTestimonial}
             disabled={isTransitioning}
-            className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 sm:p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
+            className="absolute right-1 sm:right-4 top-1/2 -translate-y-1/2 bg-white rounded-full p-2 sm:p-4 shadow-xl hover:bg-gray-100 transition-all duration-300 hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed z-10"
             aria-label="Témoignage suivant"
           >
-            <ChevronRight size={24} className="text-blue-900 sm:w-8 sm:h-8" />
+            <ChevronRight className="w-5 h-5 sm:w-8 sm:h-8 text-blue-900" />
           </button>
 
           <div className="flex justify-center gap-3 mt-8">

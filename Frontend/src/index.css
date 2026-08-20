@@ -1,29 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* ── Base ────────────────────────────────────── */
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Empêche iOS d'agrandir les textes en paysage */
+    -webkit-text-size-adjust: 100%;
+    /* Décale les ancres pour ne pas passer sous la navbar fixe */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Filet de sécurité : le vrai correctif est fait composant par composant */
+    overflow-x: hidden;
+  }
+
+  /* Médias fluides par défaut : aucune image ne peut déborder.
+     Les classes utilitaires Tailwind (h-64, object-cover…) restent
+     prioritaires car la couche utilities passe après la couche base. */
+  img,
+  video,
+  svg,
+  canvas {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Évite qu'un mot long (URL, email) casse la mise en page sur 320px */
+  h1, h2, h3, h4, h5, h6, p, li, a, span, dd, dt, figcaption, label, td, th {
+    overflow-wrap: break-word;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+
+  /* Anti-zoom iOS : Safari zoome dès qu'un champ fait moins de 16px.
+     Centralisé ici pour ne pas avoir à le répéter sur chaque formulaire. */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    input,
+    select,
+    textarea {
+      font-size: inherit;
+    }
+  }
+
+  /* Le zoom iOS se déclenche aussi sur les champs date/time */
+  input[type='date'],
+  input[type='time'],
+  input[type='datetime-local'] {
+    min-height: 2.75rem;
+  }
+
+  /* Cibles tactiles confortables (recommandation WCAG 2.5.5 : 44x44) */
+  @media (pointer: coarse) {
+    button,
+    a[role='button'],
+    [type='button'],
+    [type='submit'],
+    [type='reset'] {
+      min-height: 2.75rem;
+    }
+  }
+
+  /* Focus clavier visible et cohérent, sans gêner la souris */
+  :focus-visible {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
+
+  /* Zone de scroll tactile fluide sur iOS */
+  .overflow-y-auto,
+  .overflow-x-auto,
+  .overflow-auto {
+    -webkit-overflow-scrolling: touch;
+  }
 }
 
-* {
-  box-sizing: border-box;
-}
+/* ── Utilitaires de mise en page ─────────────── */
 
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-}
+@layer components {
+  /* Conteneur de page : largeur fluide, plafonnée et centrée.
+     Remplace les répétitions de `max-w-7xl mx-auto px-4 sm:px-6 lg:px-8`. */
+  .container-page {
+    width: 100%;
+    max-width: theme('maxWidth.content');
+    margin-inline: auto;
+    padding-inline: theme('spacing.gutter');
+  }
 
-body {
-  overflow-x: hidden;
+  /* Scroll interne isolé : évite que le scroll d'une modale
+     ne se propage à la page derrière (scroll chaining). */
+  .scroll-contain {
+    overscroll-behavior: contain;
+  }
 }
 
 /* ── Animations ──────────────────────────────── */
@@ -142,4 +234,35 @@ body {
 .section-reveal.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ── Accessibilité : mouvement réduit ────────── */
+
+/* Respecte le réglage système « réduire les animations ».
+   Neutralise aussi le parallax, principale source de saccades sur mobile. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .animate-fade-in-up,
+  .animate-fadeInUp,
+  .animate-fade-in-down,
+  .animate-fade-in-scale {
+    opacity: 1;
+  }
+
+  .section-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .scroll-translate {
+    transform: none !important;
+  }
 }

@@ -146,53 +146,55 @@ export default function AdminVisitRequests() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Demandes de visite</h1>
-        <p className="mt-2 text-gray-600">
+        <h1 className="text-fluid-2xl font-bold text-gray-900">Demandes de visite</h1>
+        <p className="mt-2 text-gray-600 text-fluid-base">
           Gérez les demandes de visite des clients
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Total</p>
-              <p className="text-2xl font-bold">{visitRequests.length}</p>
+      {/* 2 colonnes dès le mobile : 4 cartes empilées obligeraient à
+          faire défiler toute la page avant d'atteindre la liste */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">Total</p>
+              <p className="text-fluid-2xl font-bold">{visitRequests.length}</p>
             </div>
-            <Calendar className="w-8 h-8 text-blue-500" />
+            <Calendar className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500 flex-shrink-0" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">En attente</p>
-              <p className="text-2xl font-bold">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">En attente</p>
+              <p className="text-fluid-2xl font-bold">
                 {visitRequests.filter(r => r.status === 'pending').length}
               </p>
             </div>
-            <AlertCircle className="w-8 h-8 text-yellow-500" />
+            <AlertCircle className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-500 flex-shrink-0" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Confirmées</p>
-              <p className="text-2xl font-bold">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">Confirmées</p>
+              <p className="text-fluid-2xl font-bold">
                 {visitRequests.filter(r => r.status === 'confirmed').length}
               </p>
             </div>
-            <CheckCircle2 className="w-8 h-8 text-green-500" />
+            <CheckCircle2 className="w-6 h-6 sm:w-8 sm:h-8 text-green-500 flex-shrink-0" />
           </div>
         </div>
-        <div className="bg-white p-6 rounded-lg shadow">
-          <div className="flex items-center justify-between">
-            <div>
-              <p className="text-sm text-gray-600">Annulées</p>
-              <p className="text-2xl font-bold">
+        <div className="bg-white p-4 sm:p-6 rounded-lg shadow min-w-0">
+          <div className="flex items-center justify-between gap-2">
+            <div className="min-w-0">
+              <p className="text-xs sm:text-sm text-gray-600">Annulées</p>
+              <p className="text-fluid-2xl font-bold">
                 {visitRequests.filter(r => r.status === 'cancelled').length}
               </p>
             </div>
-            <XCircle className="w-8 h-8 text-red-500" />
+            <XCircle className="w-6 h-6 sm:w-8 sm:h-8 text-red-500 flex-shrink-0" />
           </div>
         </div>
       </div>
@@ -205,21 +207,27 @@ export default function AdminVisitRequests() {
       />
 
       {selectedRequest && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold">Détails de la demande</h2>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex items-end sm:items-center justify-center z-50 p-0 sm:p-4"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Détails de la demande"
+        >
+          <div className="bg-white rounded-t-2xl sm:rounded-lg shadow-xl max-w-2xl w-full max-h-[92dvh] sm:max-h-[90dvh] overflow-y-auto scroll-contain">
+            <div className="p-4 sm:p-6">
+              <div className="flex items-center justify-between gap-3 mb-6">
+                <h2 className="text-fluid-2xl font-bold min-w-0">Détails de la demande</h2>
                 <button
                   onClick={() => setSelectedRequest(null)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="flex-shrink-0 text-gray-400 hover:text-gray-600 p-1"
+                  aria-label="Fermer"
                 >
                   <XCircle className="w-6 h-6" />
                 </button>
               </div>
 
               <div className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Nom
@@ -230,13 +238,13 @@ export default function AdminVisitRequests() {
                     </div>
                   </div>
 
-                  <div>
+                  <div className="min-w-0">
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Email
                     </label>
-                    <div className="flex items-center gap-2 text-gray-900">
-                      <Mail className="w-4 h-4 text-gray-400" />
-                      <a href={`mailto:${selectedRequest.email}`} className="text-blue-600 hover:underline">
+                    <div className="flex items-center gap-2 text-gray-900 min-w-0">
+                      <Mail className="w-4 h-4 text-gray-400 flex-shrink-0" />
+                      <a href={`mailto:${selectedRequest.email}`} className="text-blue-600 hover:underline break-all">
                         {selectedRequest.email}
                       </a>
                     </div>

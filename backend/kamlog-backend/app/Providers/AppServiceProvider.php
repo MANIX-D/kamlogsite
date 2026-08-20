@@ -151,24 +151,35 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
-        // ── Formulaires publics : soumissions limitées ──
+        // ── Formulaires publics : soumissions limitées (anti-spam, par type de formulaire) ──
         RateLimiter::for('public-form', function (Request $request) {
+            // Cloisonner le quota par formulaire : une candidature ne doit pas
+            // bloquer une demande de contact ou de devis.
+            $scope = $request->path();
+
             return [
-                // 3 soumissions par heure par IP
-                Limit::perHour(3)->by('form:' . $request->ip())->response(function () {
+                // 5 soumissions par heure et par formulaire
+                Limit::perHour(5)->by('form:' . $scope . '|' . $request->ip())->response(function () {
                     return response()->json([
                         'success' => false,
-                        'message' => 'Vous avez atteint la limite de soumissions. Réessayez dans une heure.',
+                        'message' => 'Vous avez atteint la limite de soumissions pour ce formulaire. Réessayez dans une heure.',
                     ], 429);
                 }),
-                // 10 soumissions par jour par IP
-                Limit::perDay(10)->by('form-day:' . $request->ip())->response(function () {
+                // 40 soumissions par jour toutes formulaires confondus
+                Limit::perDay(40)->by('form-day:' . $request->ip())->response(function () {
                     return response()->json([
                         'success' => false,
                         'message' => 'Limite quotidienne atteinte. Réessayez demain.',
                     ], 429);
                 }),
             ];
+        });
+
+        // ── Tracking des visites : ce n'est pas un formulaire, quota large ──
+        RateLimiter::for('tracking', function (Request $request) {
+            return Limit::perMinute(60)->by('track:' . $request->ip())->response(function () {
+                return response()->json(['success' => false], 429);
+            });
         });
 
         // ── Upload de fichiers ──

@@ -54,8 +54,8 @@ export default function AdminMessages() {
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-slate-900">Messages</h1>
-        <p className="text-slate-600 mt-2">
+        <h1 className="text-fluid-3xl font-bold text-slate-900">Messages</h1>
+        <p className="text-slate-600 mt-2 text-fluid-base">
           Messages reçus via le formulaire de contact
         </p>
       </div>
@@ -70,26 +70,28 @@ export default function AdminMessages() {
           messages.map((message) => (
             <div
               key={message.id}
-              className={`bg-white rounded-lg shadow-sm border p-6 transition-all ${
+              className={`bg-white rounded-lg shadow-sm border p-4 sm:p-6 transition-all ${
                 message.lu
                   ? 'border-slate-200'
                   : 'border-blue-300 bg-blue-50'
               }`}
             >
-              <div className="flex items-start justify-between mb-4">
-                <div className="flex-1">
-                  <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-lg font-bold text-slate-900">
+              <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 mb-4">
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-center gap-3 mb-2 flex-wrap">
+                    <h3 className="text-fluid-lg font-bold text-slate-900 break-words">
                       {message.nom}
                     </h3>
                     {!message.lu && (
-                      <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded-full">
+                      <span className="px-2 py-1 bg-blue-600 text-white text-xs font-medium rounded-full flex-shrink-0">
                         Nouveau
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-4 text-sm text-slate-600">
-                    <span>{message.email}</span>
+                  {/* Les métadonnées se replient : elles ne tiennent pas
+                      sur une seule ligne sur un téléphone */}
+                  <div className="flex flex-col xs:flex-row xs:flex-wrap xs:items-center gap-1 xs:gap-x-4 text-sm text-slate-600">
+                    <span className="break-all">{message.email}</span>
                     {message.telephone && <span>{message.telephone}</span>}
                     <span>
                       {new Date(message.created_at).toLocaleDateString('fr-FR', {
@@ -102,11 +104,11 @@ export default function AdminMessages() {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 lg:flex-shrink-0">
                   {!message.lu && (
                     <button
                       onClick={() => handleMarkAsRead(message)}
-                      className="flex items-center gap-1 px-3 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors"
+                      className="flex items-center justify-center gap-1 px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm rounded-lg transition-colors"
                     >
                       <CheckCircle size={16} />
                       <span>Marquer comme lu</span>
@@ -114,7 +116,7 @@ export default function AdminMessages() {
                   )}
                   <button
                     onClick={() => handleDelete(message)}
-                    className="flex items-center gap-1 px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
+                    className="flex items-center justify-center gap-1 px-3 py-2 bg-red-600 hover:bg-red-700 text-white text-sm rounded-lg transition-colors"
                   >
                     <Trash2 size={16} />
                     <span>Supprimer</span>
@@ -129,8 +131,8 @@ export default function AdminMessages() {
                 <span className="text-slate-900">{message.sujet}</span>
               </div>
 
-              <div className="bg-slate-50 rounded-lg p-4">
-                <p className="text-slate-700 whitespace-pre-wrap">
+              <div className="bg-slate-50 rounded-lg p-3 sm:p-4">
+                <p className="text-slate-700 whitespace-pre-wrap break-words">
                   {message.message}
                 </p>
               </div>

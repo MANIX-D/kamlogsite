@@ -345,10 +345,10 @@ export default function AdminActualites() {
 
   return (
     <div>
-      <div className="mb-6 flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-slate-900">Actualités</h1>
-          <p className="text-slate-600 mt-2">
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-fluid-3xl font-bold text-slate-900">Actualités</h1>
+          <p className="text-slate-600 mt-2 text-fluid-base">
             Gérer les articles, annonces et offres
           </p>
         </div>
@@ -391,7 +391,7 @@ export default function AdminActualites() {
         loading={submitting}
       >
         <div className="space-y-4">
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Titre (Français)
@@ -423,7 +423,7 @@ export default function AdminActualites() {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Type
@@ -494,7 +494,7 @@ export default function AdminActualites() {
             </label>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-slate-700 mb-2">
                 Contenu (Français)
