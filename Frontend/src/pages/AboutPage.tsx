@@ -19,12 +19,11 @@ export default function AboutPage() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section
-        className="relative w-full min-h-dvh bg-cover bg-center pt-16 sm:pt-20 pb-12 overflow-hidden flex items-center justify-center"
-        style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/about-hero.webp')`,
-        }}
+        className="relative w-full min-h-dvh pt-16 sm:pt-20 pb-12 overflow-hidden flex items-center justify-center"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30"></div>
+        <img src="/images/about-hero.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[rgba(31,56,120,0.75)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
         <div className="container-page text-center relative z-10">
           <h1
             className={`text-fluid-5xl font-extrabold text-white mb-6 sm:mb-8 tracking-tight leading-[1.1] transition-all duration-1000 ${

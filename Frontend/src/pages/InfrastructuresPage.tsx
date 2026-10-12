@@ -50,7 +50,7 @@ export default function InfrastructuresPage() {
       icon: Boxes,
       titleKey: "visitRequest.form.infrastructureOptions.silos",
       location: t('infrastructuresPage.facilities.silos.location', "Port Autonome de Douala"),
-      capacity: "20 000 tonnes",
+      capacity: "18 000 tonnes",
       type: t('infrastructuresPage.facilities.silos.type', "Silos sur pieux"),
       features: [
         t('infrastructuresPage.facilities.silos.feature1', "Entièrement automatisés"),
@@ -64,7 +64,7 @@ export default function InfrastructuresPage() {
       icon: Building2,
       titleKey: "visitRequest.form.infrastructureOptions.udeac",
       location: t('infrastructuresPage.facilities.udeac.location', "Place UDEAC 01, Zone Portuaire"),
-      surface: "16 000 m²",
+      surface: "11 000 m²",
       capacity: t('infrastructuresPage.facilities.udeac.capacity', "Sécurisé 24/7"),
       features: [
         t('infrastructuresPage.facilities.udeac.feature1', "Sécurité renforcée 24h/24"),
@@ -79,13 +79,13 @@ export default function InfrastructuresPage() {
   const stats = useMemo(() => [
     {
       icon: TrendingUp,
-      value: "180 000",
+      value: "60 000+",
       label: t('infrastructuresPage.statsLabels.storage.label', "Tonnes"),
       description: t('infrastructuresPage.statsLabels.storage.description', "Capacité de stockage cumulée")
     },
     {
       icon: Warehouse,
-      value: "43 000",
+      value: "16 000",
       label: t('infrastructuresPage.statsLabels.surface.label', "m²"),
       description: t('infrastructuresPage.statsLabels.surface.description', "Surface d'entreposage totale")
     },
@@ -106,11 +106,10 @@ export default function InfrastructuresPage() {
   return (
     <div className="min-h-screen bg-white">
       <section
-        className="relative w-full min-h-dvh bg-cover bg-center pt-16 sm:pt-20 pb-12 overflow-hidden flex items-center justify-center"
-        style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/infra-hero.webp')`,
-        }}
+        className="relative w-full min-h-dvh pt-16 sm:pt-20 pb-12 overflow-hidden flex items-center justify-center"
       >
+        <img src="/images/infra-hero.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[rgba(31,56,120,0.75)] pointer-events-none"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
         <div className="container-page text-center relative z-10">
           <h1

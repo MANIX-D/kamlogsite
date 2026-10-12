@@ -22,11 +22,10 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
       <section
-        className="relative w-full min-h-dvh bg-cover bg-center pt-16 sm:pt-20 pb-12 overflow-hidden flex items-center justify-center"
-        style={{
-          backgroundImage: `linear-gradient(rgba(31, 56, 120, 0.75), rgba(31, 56, 120, 0.75)), url('/images/services-hero.webp')`,
-        }}
+        className="relative w-full min-h-dvh pt-16 sm:pt-20 pb-12 overflow-hidden flex items-center justify-center"
       >
+        <img src="/images/services-hero.webp" alt="" className="absolute inset-0 w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-[rgba(31,56,120,0.75)] pointer-events-none"></div>
         <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/30 pointer-events-none"></div>
         <div className="container-page text-center relative z-10">
           <h1
@@ -65,7 +64,7 @@ export default function ServicesPage() {
                   src="/images/services-manutention1.webp"
                   alt="Manutention portuaire"
                   loading="lazy"
-                  className="w-full h-80 object-cover"
+                  className="w-full h-56 sm:h-72 lg:h-80 object-cover"
                 />
               </div>
               <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-black/5 transform hover:scale-105 transition-all duration-500">
@@ -73,7 +72,7 @@ export default function ServicesPage() {
                   src="/images/services-port.webp"
                   alt="Port et navire"
                   loading="lazy"
-                  className="w-full h-80 object-cover"
+                  className="w-full h-56 sm:h-72 lg:h-80 object-cover"
                 />
               </div>
             </div>
@@ -133,7 +132,7 @@ export default function ServicesPage() {
                 src="/images/services-chariot.webp"
                 alt="Entrepôt stockage"
                 loading="lazy"
-                className="w-full h-96 object-cover"
+                className="w-full h-64 sm:h-80 lg:h-96 object-cover"
               />
             </div>
           </div>
@@ -157,7 +156,7 @@ export default function ServicesPage() {
             </p>
 
             <ul className="space-y-4 mb-12">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11].map((i) => (
                 <li key={i} className="flex items-start text-base">
                   <span className="mr-3 mt-1">•</span>
                   <span dangerouslySetInnerHTML={{ __html: t(`servicesDetailed.warehouse.features.item${i}`) }} />
@@ -171,7 +170,7 @@ export default function ServicesPage() {
                   src="/images/services-entrepot1.webp"
                   alt="Entrepôt vue aérienne"
                   loading="lazy"
-                  className="w-full h-64 object-cover"
+                  className="w-full h-48 sm:h-56 lg:h-64 object-cover"
                 />
               </div>
               <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10">
@@ -179,7 +178,7 @@ export default function ServicesPage() {
                   src="/images/services-entrepot2.webp"
                   alt="Intérieur entrepôt"
                   loading="lazy"
-                  className="w-full h-64 object-cover"
+                  className="w-full h-48 sm:h-56 lg:h-64 object-cover"
                 />
               </div>
               <div className="rounded-2xl overflow-hidden shadow-xl ring-1 ring-white/10">
@@ -187,7 +186,7 @@ export default function ServicesPage() {
                   src="/images/services-entrepot3.webp"
                   alt="Entrepôt stockage"
                   loading="lazy"
-                  className="w-full h-64 object-cover"
+                  className="w-full h-48 sm:h-56 lg:h-64 object-cover"
                 />
               </div>
             </div>
@@ -245,7 +244,7 @@ export default function ServicesPage() {
                 src="/images/services-import.webp"
                 alt="Transit et import"
                 loading="lazy"
-                className="w-full h-full object-cover"
+                className="w-full h-64 sm:h-80 lg:h-full object-cover"
               />
             </div>
           </div>
@@ -256,7 +255,7 @@ export default function ServicesPage() {
                 src="/images/services-export.webp"
                 alt="Export maritime"
                 loading="lazy"
-                className="w-full h-full object-cover"
+                className="w-full h-64 sm:h-80 lg:h-full object-cover"
               />
             </div>
 
@@ -304,39 +303,31 @@ export default function ServicesPage() {
 
               <div className="mb-12">
                 <h4 className="text-fluid-2xl font-bold mb-3">
-                  {t('servicesDetailed.containers.benefits.title')}
+                  {t('servicesDetailed.containers.capacity.title')}
                 </h4>
                 <div className="w-16 h-1 bg-red-600 mb-4"></div>
                 <ul className="space-y-3">
-                  <li className="flex items-start text-base">
-                    <span className="mr-3">•</span>
-                    <span>{t('servicesDetailed.containers.benefits.item1')}</span>
-                  </li>
-                  <li className="flex items-start text-base">
-                    <span className="mr-3">•</span>
-                    <span>{t('servicesDetailed.containers.benefits.item2')}</span>
-                  </li>
-                  <li className="flex items-start text-base">
-                    <span className="mr-3">•</span>
-                    <span>{t('servicesDetailed.containers.benefits.item3')}</span>
-                  </li>
-                  <li className="flex items-start text-base">
-                    <span className="mr-3">•</span>
-                    <span>{t('servicesDetailed.containers.benefits.item4')}</span>
-                  </li>
+                  {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                    <li key={i} className="flex items-start text-base">
+                      <span className="mr-3 flex-shrink-0" aria-hidden="true">•</span>
+                      <span>{t(`servicesDetailed.containers.capacity.item${i}`)}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
 
               <div>
                 <h4 className="text-fluid-2xl font-bold mb-3">
-                  {t('servicesDetailed.containers.capacity.title')}
+                  {t('servicesDetailed.containers.benefits.title')}
                 </h4>
                 <div className="w-16 h-1 bg-red-600 mb-4"></div>
                 <ul className="space-y-3">
-                  <li className="flex items-start text-base">
-                    <span className="mr-3">•</span>
-                    <span>{t('servicesDetailed.containers.capacity.item1')}</span>
-                  </li>
+                  {[1, 2, 3, 4, 5, 6].map((i) => (
+                    <li key={i} className="flex items-start text-base">
+                      <span className="mr-3 flex-shrink-0" aria-hidden="true">•</span>
+                      <span>{t(`servicesDetailed.containers.benefits.item${i}`)}</span>
+                    </li>
+                  ))}
                 </ul>
               </div>
             </div>
@@ -445,7 +436,7 @@ export default function ServicesPage() {
                     src="/images/services-camions.webp"
                     alt="Workers in logistics"
                     loading="lazy"
-                    className="w-full h-80 object-cover"
+                    className="w-full h-56 sm:h-72 lg:h-80 object-cover"
                   />
                 </div>
                 <div className="rounded-2xl overflow-hidden shadow-2xl transform hover:scale-105 transition-transform duration-300">
@@ -453,7 +444,7 @@ export default function ServicesPage() {
                     src="/images/services-equipe.webp"
                     alt="Logistics worker"
                     loading="lazy"
-                    className="w-full h-80 object-cover"
+                    className="w-full h-56 sm:h-72 lg:h-80 object-cover"
                   />
                 </div>
               </div>

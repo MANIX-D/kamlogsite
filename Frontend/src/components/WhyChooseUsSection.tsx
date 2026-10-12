@@ -3,10 +3,15 @@ import { useEffect, useState, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
+// Décalage maximal des cartes, en pixels. Sans borne, un écran haut produisait
+// un décalage proportionnel à la moitié du viewport et désaxéait la grille.
+const MAX_SHIFT = 40;
+
 export default function WhyChooseUsSection() {
   const [isVisible, setIsVisible] = useState(false);
   const [scrollOffset, setScrollOffset] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef<number>(0);
   const { t } = useTranslation();
 
   const reasons = [
@@ -29,22 +34,36 @@ export default function WhyChooseUsSection() {
       '(min-width: 1024px) and (pointer: fine) and (prefers-reduced-motion: no-preference)'
     );
 
-    const handleScroll = () => {
-      if (containerRef.current) {
-        const rect = containerRef.current.getBoundingClientRect();
-        const elementCenter = rect.top + rect.height / 2;
-        const windowCenter = window.innerHeight / 2;
-        const offset = (elementCenter - windowCenter) * 0.15;
-        setScrollOffset(offset);
-      }
+    const update = () => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const elementCenter = rect.top + rect.height / 2;
+      const windowCenter = window.innerHeight / 2;
+      const offset = (elementCenter - windowCenter) * 0.15;
+      setScrollOffset(Math.min(Math.max(offset, -MAX_SHIFT), MAX_SHIFT));
+    };
+
+    const schedule = () => {
+      cancelAnimationFrame(rafRef.current);
+      rafRef.current = requestAnimationFrame(update);
     };
 
     const bind = () => {
       if (query.matches) {
-        handleScroll();
-        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('scroll', schedule, { passive: true });
+        // Un redimensionnement déplace le centre de la grille sans émettre de
+        // `scroll` : sans ce recalcul, le décalage restait figé sur l'ancienne
+        // mise en page et les cartes apparaissaient désaxées.
+        window.addEventListener('resize', schedule);
+        window.addEventListener('orientationchange', schedule);
+        schedule();
       } else {
-        window.removeEventListener('scroll', handleScroll);
+        window.removeEventListener('scroll', schedule);
+        window.removeEventListener('resize', schedule);
+        window.removeEventListener('orientationchange', schedule);
+        cancelAnimationFrame(rafRef.current);
         setScrollOffset(0);
       }
     };
@@ -54,7 +73,10 @@ export default function WhyChooseUsSection() {
 
     return () => {
       query.removeEventListener('change', bind);
-      window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+      window.removeEventListener('orientationchange', schedule);
+      cancelAnimationFrame(rafRef.current);
     };
   }, []);
 

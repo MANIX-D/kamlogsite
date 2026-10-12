@@ -16,8 +16,8 @@
       "primary": "À propos de nous"
     },
     "stats": {
-      "years": "Ans",
-      "years_sub": "d'expérience",
+      "iso": "Certifiée",
+      "iso_sub": "ISO 9001 version 2015",
       "tons": "tonnes",
       "tons_sub": "capacité stockage",
       "warehouse": "Capacité de",
@@ -100,7 +100,7 @@
     },
     "page": {
       "title": "Nos Services",
-      "subtitle": "Des solutions logistiques complètes et sur mesure pour optimiser votre chaîne d'approvisionnement",
+      "subtitle": "Des solutions logistiques complètes adaptées à vos besoins",
       "transport": {
         "title": "Transport Terrestre",
         "description": "Transport sécurisé de marchandises sur l'ensemble de l'Afrique centrale avec une flotte moderne et performante.",
@@ -163,16 +163,6 @@
         }
       },
       "cta": {
-        "title": "Besoin d'une solution logistique ?",
-        "subtitle": "Notre équipe d'experts est à votre disposition pour étudier vos besoins",
-        "button": "Nous contacter",
-        "quoteButton": "Demander un devis"
-      }
-    },
-    "page": {
-      "title": "Nos Services",
-      "subtitle": "Des solutions logistiques complètes adaptées à vos besoins",
-      "cta": {
         "title": "Besoin d'une solution sur mesure ?",
         "subtitle": "Contactez-nous pour discuter de vos besoins logistiques",
         "button": "Nous contacter",
@@ -222,6 +212,219 @@
         "in_progress": "En cours",
         "completed": "Terminé",
         "cancelled": "Annulé"
+      }
+    },
+    "common": {
+      "add": "Ajouter",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "save": "Enregistrer",
+      "saving": "Enregistrement...",
+      "cancel": "Annuler",
+      "actions": "Actions",
+      "confirm": "Êtes-vous sûr de vouloir supprimer cet élément ?",
+      "error": "Erreur lors de l'opération",
+      "noData": "Aucune donnée disponible",
+      "search": "Rechercher...",
+      "filter": "Filtrer",
+      "export": "Exporter"
+    },
+    "nav": {
+      "logout": "Déconnexion",
+      "panel": "Admin Panel"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "news": "Actualités",
+      "partners": "Partenaires",
+      "services": "Services",
+      "infrastructures": "Infrastructures",
+      "messages": "Messages",
+      "newsletter": "Newsletter"
+    },
+    "login": {
+      "title": "Administration",
+      "subtitle": "Connectez-vous pour accéder au panneau d'administration",
+      "email": "Email",
+      "password": "Mot de passe",
+      "submit": "Se connecter",
+      "submitting": "Connexion...",
+      "error": "Échec de connexion"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Vue d'ensemble de votre administration",
+      "stats": {
+        "news": "Total Actualités",
+        "jobs": "Offres d'emploi",
+        "partners": "Partenaires",
+        "messages": "Messages reçus",
+        "subscribers": "Abonnés Newsletter"
+      },
+      "activity": "Activité récente",
+      "activityDescription": "Les statistiques détaillées seront affichées ici.",
+      "quickActions": "Actions rapides",
+      "actions": {
+        "addNews": "Ajouter une actualité",
+        "addPartner": "Ajouter un partenaire",
+        "viewMessages": "Voir les messages"
+      }
+    },
+    "news": {
+      "title": "Actualités",
+      "subtitle": "Gérer les articles, annonces et offres",
+      "columns": {
+        "title": "Titre",
+        "type": "Type",
+        "date": "Date",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "titleLabel": "Titre",
+        "typeLabel": "Type",
+        "date": "Date de publication",
+        "content": "Contenu",
+        "image": "Image",
+        "chooseImage": "Choisir une image",
+        "editTitle": "Modifier l'actualité",
+        "newTitle": "Nouvelle actualité"
+      },
+      "types": {
+        "all": "Tous les types",
+        "article": "Article",
+        "articles": "Articles",
+        "announcement": "Annonce",
+        "announcements": "Annonces",
+        "job": "Offre",
+        "jobs": "Offres"
+      }
+    },
+    "partners": {
+      "title": "Partenaires",
+      "subtitle": "Gérer les partenaires",
+      "columns": {
+        "name": "Nom",
+        "sector": "Secteur",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "name": "Nom",
+        "sector": "Secteur",
+        "description": "Description",
+        "logo": "Logo",
+        "chooseLogo": "Choisir un logo",
+        "editTitle": "Modifier le partenaire",
+        "newTitle": "Nouveau partenaire"
+      },
+      "noLogo": "N/A"
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Gérer les services proposés",
+      "columns": {
+        "name": "Nom",
+        "description": "Description",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "name": "Nom",
+        "description": "Description",
+        "icon": "Icône",
+        "iconPlaceholder": "Ex: Truck, Container, Ship",
+        "iconHelper": "Nom de l'icône Lucide React",
+        "editTitle": "Modifier le service",
+        "newTitle": "Nouveau service"
+      }
+    },
+    "infrastructures": {
+      "title": "Infrastructures",
+      "subtitle": "Gérer les infrastructures",
+      "columns": {
+        "name": "Nom",
+        "surface": "Surface",
+        "capacity": "Capacité",
+        "createdAt": "Créé le"
+      },
+      "form": {
+        "name": "Nom",
+        "surface": "Surface",
+        "surfacePlaceholder": "Ex: 5000 m²",
+        "capacity": "Capacité",
+        "capacityPlaceholder": "Ex: 1000 conteneurs",
+        "description": "Description",
+        "image": "Image",
+        "chooseImage": "Choisir une image",
+        "editTitle": "Modifier l'infrastructure",
+        "newTitle": "Nouvelle infrastructure"
+      }
+    },
+    "messages": {
+      "title": "Messages",
+      "subtitle": "Messages reçus via le formulaire de contact",
+      "noMessages": "Aucun message",
+      "newBadge": "Nouveau",
+      "markAsRead": "Marquer comme lu",
+      "subject": "Sujet:"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "subtitle": "Abonnés à la newsletter",
+      "export": "Exporter les emails",
+      "noSubscribers": "Aucun abonné",
+      "columns": {
+        "email": "Email",
+        "date": "Date d'inscription"
+      }
+    },
+    "visitRequests": {
+      "title": "Demandes de visite",
+      "subtitle": "Gérer les demandes de visite des clients",
+      "stats": {
+        "total": "Total",
+        "pending": "En attente",
+        "confirmed": "Confirmées",
+        "cancelled": "Annulées"
+      },
+      "columns": {
+        "id": "ID",
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "date": "Date souhaitée",
+        "status": "Statut",
+        "created": "Reçue le"
+      },
+      "status": {
+        "pending": "En attente",
+        "confirmed": "Confirmée",
+        "cancelled": "Annulée"
+      },
+      "details": {
+        "title": "Détails de la demande",
+        "name": "Nom",
+        "email": "Email",
+        "phone": "Téléphone",
+        "company": "Entreprise",
+        "date": "Date souhaitée",
+        "received": "Reçue le",
+        "message": "Message",
+        "currentStatus": "Statut actuel",
+        "changeStatus": "Changer le statut"
+      },
+      "actions": {
+        "pending": "En attente",
+        "confirm": "Confirmer",
+        "cancel": "Annuler"
+      },
+      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette demande de visite ?",
+      "success": {
+        "statusUpdated": "Statut mis à jour avec succès",
+        "deleted": "Demande supprimée avec succès"
+      },
+      "error": {
+        "load": "Erreur lors du chargement des demandes de visite",
+        "updateStatus": "Erreur lors de la mise à jour du statut",
+        "delete": "Erreur lors de la suppression"
       }
     }
   },
@@ -549,21 +752,23 @@
       "description": "KAMLOG met à disposition un parc à conteneurs moderne et sécurisé pour le stockage temporaire de vos conteneurs vides ou pleins. Situé à proximité des ports de Douala et Kribi, notre infrastructure permet une gestion flexible et efficace.",
       "benefits": {
         "title": "Bénéfices clients",
-        "item1": "Réduction des frais de surestaries portuaires",
-        "item2": "Gestion professionnelle des conteneurs",
-        "item3": "Flexibilité de stockage",
-        "item4": "Sécurité renforcée 24h/24",
-        "item5": "Accès simplifié et rapide"
+        "item1": "Optimisation des coûts et réduction des frais de surestaries portuaires",
+        "item2": "Réduction des risques de détérioration",
+        "item3": "Sécurité maximale, renforcée 24h/24",
+        "item4": "Disponibilité rapide et accès simplifié aux conteneurs",
+        "item5": "Gestion professionnelle des conteneurs",
+        "item6": "Flexibilité de stockage"
       },
       "capacity": {
         "title": "Capacités et équipements",
         "item1": "Superficie entièrement pavée de 22 000 m²",
-        "item2": "Capacité d'accueil de plus de 2 000 EVP",
-        "item3": "Système de surveillance moderne (vidéosurveillance, gardiennage 24h/7j)",
-        "item4": "Chariots élévateurs et grues mobiles",
-        "item5": "Gestion informatisée des stocks",
-        "item6": "Espaces dédiés aux conteneurs frigorifiques",
-        "item7": "Maintenance et lavage de conteneurs"
+        "item2": "Capacité d'accueil moyenne de 2 500 conteneurs (TCs)",
+        "item3": "200 prises frigorifiques pour conteneurs reefers",
+        "item4": "Zone dédiée à la réparation et à la réfection de conteneurs endommagés",
+        "item5": "Nettoyage et traitement des conteneurs",
+        "item6": "Système de surveillance moderne (vidéosurveillance, gardiennage 24h/7j)",
+        "item7": "Chariots élévateurs et grues mobiles",
+        "item8": "Gestion informatisée des stocks"
       }
     },
     "customs": {
@@ -601,13 +806,16 @@
       "description": "KAMLOG dispose d'infrastructures d'entreposage sécurisées et adaptées à différentes typologies de marchandises : produits industriels, matériel agricole, biens de consommation, et plus encore.",
       "features": {
         "item1": "Entrepôt sous douane (entrepôt fictif) permettant le report des droits et taxes",
-        "item2": "Superficie : 5 000 m² couverts + 22 000 m² extérieurs pour conteneurs",
-        "item3": "Hauteur sous plafond jusqu'à 18 mètres (silos)",
+        "item2": "Magasin cale de 5 000 m² au quai 3 du Port Autonome de Douala (3 500 m² au sol et 1 500 m² de mezzanine)",
+        "item3": "Hauteur sous plafond de 18 mètres avec mezzanine intégrée",
         "item4": "Stockage vertical et horizontal",
         "item5": "Gestion informatisée des stocks avec traçabilité",
         "item6": "Services de manutention et de chargement/déchargement",
         "item7": "Espace dédié au stockage des marchandises dangereuses (avec autorisations)",
-        "item8": "Possibilité de groupage, dégroupage et conditionnement"
+        "item8": "Possibilité de groupage, dégroupage et conditionnement",
+        "item9": "Entrepôt de 11 000 m² en zone portuaire (place UDEAC 01), entièrement sécurisé",
+        "item10": "Silos sur pieux entièrement automatisés d'une capacité de 18 000 tonnes (en cours de construction)",
+        "item11": "Capacité de stockage cumulée : plus de 60 000 tonnes"
       }
     },
     "handling": {
@@ -728,24 +936,6 @@
       "title": "Visitez Nos Installations",
       "description": "Découvrez nos infrastructures modernes et performantes qui garantissent l'efficacité de vos opérations logistiques",
       "button": "Planifier une visite"
-    },
-    "stats": {
-      "surface": {
-        "label": "Surface totale",
-        "value": "27 000 m²"
-      },
-      "capacity": {
-        "label": "Capacité conteneurs",
-        "value": "2 000+ EVP"
-      },
-      "height": {
-        "label": "Hauteur maximale",
-        "value": "18 mètres"
-      },
-      "security": {
-        "label": "Surveillance",
-        "value": "24h/7j"
-      }
     }
   },
   "visitRequest": {
@@ -789,359 +979,6 @@
       "submit": "Envoyer la demande",
       "submitting": "Envoi en cours...",
       "required": "*"
-    }
-  },
-  "admin": {
-    "common": {
-      "add": "Ajouter",
-      "edit": "Modifier",
-      "delete": "Supprimer",
-      "save": "Enregistrer",
-      "saving": "Enregistrement...",
-      "cancel": "Annuler",
-      "actions": "Actions",
-      "confirm": "Êtes-vous sûr de vouloir supprimer cet élément ?",
-      "error": "Erreur lors de l'opération",
-      "noData": "Aucune donnée disponible",
-      "search": "Rechercher...",
-      "filter": "Filtrer",
-      "export": "Exporter"
-    },
-    "nav": {
-      "logout": "Déconnexion",
-      "panel": "Admin Panel"
-    },
-    "sidebar": {
-      "dashboard": "Dashboard",
-      "news": "Actualités",
-      "partners": "Partenaires",
-      "services": "Services",
-      "infrastructures": "Infrastructures",
-      "messages": "Messages",
-      "newsletter": "Newsletter"
-    },
-    "login": {
-      "title": "Administration",
-      "subtitle": "Connectez-vous pour accéder au panneau d'administration",
-      "email": "Email",
-      "password": "Mot de passe",
-      "submit": "Se connecter",
-      "submitting": "Connexion...",
-      "error": "Échec de connexion"
-    },
-    "dashboard": {
-      "title": "Dashboard",
-      "subtitle": "Vue d'ensemble de votre administration",
-      "stats": {
-        "news": "Total Actualités",
-        "jobs": "Offres d'emploi",
-        "partners": "Partenaires",
-        "messages": "Messages reçus",
-        "subscribers": "Abonnés Newsletter"
-      },
-      "activity": "Activité récente",
-      "activityDescription": "Les statistiques détaillées seront affichées ici.",
-      "quickActions": "Actions rapides",
-      "actions": {
-        "addNews": "Ajouter une actualité",
-        "addPartner": "Ajouter un partenaire",
-        "viewMessages": "Voir les messages"
-      }
-    },
-    "news": {
-      "title": "Actualités",
-      "subtitle": "Gérer les articles, annonces et offres",
-      "columns": {
-        "title": "Titre",
-        "type": "Type",
-        "date": "Date",
-        "createdAt": "Créé le"
-      },
-      "form": {
-        "titleLabel": "Titre",
-        "typeLabel": "Type",
-        "date": "Date de publication",
-        "content": "Contenu",
-        "image": "Image",
-        "chooseImage": "Choisir une image",
-        "editTitle": "Modifier l'actualité",
-        "newTitle": "Nouvelle actualité"
-      },
-      "types": {
-        "all": "Tous les types",
-        "article": "Article",
-        "articles": "Articles",
-        "announcement": "Annonce",
-        "announcements": "Annonces",
-        "job": "Offre",
-        "jobs": "Offres"
-      }
-    },
-    "partners": {
-      "title": "Partenaires",
-      "subtitle": "Gérer les partenaires",
-      "columns": {
-        "name": "Nom",
-        "sector": "Secteur",
-        "createdAt": "Créé le"
-      },
-      "form": {
-        "name": "Nom",
-        "sector": "Secteur",
-        "description": "Description",
-        "logo": "Logo",
-        "chooseLogo": "Choisir un logo",
-        "editTitle": "Modifier le partenaire",
-        "newTitle": "Nouveau partenaire"
-      },
-      "noLogo": "N/A"
-    },
-    "services": {
-      "title": "Services",
-      "subtitle": "Gérer les services proposés",
-      "columns": {
-        "name": "Nom",
-        "description": "Description",
-        "createdAt": "Créé le"
-      },
-      "form": {
-        "name": "Nom",
-        "description": "Description",
-        "icon": "Icône",
-        "iconPlaceholder": "Ex: Truck, Container, Ship",
-        "iconHelper": "Nom de l'icône Lucide React",
-        "editTitle": "Modifier le service",
-        "newTitle": "Nouveau service"
-      }
-    },
-    "infrastructures": {
-      "title": "Infrastructures",
-      "subtitle": "Gérer les infrastructures",
-      "columns": {
-        "name": "Nom",
-        "surface": "Surface",
-        "capacity": "Capacité",
-        "createdAt": "Créé le"
-      },
-      "form": {
-        "name": "Nom",
-        "surface": "Surface",
-        "surfacePlaceholder": "Ex: 5000 m²",
-        "capacity": "Capacité",
-        "capacityPlaceholder": "Ex: 1000 conteneurs",
-        "description": "Description",
-        "image": "Image",
-        "chooseImage": "Choisir une image",
-        "editTitle": "Modifier l'infrastructure",
-        "newTitle": "Nouvelle infrastructure"
-      }
-    },
-    "messages": {
-      "title": "Messages",
-      "subtitle": "Messages reçus via le formulaire de contact",
-      "noMessages": "Aucun message",
-      "newBadge": "Nouveau",
-      "markAsRead": "Marquer comme lu",
-      "subject": "Sujet:"
-    },
-    "newsletter": {
-      "title": "Newsletter",
-      "subtitle": "Abonnés à la newsletter",
-      "export": "Exporter les emails",
-      "noSubscribers": "Aucun abonné",
-      "columns": {
-        "email": "Email",
-        "date": "Date d'inscription"
-      }
-    },
-    "visitRequests": {
-      "title": "Demandes de visite",
-      "subtitle": "Gérer les demandes de visite des clients",
-      "stats": {
-        "total": "Total",
-        "pending": "En attente",
-        "confirmed": "Confirmées",
-        "cancelled": "Annulées"
-      },
-      "columns": {
-        "id": "ID",
-        "name": "Nom",
-        "email": "Email",
-        "phone": "Téléphone",
-        "date": "Date souhaitée",
-        "status": "Statut",
-        "created": "Reçue le"
-      },
-      "status": {
-        "pending": "En attente",
-        "confirmed": "Confirmée",
-        "cancelled": "Annulée"
-      },
-      "details": {
-        "title": "Détails de la demande",
-        "name": "Nom",
-        "email": "Email",
-        "phone": "Téléphone",
-        "company": "Entreprise",
-        "date": "Date souhaitée",
-        "received": "Reçue le",
-        "message": "Message",
-        "currentStatus": "Statut actuel",
-        "changeStatus": "Changer le statut"
-      },
-      "actions": {
-        "pending": "En attente",
-        "confirm": "Confirmer",
-        "cancel": "Annuler"
-      },
-      "confirmDelete": "Êtes-vous sûr de vouloir supprimer cette demande de visite ?",
-      "success": {
-        "statusUpdated": "Statut mis à jour avec succès",
-        "deleted": "Demande supprimée avec succès"
-      },
-      "error": {
-        "load": "Erreur lors du chargement des demandes de visite",
-        "updateStatus": "Erreur lors de la mise à jour du statut",
-        "delete": "Erreur lors de la suppression"
-      }
-    }
-  },
-  "servicesDetailed": {
-    "transport": {
-      "title": "Transport",
-      "heading": "VOTRE MARCHANDISE, NOTRE PRIORITÉ",
-      "description": "KAMLOG assure le transport terrestre des marchandises depuis les ports, entrepôts et points de chargement sur l'ensemble de la sous-région Afrique centrale. Notre flotte moderne et nos conducteurs expérimentés garantissent fiabilité et ponctualité.",
-      "services": {
-        "title": "Nos prestations",
-        "item1": "Transport de conteneurs 20' et 40' (pleins ou vides)",
-        "item2": "Transport de fret conventionnel",
-        "item3": "Transport de marchandises sensibles ou de grande valeur",
-        "item4": "Transports réguliers ou ponctuels",
-        "item5": "Couverture sous-régionale (CEMAC)"
-      },
-      "benefits": {
-        "title": "Bénéfices clients",
-        "item1": "Conducteurs qualifiés et formés aux normes de sécurité",
-        "item2": "Flotte récente et régulièrement contrôlée",
-        "item3": "Suivi GPS en temps réel",
-        "item4": "Assurance tous risques sur toutes les opérations",
-        "item5": "Disponibilité 24h/7j"
-      }
-    },
-    "containers": {
-      "title": "Parc à Conteneurs",
-      "heading": "UNE SOLUTION SÛRE POUR VOS CONTENEURS",
-      "description": "KAMLOG met à disposition un parc à conteneurs moderne et sécurisé pour le stockage temporaire de vos conteneurs vides ou pleins. Situé à proximité des ports de Douala et Kribi, notre infrastructure permet une gestion flexible et efficace.",
-      "benefits": {
-        "title": "Bénéfices clients",
-        "item1": "Réduction des frais de surestaries portuaires",
-        "item2": "Gestion professionnelle des conteneurs",
-        "item3": "Flexibilité de stockage",
-        "item4": "Sécurité renforcée 24h/24",
-        "item5": "Accès simplifié et rapide"
-      },
-      "capacity": {
-        "title": "Capacités et équipements",
-        "item1": "Superficie entièrement pavée de 22 000 m²",
-        "item2": "Capacité d'accueil de plus de 2 000 EVP",
-        "item3": "Système de surveillance moderne (vidéosurveillance, gardiennage 24h/7j)",
-        "item4": "Chariots élévateurs et grues mobiles",
-        "item5": "Gestion informatisée des stocks",
-        "item6": "Espaces dédiés aux conteneurs frigorifiques",
-        "item7": "Maintenance et lavage de conteneurs"
-      }
-    },
-    "customs": {
-      "tag": "DOUANE",
-      "title": "Transit Douanier & Import / Export",
-      "heading": "NOUS SIMPLIFIONS VOS FORMALITÉS, VOUS GAGNEZ DU TEMPS",
-      "description": "KAMLOG accompagne ses clients dans toutes les procédures de transit import et export, en garantissant conformité réglementaire, gain de temps et maîtrise des coûts. Grâce à notre expertise et notre réseau douanier, nous assurons une gestion fluide de vos dossiers.",
-      "import": {
-        "title": "Import",
-        "item1": "Enlèvement des marchandises au port ou à l'aéroport",
-        "item2": "Déclarations en douane import",
-        "item3": "Dédouanement au niveau du port de Douala ou de Kribi",
-        "item4": "Gestion des procédures sanitaires ou techniques (MINCOMMERCE, MINDAF...)",
-        "item5": "Mise à disposition de caution en douane",
-        "item6": "Liquidation des droits et taxes",
-        "item7": "Paiement des frais portuaires",
-        "item8": "Livraison à domicile sur Douala ou dans l'arrière-pays"
-      },
-      "export": {
-        "title": "Export",
-        "item1": "Enlèvement des marchandises en magasin ou en usine",
-        "item2": "Empotage de conteneurs dans nos locaux ou sur site client",
-        "item3": "Établissement des documents d'export (BAE, BL, facture...)",
-        "item4": "Déclarations en douane export",
-        "item5": "Paiement des frais portuaires",
-        "item6": "Acheminement des conteneurs au port",
-        "item7": "Suivi jusqu'à embarquement",
-        "item8": "Coordination avec les armateurs et consignataires"
-      }
-    },
-    "warehouse": {
-      "tag": "ENTREPOSAGE",
-      "title": "ENTREPOSAGE & GESTION DE STOCKS",
-      "heading": "VOS MARCHANDISES EN SÉCURITÉ, SOUS CONTRÔLE PERMANENT",
-      "description": "KAMLOG dispose d'infrastructures d'entreposage sécurisées et adaptées à différentes typologies de marchandises : produits industriels, matériel agricole, biens de consommation, et plus encore.",
-      "features": {
-        "item1": "Entrepôt sous douane (entrepôt fictif) permettant le report des droits et taxes",
-        "item2": "Superficie : 5 000 m² couverts + 22 000 m² extérieurs pour conteneurs",
-        "item3": "Hauteur sous plafond jusqu'à 18 mètres (silos)",
-        "item4": "Stockage vertical et horizontal",
-        "item5": "Gestion informatisée des stocks avec traçabilité",
-        "item6": "Services de manutention et de chargement/déchargement",
-        "item7": "Espace dédié au stockage des marchandises dangereuses (avec autorisations)",
-        "item8": "Possibilité de groupage, dégroupage et conditionnement"
-      }
-    },
-    "handling": {
-      "tag": "MANUTENTION",
-      "title": "MANUTENTION PORTUAIRE & ACCOSTAGE",
-      "heading": "UNE PRISE EN CHARGE PROFESSIONNELLE AU CŒUR DU PORT",
-      "description": "KAMLOG assure la manutention des marchandises au Port Autonome de Douala (Quai 3) ainsi qu'au Port de Kribi. Nos équipes qualifiées et équipements performants garantissent une prise en charge rapide, sécurisée et conforme.",
-      "services": {
-        "title": "Nos prestations",
-        "item1": "Déchargement de navires",
-        "item2": "Arrimage et désarrimage de conteneurs",
-        "item3": "Manutention de colis lourds et volumineux",
-        "item4": "Transfert de marchandises depuis le bord à quai jusqu'aux entrepôts ou zones de stockage",
-        "item5": "Gestion des opérations d'accostage",
-        "item6": "Coordination avec les consignataires et armateurs",
-        "item7": "Respect des procédures de sécurité ISPS"
-      },
-      "benefits": {
-        "title": "Bénéfices clients",
-        "item1": "Rapidité et efficacité (réduction des temps d'immobilisation)",
-        "item2": "Disponibilité de matériel performant (grues, chariots, tracteurs...)",
-        "item3": "Équipes expérimentées et formées",
-        "item4": "Proximité avec la zone portuaire",
-        "item5": "Continuité de service 24h/7j si besoin"
-      }
-    },
-    "methodology": {
-      "tag": "MÉTHODOLOGIE",
-      "title": "Notre Méthodologie",
-      "step1": {
-        "title": "Analyse de vos besoins",
-        "description": "Écoute, diagnostic et évaluation de vos attentes"
-      },
-      "step2": {
-        "title": "Proposition de solution personnalisée",
-        "description": "Élaboration d'une offre technique et financière adaptée"
-      },
-      "step3": {
-        "title": "Planification opérationnelle",
-        "description": "Organisation logistique et mobilisation des ressources"
-      },
-      "step4": {
-        "title": "Exécution sécurisée",
-        "description": "Mise en œuvre avec suivi en temps réel"
-      },
-      "step5": {
-        "title": "Suivi & reporting",
-        "description": "Communication régulière et amélioration continue"
-      }
     }
   }
 }

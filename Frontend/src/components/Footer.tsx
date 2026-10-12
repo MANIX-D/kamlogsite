@@ -200,7 +200,7 @@ export default function Footer() {
           <div className="border-t border-white/10 pt-6 sm:pt-8">
             <div className="text-center space-y-2">
               <p className="text-gray-400 text-sm font-medium tracking-wide">
-                © 2026 KAMLOG. {t('footer.rights')}
+                © {new Date().getFullYear()} KAMLOG. {t('footer.rights')}
               </p>
               <p className="text-gray-500 text-xs">
                 Powered By <a href="mailto:Toyotamnx@gmail.com" className="text-gray-400 hover:text-white underline underline-offset-2 transition-colors duration-300">Toyotamnx@gmail.com</a>

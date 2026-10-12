@@ -102,7 +102,7 @@ export default function NewsPage() {
   return (
     <div className="min-h-screen pt-16 sm:pt-20 bg-gradient-to-b from-gray-50 to-white">
       <div
-        className="relative bg-brand text-white min-h-[clamp(16rem,45vh,26rem)] py-14 overflow-hidden flex items-center bg-cover bg-center lg:bg-fixed"
+        className="relative bg-brand text-white min-h-[clamp(16rem,45vh,26rem)] py-14 overflow-hidden flex items-center bg-cover bg-center"
         style={{
           backgroundImage: `linear-gradient(135deg, rgba(31, 56, 120, 0.95), rgba(15, 35, 80, 0.9)), url('/images/news-hero.webp')`,
         }}

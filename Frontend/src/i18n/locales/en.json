@@ -16,8 +16,8 @@
       "primary": "About Us"
     },
     "stats": {
-      "years": "Years",
-      "years_sub": "of experience",
+      "iso": "Certified",
+      "iso_sub": "ISO 9001 version 2015",
       "tons": "tons",
       "tons_sub": "storage capacity",
       "warehouse": "Warehouse",
@@ -100,7 +100,7 @@
     },
     "page": {
       "title": "Our Services",
-      "subtitle": "Complete and customized logistics solutions to optimize your supply chain",
+      "subtitle": "Complete logistics solutions tailored to your needs",
       "transport": {
         "title": "Land Transport",
         "description": "Secure freight transport across Central Africa with a modern and high-performance fleet.",
@@ -163,16 +163,6 @@
         }
       },
       "cta": {
-        "title": "Need a logistics solution?",
-        "subtitle": "Our team of experts is at your disposal to study your needs",
-        "button": "Contact Us",
-        "quoteButton": "Request a Quote"
-      }
-    },
-    "page": {
-      "title": "Our Services",
-      "subtitle": "Complete logistics solutions tailored to your needs",
-      "cta": {
         "title": "Need a customized solution?",
         "subtitle": "Contact us to discuss your logistics needs",
         "button": "Contact Us",
@@ -222,6 +212,168 @@
         "in_progress": "In Progress",
         "completed": "Completed",
         "cancelled": "Cancelled"
+      }
+    },
+    "common": {
+      "add": "Add",
+      "edit": "Edit",
+      "delete": "Delete",
+      "save": "Save",
+      "saving": "Saving...",
+      "cancel": "Cancel",
+      "actions": "Actions",
+      "confirm": "Are you sure you want to delete this item?",
+      "error": "Operation error",
+      "noData": "No data available",
+      "search": "Search...",
+      "filter": "Filter",
+      "export": "Export"
+    },
+    "nav": {
+      "logout": "Logout",
+      "panel": "Admin Panel"
+    },
+    "sidebar": {
+      "dashboard": "Dashboard",
+      "news": "News",
+      "partners": "Partners",
+      "services": "Services",
+      "infrastructures": "Infrastructures",
+      "messages": "Messages",
+      "newsletter": "Newsletter"
+    },
+    "login": {
+      "title": "Administration",
+      "subtitle": "Log in to access the admin panel",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "submitting": "Connecting...",
+      "error": "Connection failed"
+    },
+    "dashboard": {
+      "title": "Dashboard",
+      "subtitle": "Overview of your administration",
+      "stats": {
+        "news": "Total News",
+        "jobs": "Job Offers",
+        "partners": "Partners",
+        "messages": "Messages Received",
+        "subscribers": "Newsletter Subscribers"
+      },
+      "activity": "Recent Activity",
+      "activityDescription": "Detailed statistics will be displayed here.",
+      "quickActions": "Quick Actions",
+      "actions": {
+        "addNews": "Add news",
+        "addPartner": "Add partner",
+        "viewMessages": "View messages"
+      }
+    },
+    "news": {
+      "title": "News",
+      "subtitle": "Manage articles, announcements and offers",
+      "columns": {
+        "title": "Title",
+        "type": "Type",
+        "date": "Date",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "titleLabel": "Title",
+        "typeLabel": "Type",
+        "date": "Publication date",
+        "content": "Content",
+        "image": "Image",
+        "chooseImage": "Choose an image",
+        "editTitle": "Edit news",
+        "newTitle": "New news"
+      },
+      "types": {
+        "all": "All types",
+        "article": "Article",
+        "articles": "Articles",
+        "announcement": "Announcement",
+        "announcements": "Announcements",
+        "job": "Job Offer",
+        "jobs": "Job Offers"
+      }
+    },
+    "partners": {
+      "title": "Partners",
+      "subtitle": "Manage partners",
+      "columns": {
+        "name": "Name",
+        "sector": "Sector",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "name": "Name",
+        "sector": "Sector",
+        "description": "Description",
+        "logo": "Logo",
+        "chooseLogo": "Choose a logo",
+        "editTitle": "Edit partner",
+        "newTitle": "New partner"
+      },
+      "noLogo": "N/A"
+    },
+    "services": {
+      "title": "Services",
+      "subtitle": "Manage offered services",
+      "columns": {
+        "name": "Name",
+        "description": "Description",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "name": "Name",
+        "description": "Description",
+        "icon": "Icon",
+        "iconPlaceholder": "Ex: Truck, Container, Ship",
+        "iconHelper": "Lucide React icon name",
+        "editTitle": "Edit service",
+        "newTitle": "New service"
+      }
+    },
+    "infrastructures": {
+      "title": "Infrastructures",
+      "subtitle": "Manage infrastructures",
+      "columns": {
+        "name": "Name",
+        "surface": "Surface",
+        "capacity": "Capacity",
+        "createdAt": "Created on"
+      },
+      "form": {
+        "name": "Name",
+        "surface": "Surface",
+        "surfacePlaceholder": "Ex: 5000 m²",
+        "capacity": "Capacity",
+        "capacityPlaceholder": "Ex: 1000 containers",
+        "description": "Description",
+        "image": "Image",
+        "chooseImage": "Choose an image",
+        "editTitle": "Edit infrastructure",
+        "newTitle": "New infrastructure"
+      }
+    },
+    "messages": {
+      "title": "Messages",
+      "subtitle": "Messages received via contact form",
+      "noMessages": "No messages",
+      "newBadge": "New",
+      "markAsRead": "Mark as read",
+      "subject": "Subject:"
+    },
+    "newsletter": {
+      "title": "Newsletter",
+      "subtitle": "Newsletter subscribers",
+      "export": "Export emails",
+      "noSubscribers": "No subscribers",
+      "columns": {
+        "email": "Email",
+        "date": "Registration date"
       }
     }
   },
@@ -549,21 +701,23 @@
       "description": "KAMLOG provides a modern and secure container yard for temporary storage of your empty or full containers. Located near the ports of Douala and Kribi, our infrastructure allows flexible and efficient management.",
       "benefits": {
         "title": "Client Benefits",
-        "item1": "Reduction of port demurrage fees",
-        "item2": "Professional container management",
-        "item3": "Storage flexibility",
-        "item4": "24/7 enhanced security",
-        "item5": "Simplified and fast access"
+        "item1": "Cost optimization and reduction of port demurrage fees",
+        "item2": "Reduced risk of container damage",
+        "item3": "Maximum security, reinforced 24/7",
+        "item4": "Fast availability and simplified access to containers",
+        "item5": "Professional container management",
+        "item6": "Storage flexibility"
       },
       "capacity": {
         "title": "Capacities and Equipment",
         "item1": "Fully paved area of 22,000 m²",
-        "item2": "Capacity to accommodate over 2,000 TEUs",
-        "item3": "Modern surveillance system (video surveillance, 24/7 security)",
-        "item4": "Forklifts and mobile cranes",
-        "item5": "Computerized inventory management",
-        "item6": "Dedicated spaces for refrigerated containers",
-        "item7": "Container maintenance and washing"
+        "item2": "Average capacity of 2,500 containers (TCs)",
+        "item3": "200 reefer plugs for refrigerated containers",
+        "item4": "Dedicated area for the repair and refurbishment of damaged containers",
+        "item5": "Container cleaning and treatment",
+        "item6": "Modern surveillance system (video surveillance, 24/7 security)",
+        "item7": "Forklifts and mobile cranes",
+        "item8": "Computerized inventory management"
       }
     },
     "customs": {
@@ -601,13 +755,16 @@
       "description": "KAMLOG has secure warehousing facilities adapted to different types of goods: industrial products, agricultural equipment, consumer goods, and more.",
       "features": {
         "item1": "Bonded warehouse (fictitious warehouse) allowing deferral of duties and taxes",
-        "item2": "Area: 5,000 m² covered + 22,000 m² outdoor for containers",
-        "item3": "Ceiling height up to 18 meters (silos)",
+        "item2": "Quayside warehouse of 5,000 m² at Quay 3 of the Port Autonome de Douala (3,500 m² on the ground and 1,500 m² mezzanine)",
+        "item3": "Ceiling height of 18 meters with integrated mezzanine",
         "item4": "Vertical and horizontal storage",
         "item5": "Computerized inventory management with traceability",
         "item6": "Handling and loading/unloading services",
         "item7": "Dedicated space for dangerous goods storage (with permits)",
-        "item8": "Possibility of grouping, ungrouping and packaging"
+        "item8": "Possibility of grouping, ungrouping and packaging",
+        "item9": "11,000 m² warehouse in the port zone (Place UDEAC 01), fully secured",
+        "item10": "Fully automated pile-supported silos with a capacity of 18,000 tonnes (under construction)",
+        "item11": "Cumulated storage capacity: over 60,000 tonnes"
       }
     },
     "handling": {
@@ -728,24 +885,6 @@
       "title": "Visit Our Facilities",
       "description": "Discover our modern and high-performance infrastructures that guarantee the efficiency of your logistics operations",
       "button": "Schedule a visit"
-    },
-    "stats": {
-      "surface": {
-        "label": "Total Surface",
-        "value": "27,000 m²"
-      },
-      "capacity": {
-        "label": "Container Capacity",
-        "value": "2,000+ TEU"
-      },
-      "height": {
-        "label": "Maximum Height",
-        "value": "18 meters"
-      },
-      "security": {
-        "label": "Surveillance",
-        "value": "24/7"
-      }
     }
   },
   "visitRequest": {
@@ -789,170 +928,6 @@
       "submit": "Send request",
       "submitting": "Sending...",
       "required": "*"
-    }
-  },
-  "admin": {
-    "common": {
-      "add": "Add",
-      "edit": "Edit",
-      "delete": "Delete",
-      "save": "Save",
-      "saving": "Saving...",
-      "cancel": "Cancel",
-      "actions": "Actions",
-      "confirm": "Are you sure you want to delete this item?",
-      "error": "Operation error",
-      "noData": "No data available",
-      "search": "Search...",
-      "filter": "Filter",
-      "export": "Export"
-    },
-    "nav": {
-      "logout": "Logout",
-      "panel": "Admin Panel"
-    },
-    "sidebar": {
-      "dashboard": "Dashboard",
-      "news": "News",
-      "partners": "Partners",
-      "services": "Services",
-      "infrastructures": "Infrastructures",
-      "messages": "Messages",
-      "newsletter": "Newsletter"
-    },
-    "login": {
-      "title": "Administration",
-      "subtitle": "Log in to access the admin panel",
-      "email": "Email",
-      "password": "Password",
-      "submit": "Sign in",
-      "submitting": "Connecting...",
-      "error": "Connection failed"
-    },
-    "dashboard": {
-      "title": "Dashboard",
-      "subtitle": "Overview of your administration",
-      "stats": {
-        "news": "Total News",
-        "jobs": "Job Offers",
-        "partners": "Partners",
-        "messages": "Messages Received",
-        "subscribers": "Newsletter Subscribers"
-      },
-      "activity": "Recent Activity",
-      "activityDescription": "Detailed statistics will be displayed here.",
-      "quickActions": "Quick Actions",
-      "actions": {
-        "addNews": "Add news",
-        "addPartner": "Add partner",
-        "viewMessages": "View messages"
-      }
-    },
-    "news": {
-      "title": "News",
-      "subtitle": "Manage articles, announcements and offers",
-      "columns": {
-        "title": "Title",
-        "type": "Type",
-        "date": "Date",
-        "createdAt": "Created on"
-      },
-      "form": {
-        "titleLabel": "Title",
-        "typeLabel": "Type",
-        "date": "Publication date",
-        "content": "Content",
-        "image": "Image",
-        "chooseImage": "Choose an image",
-        "editTitle": "Edit news",
-        "newTitle": "New news"
-      },
-      "types": {
-        "all": "All types",
-        "article": "Article",
-        "articles": "Articles",
-        "announcement": "Announcement",
-        "announcements": "Announcements",
-        "job": "Job Offer",
-        "jobs": "Job Offers"
-      }
-    },
-    "partners": {
-      "title": "Partners",
-      "subtitle": "Manage partners",
-      "columns": {
-        "name": "Name",
-        "sector": "Sector",
-        "createdAt": "Created on"
-      },
-      "form": {
-        "name": "Name",
-        "sector": "Sector",
-        "description": "Description",
-        "logo": "Logo",
-        "chooseLogo": "Choose a logo",
-        "editTitle": "Edit partner",
-        "newTitle": "New partner"
-      },
-      "noLogo": "N/A"
-    },
-    "services": {
-      "title": "Services",
-      "subtitle": "Manage offered services",
-      "columns": {
-        "name": "Name",
-        "description": "Description",
-        "createdAt": "Created on"
-      },
-      "form": {
-        "name": "Name",
-        "description": "Description",
-        "icon": "Icon",
-        "iconPlaceholder": "Ex: Truck, Container, Ship",
-        "iconHelper": "Lucide React icon name",
-        "editTitle": "Edit service",
-        "newTitle": "New service"
-      }
-    },
-    "infrastructures": {
-      "title": "Infrastructures",
-      "subtitle": "Manage infrastructures",
-      "columns": {
-        "name": "Name",
-        "surface": "Surface",
-        "capacity": "Capacity",
-        "createdAt": "Created on"
-      },
-      "form": {
-        "name": "Name",
-        "surface": "Surface",
-        "surfacePlaceholder": "Ex: 5000 m²",
-        "capacity": "Capacity",
-        "capacityPlaceholder": "Ex: 1000 containers",
-        "description": "Description",
-        "image": "Image",
-        "chooseImage": "Choose an image",
-        "editTitle": "Edit infrastructure",
-        "newTitle": "New infrastructure"
-      }
-    },
-    "messages": {
-      "title": "Messages",
-      "subtitle": "Messages received via contact form",
-      "noMessages": "No messages",
-      "newBadge": "New",
-      "markAsRead": "Mark as read",
-      "subject": "Subject:"
-    },
-    "newsletter": {
-      "title": "Newsletter",
-      "subtitle": "Newsletter subscribers",
-      "export": "Export emails",
-      "noSubscribers": "No subscribers",
-      "columns": {
-        "email": "Email",
-        "date": "Registration date"
-      }
     }
   }
 }
